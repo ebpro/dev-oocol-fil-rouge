@@ -50,6 +50,11 @@ jobs:
 
       - name: Upload test reports and coverage
         if: always()
+        # Best-effort : l'organisation ebpro (plan Team) a son quota Actions
+        # « artifact storage » (2 GiB) saturé — un échec de CreateArtifact ne doit
+        # pas rougir un build Maven sinon vert. Repasser au mode bloquant quand le
+        # quota est libéré (cf. incident 2026-10-20).
+        continue-on-error: true
         uses: actions/upload-artifact@v4
         with:
           name: reports-java-${{ matrix.java }}-${{ github.run_id }}
