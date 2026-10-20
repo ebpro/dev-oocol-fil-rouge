@@ -51,7 +51,9 @@
     <module>00-scaffold</module>
     <!-- Semaine 3 / Séances CNAM S4-S5 : ELO 04 — classes, encapsulation, static, final -->
     <module>20-domain-bases</module>
-    <!-- Les modules 30..95 sont ajoutés au fil du semestre (voir docs/progression.md) -->
+    <!-- Semaine 4 / Séances CNAM S5-S6 : ELO 05 — héritage, classes abstraites, interfaces, polymorphisme -->
+    <module>30-heritage</module>
+    <!-- Les modules 40..95 sont ajoutés au fil du semestre (voir docs/progression.md) -->
   </modules>
 
   <properties>
