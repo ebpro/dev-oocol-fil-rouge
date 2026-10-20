@@ -1,0 +1,53 @@
+name: "CodeQL Security Scan"
+
+# Porté depuis ebpro/java101-tp1 (.github/workflows/codeql-analysis.yml).
+# Analyse de sécurité Java ; la construction pour l'extraction CodeQL passe par le wrapper Maven.
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+    branches: ["**"]
+  schedule:
+    - cron: '0 2 * * 1' # hebdomadaire, le lundi à 02:00 UTC
+
+permissions:
+  actions: read
+  contents: read
+  security-events: write
+
+jobs:
+  codeql:
+    name: Analyze (CodeQL)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: java
+
+      - name: Set up JDK 21 for CodeQL build
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+
+      - name: Build (explicit) - use Maven to produce artifacts for CodeQL
+        run: |
+          chmod +x mvnw || true
+          BUILD_TIMESTAMP=$(date -u +%Y-%m-%dT%H:%M:%SZ)
+          ./mvnw -B -DskipTests -Dproject.build.outputTimestamp="$BUILD_TIMESTAMP" clean package
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+        with:
+          # upload:false — ingestion « code scanning » exige Code Security activé sur le
+          # dépôt ; l'organisation ebpro (plan Team, lock metered usage) ne peut pas
+          # l'activer sur un dépôt privé. Passer à `true` dès que Code Security est
+          # disponible (le reste du workflow est prêt).
+          upload: false

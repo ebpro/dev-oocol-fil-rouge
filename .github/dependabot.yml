@@ -1,0 +1,21 @@
+version: 2
+updates:
+  # Dépendances Maven (POM parent + modules)
+  - package-ecosystem: "maven"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+    labels:
+      - "deps"
+      - "automated"
+
+  # Actions CI (actions/checkout, actions/setup-java, github/codeql-action, ...)
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+    labels:
+      - "deps"
+      - "automated"

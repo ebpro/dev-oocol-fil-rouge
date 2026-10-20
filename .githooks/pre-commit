@@ -1,0 +1,49 @@
+#!/bin/sh
+#
+# Git pre-commit hook for dev-oocol-fil-rouge (DEV-OOCOL)
+# This hook runs before each commit to ensure code quality
+#
+# To install: git config core.hooksPath .githooks (from project root)
+#
+
+echo "🔍 Running pre-commit checks..."
+
+# Check if Maven wrapper exists
+if [ ! -f "./mvnw" ]; then
+    echo "❌ Maven wrapper not found!"
+    exit 1
+fi
+
+# Make sure mvnw is executable
+chmod +x ./mvnw
+
+# 1. Compile the code
+echo "📦 Compiling code..."
+./mvnw clean compile -DskipTests -q
+if [ $? -ne 0 ]; then
+    echo "❌ Compilation failed! Please fix errors before committing."
+    exit 1
+fi
+echo "✅ Compilation successful"
+
+# 2. Run tests
+echo "🧪 Running tests..."
+./mvnw test -q
+if [ $? -ne 0 ]; then
+    echo "❌ Tests failed! Please fix failing tests before committing."
+    exit 1
+fi
+echo "✅ All tests passed"
+
+# 3. Check for Javadoc warnings (optional, non-blocking)
+echo "📝 Checking Javadoc..."
+./mvnw javadoc:javadoc -q 2>&1 | grep -i "warning" > /dev/null
+if [ $? -eq 0 ]; then
+    echo "⚠️  Javadoc has warnings (not blocking commit)"
+else
+    echo "✅ Javadoc looks good"
+fi
+
+echo "✨ Pre-commit checks passed! Ready to commit."
+exit 0
+

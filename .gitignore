@@ -1,0 +1,45 @@
+# --- Maven ---
+target/
+**/target/
+dependency-reduced-pom.xml
+.mvn/wrapper/maven-wrapper.jar
+release.properties
+pom.xml.versionsBackup
+pom.xml.releaseBackup
+pom.xml.next
+pom.xml.tag
+
+# --- Java ---
+*.class
+*.jar
+*.war
+*.ear
+# (les jars téléversés par le wrapper Maven sont téléchargés, jamais committés)
+
+# --- Rapport de couverture / tests (régénérables) ---
+**/jacoco.exec
+**/site/jacoco/
+
+# --- IDEs ---
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+.settings/
+.project
+.classpath
+.factorypath
+
+# --- OS ---
+.DS_Store
+Thumbs.db
+
+# --- Logs et temporaires ---
+*.log
+*.tmp
+*.swp
+*~
+
+# --- Local ---
+local.properties

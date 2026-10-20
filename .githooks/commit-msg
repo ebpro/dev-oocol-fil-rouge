@@ -1,0 +1,49 @@
+#!/bin/sh
+#
+# Git commit-msg hook for dev-oocol-fil-rouge (DEV-OOCOL)
+# Validates commit message format (Conventional Commits)
+#
+# Format: <type>(<scope>): <subject>
+# Example: feat(person): add factory method for Person creation
+#
+# Types: feat, fix, docs, style, refactor, test, chore, ci
+#
+
+commit_msg_file=$1
+commit_msg=$(cat "$commit_msg_file")
+
+# Pattern for conventional commits
+# Format: type(optional scope): description
+pattern="^(feat|fix|docs|style|refactor|test|chore|ci|perf|build|revert)(\(.+\))?: .{1,72}$"
+
+if ! echo "$commit_msg" | grep -qE "$pattern"; then
+    echo "❌ Invalid commit message format!"
+    echo ""
+    echo "Please use Conventional Commits format:"
+    echo "  <type>(<optional-scope>): <description>"
+    echo ""
+    echo "Valid types:"
+    echo "  feat     - New feature"
+    echo "  fix      - Bug fix"
+    echo "  docs     - Documentation changes"
+    echo "  style    - Code style changes (formatting, etc.)"
+    echo "  refactor - Code refactoring"
+    echo "  test     - Adding or updating tests"
+    echo "  chore    - Maintenance tasks"
+    echo "  ci       - CI/CD changes"
+    echo "  perf     - Performance improvements"
+    echo "  build    - Build system changes"
+    echo ""
+    echo "Examples:"
+    echo "  feat(person): add factory method for Person creation"
+    echo "  fix(address): correct validation in Address constructor"
+    echo "  test: add tests for PersonValueObject"
+    echo "  docs: update README with new examples"
+    echo ""
+    echo "Your message was:"
+    echo "  $commit_msg"
+    exit 1
+fi
+
+exit 0
+

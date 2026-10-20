@@ -1,0 +1,35 @@
+#!/bin/sh
+#
+# Git pre-push hook for dev-oocol-fil-rouge (DEV-OOCOL)
+# Runs comprehensive checks before pushing to remote
+#
+# To install: git config core.hooksPath .githooks (from project root)
+#
+
+echo "🚀 Running pre-push checks..."
+
+# Check if Maven wrapper exists
+if [ ! -f "./mvnw" ]; then
+    echo "❌ Maven wrapper not found!"
+    exit 1
+fi
+
+# Make sure mvnw is executable
+chmod +x ./mvnw
+
+# 1. Run full clean build with tests
+echo "🏗️  Running clean build with tests..."
+./mvnw clean verify
+if [ $? -ne 0 ]; then
+    echo "❌ Build failed! Please fix errors before pushing."
+    exit 1
+fi
+echo "✅ Build successful"
+
+# 2. Check for TODO/FIXME in staged files (warning only)
+echo "🔍 Checking for TODO/FIXME markers..."
+git diff --cached --name-only | grep "\.java$" | xargs grep -n "TODO\|FIXME" || true
+
+echo "✨ Pre-push checks passed! Ready to push."
+exit 0
+
