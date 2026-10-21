@@ -55,7 +55,9 @@
     <module>30-heritage</module>
     <!-- Semaine 5 / Séances CNAM S6-S7 : ELO 06 — collections (List/Set/Map/Queue), généricité, Comparable/Comparator, equals/hashCode -->
     <module>40-collections</module>
-    <!-- Les modules 50..95 sont ajoutés au fil du semestre (voir docs/progression.md) -->
+    <!-- Semaine 6 / Séance CNAM S9 : ELO 07 — exceptions checked/unchecked, try-with-resources, chaînage de causes, hiérarchie métier -->
+    <module>50-exceptions</module>
+    <!-- Les modules 60..95 sont ajoutés au fil du semestre (voir docs/progression.md) -->
   </modules>
 
   <properties>
