@@ -61,7 +61,9 @@
     <module>60-io</module>
     <!-- Semaine 8 / Séance CNAM S11 : ELO 09 — sérialisation Java (Serializable, serialVersionUID, transient, Externalizable, versioning, pièges) -->
     <module>70-serialisation</module>
-    <!-- Les modules 80..95 sont ajoutés au fil du semestre (voir docs/progression.md) -->
+    <!-- Semaines 10-11 / Séances CNAM S12-S14 : ELO 11 — Java moderne (records, sealed, pattern matching, switch expressions, Streams, lambdas, var, text blocks, Optional) -->
+    <module>80-modern-java</module>
+    <!-- Les modules 90..95 sont ajoutés au fil du semestre (voir docs/progression.md) -->
   </modules>
 
   <properties>
