@@ -1,49 +1,36 @@
 #!/bin/sh
 #
-# Git commit-msg hook for dev-oocol-fil-rouge (DEV-OOCOL)
-# Validates commit message format (Conventional Commits)
+# Git commit-msg hook — Conventional Commits validator
+# Pattern: type(scope): subject (≤72 chars)
+# Allowed types: feat, fix, docs, style, refactor, test, chore, ci, perf, build, revert
 #
-# Format: <type>(<scope>): <subject>
-# Example: feat(person): add factory method for Person creation
-#
-# Types: feat, fix, docs, style, refactor, test, chore, ci
+# Install: git config core.hooksPath .githooks
 #
 
-commit_msg_file=$1
-commit_msg=$(cat "$commit_msg_file")
+MSG_FILE="$1"
+SUBJECT=$(head -n 1 "$MSG_FILE")
 
-# Pattern for conventional commits
-# Format: type(optional scope): description
-pattern="^(feat|fix|docs|style|refactor|test|chore|ci|perf|build|revert)(\(.+\))?: .{1,72}$"
+# Allow merge/revert commits and fixup!/squash!
+case "$SUBJECT" in
+    Merge*|Revert*|fixup!*|squash!*) exit 0 ;;
+esac
 
-if ! echo "$commit_msg" | grep -qE "$pattern"; then
-    echo "❌ Invalid commit message format!"
-    echo ""
-    echo "Please use Conventional Commits format:"
-    echo "  <type>(<optional-scope>): <description>"
-    echo ""
-    echo "Valid types:"
-    echo "  feat     - New feature"
-    echo "  fix      - Bug fix"
-    echo "  docs     - Documentation changes"
-    echo "  style    - Code style changes (formatting, etc.)"
-    echo "  refactor - Code refactoring"
-    echo "  test     - Adding or updating tests"
-    echo "  chore    - Maintenance tasks"
-    echo "  ci       - CI/CD changes"
-    echo "  perf     - Performance improvements"
-    echo "  build    - Build system changes"
-    echo ""
-    echo "Examples:"
-    echo "  feat(person): add factory method for Person creation"
-    echo "  fix(address): correct validation in Address constructor"
-    echo "  test: add tests for PersonValueObject"
-    echo "  docs: update README with new examples"
-    echo ""
-    echo "Your message was:"
-    echo "  $commit_msg"
+PATTERN='^(feat|fix|docs|style|refactor|test|chore|ci|perf|build|revert)(\([a-z0-9-]+\))?: .{1,72}$'
+
+if ! echo "$SUBJECT" | grep -qE "$PATTERN"; then
+    cat >&2 <<EOF
+✗ Invalid commit message.
+
+  Got:      "$SUBJECT"
+  Expected: type(scope): description
+  Types:    feat|fix|docs|style|refactor|test|chore|ci|perf|build|revert
+  Example:  feat(40-collections): add StationRepository with sorted views
+
+  Rules:
+  - Subject line only is checked (body is free-form)
+  - ≤72 characters after the colon+space
+  - scope is optional, lowercase-hyphenated
+
+EOF
     exit 1
 fi
-
-exit 0
-

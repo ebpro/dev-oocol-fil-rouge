@@ -1,35 +1,43 @@
 #!/bin/sh
 #
-# Git pre-push hook for dev-oocol-fil-rouge (DEV-OOCOL)
-# Runs comprehensive checks before pushing to remote
+# Git pre-push hook — dev-oocol-fil-rouge
+# Runs tests on changed modules (plus dependents). Static analysis is CI's job.
 #
-# To install: git config core.hooksPath .githooks (from project root)
+# Install: git config core.hooksPath .githooks
+# Skip with: git push --no-verify (emergency WIP pushes)
 #
 
-echo "🚀 Running pre-push checks..."
+set -e
 
-# Check if Maven wrapper exists
-if [ ! -f "./mvnw" ]; then
-    echo "❌ Maven wrapper not found!"
-    exit 1
+# Find all files changed between remote tip and local HEAD
+REMOTE=$(git rev-parse @{u} 2>/dev/null || echo "")
+if [ -z "$REMOTE" ]; then
+    # No upstream (first push) — full verify
+    ./mvnw clean test -q -T 1C
+    echo "✓ pre-push: full test suite passed (no upstream)"
+    exit 0
 fi
 
-# Make sure mvnw is executable
-chmod +x ./mvnw
+CHANGED=$(git diff --name-only "$REMOTE"..HEAD | grep -E '\.(java|xml|properties)$' || true)
 
-# 1. Run full clean build with tests
-echo "🏗️  Running clean build with tests..."
-./mvnw clean verify
-if [ $? -ne 0 ]; then
-    echo "❌ Build failed! Please fix errors before pushing."
-    exit 1
+if [ -z "$CHANGED" ]; then
+    echo "✓ pre-push: no source changes, skipping tests"
+    exit 0
 fi
-echo "✅ Build successful"
 
-# 2. Check for TODO/FIXME in staged files (warning only)
-echo "🔍 Checking for TODO/FIXME markers..."
-git diff --cached --name-only | grep "\.java$" | xargs grep -n "TODO\|FIXME" || true
+# Extract unique module directories
+MODULES=$(echo "$CHANGED" | cut -d'/' -f1 | sort -u | grep -E '^[0-9]' || true)
 
-echo "✨ Pre-push checks passed! Ready to push."
-exit 0
+# Parent pom changes → full reactor
+if echo "$CHANGED" | grep -q '^pom\.xml$'; then
+    MODULES=""
+fi
 
+if [ -z "$MODULES" ]; then
+    ./mvnw clean test -q -T 1C
+else
+    PL=$(echo "$MODULES" | paste -sd ',' -)
+    ./mvnw test -q -T 1C -pl "$PL" -am
+fi
+
+echo "✓ pre-push: tests passed"

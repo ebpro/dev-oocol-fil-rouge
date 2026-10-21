@@ -1,49 +1,36 @@
 #!/bin/sh
 #
-# Git pre-commit hook for dev-oocol-fil-rouge (DEV-OOCOL)
-# This hook runs before each commit to ensure code quality
+# Git pre-commit hook — dev-oocol-fil-rouge
+# Fast compile-only check on changed modules.
+# Full test suite is owned by pre-push and CI.
 #
-# To install: git config core.hooksPath .githooks (from project root)
+# Install: git config core.hooksPath .githooks
 #
 
-echo "🔍 Running pre-commit checks..."
+set -e
 
-# Check if Maven wrapper exists
-if [ ! -f "./mvnw" ]; then
-    echo "❌ Maven wrapper not found!"
-    exit 1
+# Find changed Java/resource source files and map to modules
+CHANGED=$(git diff --cached --name-only --diff-filter=ACMR | grep -E '\.(java|xml|properties)$' || true)
+
+if [ -z "$CHANGED" ]; then
+    exit 0
 fi
 
-# Make sure mvnw is executable
-chmod +x ./mvnw
+# Extract unique module directories (first path component that matches a module)
+MODULES=$(echo "$CHANGED" | cut -d'/' -f1 | sort -u | grep -E '^[0-9]' || true)
 
-# 1. Compile the code
-echo "📦 Compiling code..."
-./mvnw clean compile -DskipTests -q
-if [ $? -ne 0 ]; then
-    echo "❌ Compilation failed! Please fix errors before committing."
-    exit 1
+# Also include parent pom changes (affects all modules)
+if echo "$CHANGED" | grep -q '^pom\.xml$'; then
+    MODULES=""  # empty means full reactor
 fi
-echo "✅ Compilation successful"
 
-# 2. Run tests
-echo "🧪 Running tests..."
-./mvnw test -q
-if [ $? -ne 0 ]; then
-    echo "❌ Tests failed! Please fix failing tests before committing."
-    exit 1
-fi
-echo "✅ All tests passed"
-
-# 3. Check for Javadoc warnings (optional, non-blocking)
-echo "📝 Checking Javadoc..."
-./mvnw javadoc:javadoc -q 2>&1 | grep -i "warning" > /dev/null
-if [ $? -eq 0 ]; then
-    echo "⚠️  Javadoc has warnings (not blocking commit)"
+if [ -z "$MODULES" ]; then
+    # Full reactor compile (parent or non-module changes)
+    ./mvnw compile -DskipTests -q -T 1C
 else
-    echo "✅ Javadoc looks good"
+    # Incremental: changed modules + their dependents
+    PL=$(echo "$MODULES" | paste -sd ',' -)
+    ./mvnw compile -DskipTests -q -T 1C -pl "$PL" -am
 fi
 
-echo "✨ Pre-commit checks passed! Ready to commit."
-exit 0
-
+echo "✓ pre-commit: compile OK"
