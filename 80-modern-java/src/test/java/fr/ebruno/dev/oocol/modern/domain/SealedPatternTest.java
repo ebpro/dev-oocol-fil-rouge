@@ -96,9 +96,7 @@ class SealedPatternTest {
     @Test
     void nouvelleVarianteCasseraitLesSwitchs() {
         // Preuve négative, jouable uniquement à la compilation — consignée ici pour la leçon :
-        /* CODE COMMENTÉ — Comparaison pédagogique avant/après:
-           record Funiculaire(String identifiant, int capacite) implements Vehicle {}
-        */
+        // déclarer un variant Funiculaire en plus (un record implémentant Vehicle)
         // ne compile PAS (hors clauses permits) ; et si on l'ajoute AUSSI à « permits »,
         // chaque switch de cette classe (et de la démo) devient une ERREUR de compilation :
         // « the switch expression does not cover all possible input values ».
