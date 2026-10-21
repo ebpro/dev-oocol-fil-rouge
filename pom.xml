@@ -57,7 +57,9 @@
     <module>40-collections</module>
     <!-- Semaine 6 / Séance CNAM S9 : ELO 07 — exceptions checked/unchecked, try-with-resources, chaînage de causes, hiérarchie métier -->
     <module>50-exceptions</module>
-    <!-- Les modules 60..95 sont ajoutés au fil du semestre (voir docs/progression.md) -->
+    <!-- Semaine 7 / Séance CNAM S10 : ELO 08 — NIO.2 (Path, Files), chargement CSV, charset, écriture atomique, FileVisitor -->
+    <module>60-io</module>
+    <!-- Les modules 70..95 sont ajoutés au fil du semestre (voir docs/progression.md) -->
   </modules>
 
   <properties>
