@@ -25,7 +25,7 @@ Aucun plugin d'IDE n'est requis : tout se vérifie en ligne de commande. L'IDE
 ## Construire
 
 ```bash
-# Tout le projet (ici un seul module : 00-scaffold)
+# Tout le projet (les 11 modules du fil rouge)
 ./mvnw verify
 
 # Un seul module, sans ses dépendants (les modules sont indépendants)

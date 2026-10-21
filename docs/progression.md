@@ -51,5 +51,29 @@ supplémentaire (ex. tests : `45-testing`) peut s'insérer sans renuméroter le 
 
 ## État d'implémentation
 
-- [x] `00-scaffold` — **en place** (cette itération)
-- [ ] `20-domain-bases` … `95-transit-app` — à créer séance par séance au fil du semestre
+**2026-10-21 : les 11 modules de code sont livrés** — réacteur complet vert
+(`./mvnw verify` : build + tests + Checkstyle/PMD/SpotBugs en mode
+avertissement), SonarQube Quality Gate OK (8 issues restantes, ratings A/B/A).
+
+| Module | État | Tests (surefire) |
+|---|---|---|
+| `00-scaffold` | ✅ 2026-10-21 | 4 |
+| `20-domain-bases` | ✅ 2026-10-21 | 29 |
+| `30-heritage` | ✅ 2026-10-21 | 29 |
+| `40-collections` | ✅ 2026-10-21 | 48 |
+| `50-exceptions` | ✅ 2026-10-21 | 45 |
+| `60-io` | ✅ 2026-10-21 | 36 |
+| `70-serialisation` | ✅ 2026-10-21 | 27 |
+| `80-modern-java` | ✅ 2026-10-21 | 32 |
+| `85-collection-pitfalls` | ✅ 2026-10-21 | 53 (dont 26 `@Disabled` : fixtures de pièges, par conception) |
+| `90-jdbc` | ✅ 2026-10-21 | 28 |
+| `95-transit-app` | ✅ 2026-10-21 | 33 |
+
+Total réacteur : **364 tests, 0 échec, 26 ignorés** — les 26 ignorés sont les
+fixtures `@Disabled` du module `85-collection-pitfalls` (par conception).
+
+Lignes du tableau sans module de code, **par conception** :
+
+- `W9-git-sprint` (ELO 10) : sprint process Git (branches, PR, revues, conflits),
+  pas de code à livrer dans ce dépôt.
+- S19–S20 : révision et soutenance des projets étudiants, aucun module.
