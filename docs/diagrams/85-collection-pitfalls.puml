@@ -1,0 +1,105 @@
+@startuml 85-collection-pitfalls
+' ============================================================
+' Module 85 - Pieges des collections (chasse aux bugs, W11)
+' Diagramme pedagogique : les trois mecanismes qui font le plus
+' de victimes - seaux HashMap + equals/hashCode incoherents,
+' retrait pendant for-each (CME), vue taille fixe d'Arrays.asList.
+' Autorite = code source :
+'   85-collection-pitfalls/src/main/java/fr/ebruno/dev/oocol/pitfalls/
+' Rendu : voir docs/diagrams/README.md
+' ============================================================
+
+title Module 85 — Pièges des collections (W11)
+
+skinparam monochrome true
+skinparam shadowing false
+skinparam roundCorner 12
+skinparam ArrowThickness 1.2
+
+' ---- Piège 1/4/6 : les seaux qui séparent des égaux ----------
+rectangle "Piège 1 - equals sans hashCode" as p1 {
+  object "BuggyStation(\"GAR\",\n\"Gare Centrale\")" as sta1 {
+    equals = true (même code)
+    hashCode = 0x71A2 (identité !)
+  }
+  object "BuggyStation(\"GAR\",\n\"Gare Neuve\")" as sta2 {
+    equals = true (même code)
+    hashCode = 0x3F0B (identité !)
+  }
+
+  database "HashMap<BuggyStation,Double>" as buckets {
+    rectangle "seau 2" as seaux2 {
+      card "GAR → 2.0" as entree
+    }
+    rectangle "seau 15" as seaux15 {
+      card "(vide)" as rien #line.dashed
+    }
+  }
+
+  sta1 -right-> entree : put : haché seau 2
+  sta2 -down-> seaux15 : get : haché seau 15\n-> null !
+  sta1 .right.> sta2 : equals() == true\nmais hashCodes différents\n-> deux seaux différents\n-> l'entrée est « perdue »
+}
+
+note bottom of p1
+  Fix (fixed/FixedStation) :
+  hashCode = Objects.hash(code)
+  égaux -> même seau -> get réussi
+end note
+
+' ---- Piège 3 : le for-each qui se fait retirer le tapis ------
+rectangle "Piège 3 - retrait pendant for-each (CME)" as p3 {
+  card "lignes = [U, V, W]" as before
+  card "for (BuggyLine l : lignes)\n  lignes.remove(l)" as boucle
+  card "itérateur : next() -> U" as it1
+  card "remove(U) : modCount++\nliste = [V, W], curseur=1" as it2
+  card "next() : modCount != expected\n!!! ConcurrentModificationException" as cme #bold
+
+  before -right-> boucle
+  boucle -right-> it1
+  it1 -right-> it2
+  it2 -right-> cme
+}
+
+note bottom of p3
+  Fix (fixed/FixedNetwork) :
+  lignes.removeIf(predicat)
+  — la liste gère elle-même
+  son parcours et ses retraits
+end note
+
+' ---- Piège 5 : la vue qui se croyait liste -------------------
+rectangle "Piège 5 - Arrays.asList : taille fixe" as p5 {
+  card "Arrays.asList(2.0, 5.5, 12.0)" as aslist
+  card "vue Arrays$ArrayList\nfixe : set OK,\nadd/remove INTERDITS" as vue
+  card "tarifs.add(20.0)\n!!! UnsupportedOperationException" as uoe #bold
+  card "new ArrayList<>(List.of(...))\n-> vraie liste modifiable" as fix
+
+  aslist -right-> vue
+  vue -right-> uoe : l'appelant ne sait pas\nque le type List\nse trompe
+  vue -down-> fix : Fix (fixed/FixedFareList)
+}
+
+' ---- Les sept autres, en résumé --------------------------------
+rectangle "Les 7 autres pièges (mêmes familles)" as autres {
+  card "2 - getter qui fuit :\nla liste interne en pâture" as p2
+  card "4 - clé instable en Map :\nle cache manque ses entrées" as p4
+  card "6 - contains faux\nsans exception : le pire" as p6
+  card "7 - comparateur : 1 au\nlieu de 0 -> contrat violé" as p7
+  card "8 - null dans un TreeSet\n-> NPE à l'insertion" as p8
+  card "9 - remove(i) dans for i++\n-> voisin sauté, pairs survivants" as p9
+  card "10 - putIfAbsent cru put\n-> fusion qui n'écrase rien" as p10
+
+  p2 -[hidden]right- p4
+  p4 -[hidden]right- p6
+  p6 -[hidden]right- p7
+  p2 -[hidden]down- p8
+  p4 -[hidden]down- p9
+  p6 -[hidden]down- p10
+}
+
+p1 -[hidden]down- p3
+p3 -[hidden]down- p5
+p5 -[hidden]down- autres
+
+@enduml

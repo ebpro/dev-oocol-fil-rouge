@@ -63,6 +63,8 @@
     <module>70-serialisation</module>
     <!-- Semaines 10-11 / Séances CNAM S12-S14 : ELO 11 — Java moderne (records, sealed, pattern matching, switch expressions, Streams, lambdas, var, text blocks, Optional) -->
     <module>80-modern-java</module>
+    <!-- Semaine 11 / Enrichissement ELO 06 — chasse aux bugs : dix pièges classiques des collections (equals/hashCode, fuites mutables, CME, clés instables, comparateurs incohérents) avec miroirs corrigés -->
+    <module>85-collection-pitfalls</module>
     <!-- Les modules 90..95 sont ajoutés au fil du semestre (voir docs/progression.md) -->
   </modules>
 
