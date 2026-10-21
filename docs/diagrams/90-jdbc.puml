@@ -1,0 +1,113 @@
+@startuml 90-jdbc
+' ============================================================
+' Module 90 - JDBC et motif DAO (ELO 12)
+' Diagramme pedagogique : l'empilement App -> Facade ->
+' contrats DAO -> implementations JDBC -> Connection -> base,
+' et l'opposition PreparedStatement (?) vs Statement (+).
+' Autorite = code source :
+'   90-jdbc/src/main/java/fr/ebruno/dev/oocol/jdbc/
+' Rendu : voir docs/diagrams/README.md
+' ============================================================
+
+title Module 90 — JDBC et DAO (ELO 12)
+
+skinparam monochrome true
+skinparam shadowing false
+skinparam roundCorner 12
+skinparam ArrowThickness 1.2
+
+package "Couche applicative" {
+  [JdbcDemo\n(6 scènes)] as demo
+}
+
+package "Façade (repo)" {
+  [NetworkRepository\nconnexion partagée\n+ transactionSurement()] as repo
+}
+
+package "Contrats (dao) — zéro SQL" {
+  [CrudDao<T, ID>] as crud
+  [StationDao] as sdao
+  [LineDao] as ldao
+}
+
+package "Implémentations (dao.impl) — tout le SQL est ici" {
+  [StationDaoJdbc] as sjdbc
+  [LineDaoJdbc] as ljdbc
+}
+
+package "JDBC (java.sql)" {
+  [Connection] as conn
+  [PreparedStatement\n(?) paramétré] as ps
+  [Statement\n(+) concaténé] as st
+  [ResultSet] as rs
+}
+
+database "H2 en mémoire\n(jdbc:h2:mem:)\n→ Postgres demain" as db
+
+demo --> repo
+repo --> sdao
+repo --> ldao
+sdao --|> crud
+ldao --|> crud
+sdao <.. sjdbc : « implements »\nJPA remplacera cette\nflèche sans toucher\nau-dessus
+ldao <.. ljdbc : « implements »
+sjdbc --> conn
+ljdbc --> conn
+conn --> ps : prepare + bind
+conn ..> st : la voie vulnérable
+ps --> db : plan figé,\nvaleur typée
+st --> db : texte recomposé\npar l'attaquant
+ps --> rs : executeQuery
+rs --> sjdbc : mapResultSet()\ncolonne → champ
+
+note bottom of ps
+  WHERE code = ?     →  code vs VALEUR  →  sûr
+  WHERE code = '...' + entrée  →  l'entrée peut devenir du CODE  →  injection
+end note
+
+@enduml
+
+@startuml 90-jdbc-transaction
+' ============================================================
+' Module 90 - le gabarit transactionnel : tout ou rien.
+' Deux insertions valides, un doublon volontaire, ROLLBACK :
+' la base retrouve son état d'avant (A de ACID).
+' ============================================================
+
+title Module 90 — transactionSurement : commit ou rollback, jamais entre-deux
+
+skinparam monochrome true
+skinparam shadowing false
+
+participant "service\n(appelant)" as app
+participant "NetworkRepository\n.transactionSurement" as tx
+participant "StationDaoJdbc" as dao
+database "H2" as db
+
+app -> tx : transactionSurement(action)
+tx -> db : setAutoCommit(false)
+activate tx
+tx -> dao : inserer(NOR)
+dao -> db : INSERT — non validé
+tx -> dao : inserer(SUD)
+dao -> db : INSERT — non validé
+tx -> dao : inserer(NOR) ← doublon volontaire
+dao --> tx : RuntimeException\n(cause : SQLException PK)
+db --x tx : contrainte refusée
+tx -> db : ROLLBACK
+note right of tx
+  NOR et SUD sont annulées
+  avec le doublon :
+  la base revient à son
+  état d'avant l'action.
+end note
+tx --> app : propagation de\nl'exception d'origine
+deactivate tx
+app -> tx : (cas favorable) transactionSurement(action OK)
+tx -> db : setAutoCommit(false)
+activate tx
+tx -> db : commit() — les deux inserts deviennent visibles
+tx --> app : retour normal
+deactivate tx
+
+@enduml

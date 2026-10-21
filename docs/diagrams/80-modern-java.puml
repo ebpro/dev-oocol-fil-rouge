@@ -1,0 +1,197 @@
+@startuml 80-modern-java
+' ============================================================
+' Module 80 - Java moderne (ELO 11)
+' Diagramme pedagogique : le diff avant/apres (POJO vs record),
+' les hierarchies sealed (Vehicle, Propulsion, Tarif), le switch
+' de motifs et le pipeline Streams de l'analyse reseau.
+' Autorite = code source :
+'   80-modern-java/src/main/java/fr/ebruno/dev/oocol/modern/
+' Rendu : voir docs/diagrams/README.md
+' ============================================================
+
+title Module 80 — Java moderne (ELO 11)
+
+skinparam monochrome true
+skinparam shadowing false
+skinparam roundCorner 12
+skinparam classAttributeIconSize 0
+skinparam ArrowThickness 1.2
+
+' ---- Le diff : avant / après -------------------------------------
+package "Avant (W3-W7)" as avant #line.dashed {
+  class "Station (POJO W3)" as StationLegacy {
+    -{final} code : String
+    -{final} nom : String
+    -{final} zone : Zone
+    -{final} accessible : boolean
+    --
+    +Station(code, nom, zone, accessible)
+    +getCode() / getNom() / getZone() / isAccessible()
+    +equals(o) : boolean   «15 lignes»
+    +hashCode() : int      «5 lignes»
+    +toString() : String   «3 lignes»
+  }
+}
+
+package "Après (W10)" as apres {
+  class Station <<record>> {
+    code : String
+    nom : String
+    zone : Zone
+    accessible : boolean
+    --
+    +{static} «compact ctor : gardes»
+    +code() / nom() / zone() / accessible()
+    +equals / hashCode / toString  «générés»
+    +compareTo(autre) : int
+    +affichage() : String
+  }
+
+  class Zone <<record>> {
+    numero : int
+    nom : String
+    --
+    +{static} «compact ctor : gardes»
+  }
+
+  class Ligne <<record>> {
+    nom : String
+    arrets : List<Station>
+    --
+    +«compact ctor : List.copyOf»
+    +trouverParCode(code) : Optional<Station>
+  }
+}
+
+StationLegacy ..> Station : 40 lignes → 1 ligne\nde déclaration\n(le diff EST la leçon)
+
+note bottom of Station
+  Même instance invalide impossible :
+  les gardes vivent dans le constructeur
+  compact — porte d'entrée UNIQUE,
+  imposée par le langage (et par le
+  format sérialisé du record, W10↔W8).
+end note
+
+' ---- Vehicle : la hiérarchie scellée ------------------------------
+interface Vehicle <<sealed>> {
+  +identifiant() : String
+  +capacite() : int
+  +decrire() : String  «default»
+}
+
+class MetroTrain <<record>> {
+  identifiant / capacite
+  nombreVoitures : int
+  propulsion : Propulsion
+}
+class Bus <<record>> {
+  identifiant / capacite
+  ligne : String
+}
+class Tramway <<record>> {
+  identifiant / capacite
+  propulsion : Propulsion
+  longueurMetres : double
+}
+
+MetroTrain --|> Vehicle
+Bus --|> Vehicle
+Tramway --|> Vehicle
+
+note left of Vehicle
+  sealed permits MetroTrain, Bus, Tramway
+  — losange de fermeture :
+  le compilateur connaît LA LISTE.
+  Tout switch doit couvrir les 3 cas :
+  exhaustivité vérifiée à la compilation,
+  pas de default, pas de « type inattendu ».
+end note
+
+' ---- Propulsion : l'union sans méthodes ---------------------------
+interface Propulsion <<sealed>>
+
+class Electrique <<record>> { puissanceKW : int }
+class Diesel <<record>> { cylindree : int }
+class Hydrogene <<record>> { pressionBar : int }
+
+Electrique --|> Propulsion
+Diesel --|> Propulsion
+Hydrogene --|> Propulsion
+MetroTrain o--> Propulsion
+Tramway o--> Propulsion
+
+' ---- Tarif : le switch de motifs ----------------------------------
+interface Tarif <<sealed>>
+
+class TarifUnite <<record>> { zone : Zone; prix : double }
+class TarifJour <<record>> { zonesValides : List<Zone>; prix : double }
+class TarifAbonnement <<record>> { titulaire : String; debut : LocalDate; fin : LocalDate }
+
+TarifUnite --|> Tarif
+TarifJour --|> Tarif
+TarifAbonnement --|> Tarif
+
+class AnalyseReseau <<service>> {
+  +{static} stationsAccessibles(ligne) : List<Station>
+  +{static} grouperParZone(lignes) : Map<Zone, List<Station>>
+  +{static} trierParCode(stations) : List<Station>
+  +{static} stationLaPlusProcheDe(code, stations) : Optional<Station>
+  +{static} prixMoyen(tarifs) : OptionalDouble
+  +{static} prixDe(tarif) : double
+  +{static} resumerReseau(lignes) : String
+}
+
+note right of AnalyseReseau::prixDe
+  switch (tarif) {
+      case TarifUnite t  -> t.prix();
+      case TarifJour t   -> t.prix();
+      case TarifAbonnement a -> 22.00;
+  }
+  — pas de default : l'abonnement
+  FORCE une décision, l'oubli est
+  une erreur de compilation.
+end note
+
+' ---- Le pipeline Streams, en flux de données ----------------------
+note as Pipeline [
+  ==== Pipeline d'analyse (grouperParZone) ====
+  List<Ligne>  →  flatMap(l -> l.arrets())
+  →  Stream<Station>  →  groupingBy(Station::zone)
+  →  Map<Zone, List<Station>>
+  ----
+  4 lignes de pipeline (AnalyseReseau)
+  vs 15 lignes de double boucle + put manuel
+  (VersionLegacy) — RÉSULTATS IDENTIQUES, prouvés en test.
+]
+
+AnalyseReseau .. Propulsion : decrirePropulsion\nswitch de motifs
+
+note bottom of Ligne
+  Optional<Station> dans la signature :
+  l'absence est un fait de TYPE (W5 :
+  null retourné + if deviné par l'appelant).
+  ifPresent / map / flatMap / orElseThrow.
+end note
+
+note bottom of VersionLegacy
+  Le miroir « avant » : boucles for-each,
+  instanceof + cast, Map.put manuel,
+  StringBuilder, Comparator anonyme.
+  Ce n'EST PAS le code correct — c'est la
+  borne de comparaison du diff.
+end note
+
+class VersionLegacy <<service>> {
+  +{static} stationsAccessibles(ligne) : List<Station>
+  +{static} grouperParZone(lignes) : Map<Zone, List<Station>>
+  +{static} prixDe(tarif) : double
+  +{static} prixMoyen(tarifs) : OptionalDouble
+  +{static} trierParCode(stations) : List<Station>
+  +{static} rapport(v) : String
+  +{static} resumerReseau(lignes) : String
+}
+
+AnalyseReseau -- VersionLegacy : le diff\nest la leçon
+
+@enduml

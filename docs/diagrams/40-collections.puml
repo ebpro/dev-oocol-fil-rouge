@@ -1,0 +1,187 @@
+@startuml 40-collections
+' ============================================================
+' Module 40 - Collections framework (ELO 06)
+' Diagramme de classes pedagogique.
+' Autorite = code source :
+'   40-collections/src/main/java/fr/ebruno/dev/oocol/collections/
+' Rendu : voir docs/diagrams/README.md
+' ============================================================
+
+title Module 40 — Collections framework (ELO 06)
+
+skinparam monochrome true
+skinparam shadowing false
+skinparam roundCorner 12
+skinparam classAttributeIconSize 0
+skinparam ArrowThickness 1.2
+
+' ---- Station : la clé d'identité --------------------------------
+class Station {
+  -{final} code : String
+  -nom : String
+  -accessible : boolean
+  -zone : Zone
+  --
+  +Station(nom : String, code : String, zone : Zone)
+  --
+  +{static} of(code : String, nom : String, zone : Zone) : Station
+  +{static} parNom() : Comparator<Station>
+  +compareTo(autre : Station) : int
+  +equals(o : Object) : boolean
+  +hashCode() : int
+  +getCode() : String
+  +getNom() : String
+  +getZone() : Zone
+}
+
+interface "Comparable<Station>" as ComparableStation {
+  +compareTo(o : Station) : int
+}
+
+note right of Station
+  equals/hashCode → précondition HashSet :
+  deux instances de même code doivent être
+  ÉGALES et avoir le MÊME hashCode — sinon
+  contains()/remove() ratent en silence.
+  Le code est {final} : une clé de hachage
+  ne doit pas changer après insertion.
+end note
+
+' ---- Zone : l'ordre naturel des zones ----------------------------
+class Zone {
+  -{final} numero : int
+  -{final} nom : String
+  --
+  +Zone(numero : int, nom : String)
+  --
+  +compareTo(autre : Zone) : int
+  +equals(o : Object) : boolean
+  +hashCode() : int
+  +getNumero() : int
+  +getNom() : String
+}
+
+interface "Comparable<Zone>" as ComparableZone {
+  +compareTo(o : Zone) : int
+}
+
+' ---- Line : la transformation W3 → W5 ----------------------------
+class Line {
+  -nom : String
+  -{final} arrets : List<Station>
+  --
+  +Line(nom : String)
+  --
+  +ajouterArret(s : Station) : boolean
+  +retirerArret(s : Station) : boolean
+  +trouverParCode(code : String) : Station
+  +nombreArrets() : int
+  +premierArret() : Station
+  +dernierArret() : Station
+  +estTerminus(s : Station) : boolean
+  +getArrets() : List<Station> «lecture seule»
+  +{static} demontrerBugSansEquals() : String
+}
+
+note bottom of Line
+  W3: paires → W5: List<Station>
+  (origine/destination fixes deviennent
+  un parcours ordonné, extensible,
+  anti-doublon par contains→equals)
+end note
+
+' ---- Network : la Map d'adjacence --------------------------------
+class Network {
+  -{final} correspondances : Map<Station, Set<Line>>
+  -{final} lignes : List<Line>
+  --
+  +Network()
+  --
+  +ajouterLigne(ligne : Line) : void
+  +lignesA(s : Station) : Set<Line> «vide si inconnue»
+  +tousLesArrets() : Set<Station> «sans doublon»
+  +trouverStationParCode(code : String) : Station
+  +getLignes() : List<Line> «lecture seule»
+  +nombreCorrespondances() : int
+}
+
+note right of Network::correspondances
+  Map = lookup O(1) par hashCode+equals
+  Set = une ligne ne dessert pas deux fois
+  la même station (anti-doublon sémantique)
+end note
+
+' ---- TripPlanner : le BFS ----------------------------------------
+class TripPlanner {
+  -TripPlanner()
+  --
+  +{static} planifier(network : Network, depart : Station, arrivee : Station) : List<Station>
+  -{static} voisinsDe(network : Network, s : Station) : List<Station>
+  -{static} <T> inverser(entree : List<T>) : List<T>
+}
+
+interface "Queue<Station>" as QueueStation
+
+note bottom of TripPlanner
+  BFS = Queue + Set + Map :
+  Queue (frontière FIFO),
+  Set (déjà-visitées),
+  Map (prédécesseurs = fil d'Ariane),
+  List (résultat ordonné).
+  Échec = liste vide (contrat W5,
+  exception en W6).
+end note
+
+' ---- FareCalculator : les deux tris -------------------------------
+class FareCalculator {
+  -{final} zones : List<Zone>
+  -{final} tarifs : Map<String, Double>
+  --
+  +FareCalculator(zones : List<Zone>, tarifs : Map<String, Double>)
+  --
+  +calculerPrix(zonesTraversees : List<Zone>) : double
+  +getZones() : List<Zone> «lecture seule»
+  +{static} trierParNumero(liste : List<Zone>) : void
+  +{static} trierParNom(liste : List<Zone>) : void
+}
+
+interface "Comparator<Zone>" as ComparatorZone {
+  +compare(a : Zone, b : Zone) : int
+}
+
+note right of ComparatorZone
+  Strategy SANS le nommer : le tri
+  délégué est un OBJET comparateur
+  passé en paramètre — classe interne
+  anonyme ici, lambda en W10.
+  Zone reste inchangée : on peut la
+  trier par n'importe quel critère.
+end note
+
+' ---- Associations / dépendances -----------------------------------
+Station ..|> ComparableStation : ordre naturel (par code)
+Zone ..|> ComparableZone : ordre naturel (par numéro)
+
+Line o-- "1..*" Station : arrets (List ordonnée)
+Station "0..1" o---> Zone : rattachée
+Network o-- "1..*" Line : lignes (List)
+Network ..> Station : clés de la Map
+Network ..> Line : valeurs des Sets
+
+TripPlanner ..> QueueStation : frontière FIFO (LinkedList)
+TripPlanner ..> Network : explore le graphe
+TripPlanner ..> Station : sommets
+
+FareCalculator ..> ComparatorZone : stratégie de tri déléguée
+FareCalculator ..> Zone : liste triée à la construction
+
+legend bottom
+|= Élément |= Signification |
+| `..|>` (pointillé + triangle) | **Réalisation** de `Comparable` : l'ordre NATUREL vient de l'objet trié |
+| `..>` (pointillé) | **Dépendance** : la classe *utilise* le conteneur/la stratégie sans le posséder |
+| `o--` | **Composition** : Line a une List d'arrêts, Network a une Map de correspondances |
+| `Map<Station, Set<Line>>` | Double généricité : chaque type choisi pour son usage (lookup / anti-doublon) |
+| `{final}` sur les champs de collection | Initialisés à la déclaration : jamais null, jamais réassignés |
+endlegend
+
+@enduml

@@ -1,0 +1,121 @@
+@startuml 50-exceptions
+' ============================================================
+' Module 50 - Exceptions checked/unchecked (ELO 07)
+' Diagramme de classes pedagogique.
+' Autorite = code source :
+'   50-exceptions/src/main/java/fr/ebruno/dev/oocol/exceptions/
+' Rendu : voir docs/diagrams/README.md
+' ============================================================
+
+title Module 50 — Hiérarchie d'exceptions (ELO 07)
+
+skinparam monochrome true
+skinparam shadowing false
+skinparam roundCorner 12
+skinparam classAttributeIconSize 0
+skinparam ArrowThickness 1.2
+
+' ---- Racines JDK --------------------------------------------
+class Exception {
+  +getMessage() : String
+  +getCause() : Throwable
+  +getSuppressed() : Throwable[]
+  +printStackTrace() : void
+}
+
+class RuntimeException {
+}
+
+' ---- Famille CHECKED (traits pleins) --------------------------
+class NetworkException {
+  -{final} serialVersionUID : long
+  +NetworkException(message : String)
+  +NetworkException(message : String, cause : Throwable)
+}
+
+class ScheduleConflictException {
+  -{final} ligne : String
+  -{final} heureConflit : int
+  +getLigne() : String
+  +getHeureConflit() : int
+}
+
+class InsufficientFundsException {
+  -{final} solde : double
+  -{final} prix : double
+  +getSolde() : double
+  +getPrix() : double
+  +getManquant() : double
+}
+
+' ---- Famille UNCHECKED (traits pointillés) --------------------
+class StationNotFoundException {
+  -{final} code : String
+  +getCode() : String
+}
+
+class FareCalculationException {
+}
+
+' ---- Héritages -------------------------------------------------
+Exception <|-- NetworkException : checked (gérer OU propager)
+NetworkException <|-- ScheduleConflictException
+NetworkException <|-- InsufficientFundsException
+
+' Trait pointillé = unchecked (convention de la séance : plein = checked).
+Exception <|.. RuntimeException
+RuntimeException <|.. StationNotFoundException : unchecked (bug : propager)
+RuntimeException <|.. FareCalculationException : unchecked (bug : propager)
+
+note right of NetworkException
+  CHECKED = récupérable :
+  un plan B existe
+  (recharger, re-planifier).
+  Le compilateur FORCE sa gestion.
+end note
+
+note right of StationNotFoundException
+  UNCHECKED = bug programme :
+  on ne rattrape pas,
+  on corrige l'appel.
+  Les deux sœurs n'ont de commun
+  que RuntimeException — d'où
+  le multi-catch de la scène 6.
+end note
+
+' ---- Qui lève quoi (le domaine en acte) ------------------------
+class Compte {
+  -{final} titulaire : String
+  -solde : double
+  +debiter(montant : double) : boolean
+  +crediter(montant : double) : void
+}
+
+class Line {
+  -{final} arrets : List<Station>
+  -frequenceMin : int
+  +trouverParCode(code : String) : Station
+  +ajouterArret(s : Station) : boolean
+  +valider() : void
+}
+
+class FareCalculator {
+  -tarifsParZone : Map<Integer, Double>
+  +enregistrerTarif(zone : int, tarif : double) : void
+  +calculerPrixEntre(depart : Station, arrivee : Station) : double
+}
+
+class Station {
+  +{static} requireValide(s : Station, context : String) : Station
+}
+
+Compte ..> InsufficientFundsException : «throws» debiter() — checked
+Compte ..> IllegalArgumentException : «lève» montant < 0 — bug
+Line ..> ScheduleConflictException : «throws» valider() — checked
+Line ..> StationNotFoundException : «lève» trouverParCode — bug
+Line ..> IllegalArgumentException : «lève» ajouterArret null/doublon — bug
+FareCalculator ..> FareCalculationException : «lève» tarif < 0 / zone sans barème — bug
+FareCalculator ..> StationNotFoundException : «propage» via requireValide — bug
+Station ..> StationNotFoundException : «lève» requireValide(null) — bug
+
+@enduml

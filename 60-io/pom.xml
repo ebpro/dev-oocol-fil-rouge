@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>fr.ebruno.dev.oocol</groupId>
+    <artifactId>dev-oocol-fil-rouge</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <relativePath>../pom.xml</relativePath>
+  </parent>
+
+  <artifactId>60-io</artifactId>
+  <name>60 - Entrées/sorties NIO.2 (ELO 08)</name>
+  <description>Le réseau Trans'U sort de la mémoire : chargement du réseau depuis des fixtures CSV (zones, arrêts, lignes) avec java.nio.file, charset explicite, écriture atomique des horaires, parcours d'arborescence par FileVisitor et gestion des ressources par try-with-resources.</description>
+
+  <dependencies>
+    <!-- JUnit Jupiter (version pilotée par le junit-bom du parent) -->
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <!-- AssertJ : assertions lisibles (« Fluent Assertions ») -->
+    <dependency>
+      <groupId>org.assertj</groupId>
+      <artifactId>assertj-core</artifactId>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+</project>
