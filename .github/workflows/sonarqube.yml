@@ -15,8 +15,8 @@ concurrency:
 
 jobs:
   sonarqube:
-    # Runs only when secrets are available (instructor org-level; students skip gracefully)
-    if: ${{ !github.event.pull_request.head.repo.fork }}
+    # Skip gracefully on forks (no org vars/secrets inherited)
+    if: ${{ vars.SONAR_RUNNER != '' }}
     uses: ebpro/ci-java/.github/workflows/sonarqube-maven.yml@v1.0.0
     with:
       sonar-main-branch: develop
