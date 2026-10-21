@@ -1,0 +1,129 @@
+@startuml 60-io
+' ============================================================
+' Module 60 - NIO.2 et gestion des ressources (ELO 08)
+' Diagramme pedagogique : flux de chargement, ecriture atomique,
+' visite d'arborescence, et la frontiere try-with-resources.
+' Autorite = code source :
+'   60-io/src/main/java/fr/ebruno/dev/oocol/nio/
+' Rendu : voir docs/diagrams/README.md
+' ============================================================
+
+title Module 60 — NIO.2 et gestion des ressources (ELO 08)
+
+skinparam monochrome true
+skinparam shadowing false
+skinparam roundCorner 12
+skinparam classAttributeIconSize 0
+skinparam ArrowThickness 1.2
+
+' ---- La frontière qui ferme pour de vrai ----------------------
+package "try-with-resources : la fermeture est garantie, même au milieu du fichier" as twr #line.dashed {
+
+  class NetworkLoader <<domain>> {
+    +{static} charger(repertoire : Path) : NetworkLoadResult
+    +{static} chargerAvecEncodage(repertoire : Path, charset : Charset) : NetworkLoadResult
+    -{static} lireLignes(fichier : Path, charset : Charset) : List<String>
+  }
+
+  class ScheduleWriter <<domain>> {
+    +{static} ecrireHoraire(cible, lignes, premierDepart, frequenceMin) : void
+    +{static} formaterHeure(minutes : int) : String
+    ~{static} calculerDeparts(premier : int, frequence : int) : List<Integer>
+  }
+
+  class FileSystemWalker <<domain>> {
+    +{static} trouverFichiers(repertoire : Path, extension : String) : List<Path>
+    +{static} tailleTotale(repertoire : Path) : long
+    +{static} resoudreChemine(segments : String...) : Path
+  }
+
+  class "Files.newBufferedReader /\nnewBufferedWriter /\nnewDirectoryStream" as JDKio <<JDK — Closeable>> {
+  }
+
+  NetworkLoader ..> JDKio : BufferedReader fermé ici,\nune ligne par lecture, try { }
+  ScheduleWriter ..> JDKio : BufferedWriter vidé ET fermé\nAVANT le move (sinon octets périmés)
+  FileSystemWalker ..> JDKio : DirectoryStream = descripteur\nouvert — même piège que le reader
+}
+
+' ---- Ce qui se passe HORS de la frontière (l'anti-pattern) -----
+class "NetworkLoader.chargerSansFermer()" as anti <<anti-pattern volontaire>> {
+  +{static} chargerSansFermer(fichier : Path) : String
+}
+note bottom of anti
+  Reader ouvert, JAMAIS fermé,
+  puis Files.delete(). POSIX : « réussit »
+  (fd fuit en invisibilité) ; Windows :
+  IOException. Le pendant exact du
+  FileWriter oublié — la grâce de l'OS
+  n'est pas une garantie Java.
+end note
+
+' ---- Les trois fichiers, dans l ordre des dépendances -----------
+object "zones.csv\n[ numero ; nom ]" as zcsv
+object "stations.csv\n[ code ; nom ; zone ; accessible ]" as scsv
+object "lignes.csv\n[ nom ; code1 ; code2 ; ... ]" as lcsv
+
+zcsv --> NetworkLoader : phase 1 — index\nnuméro → Zone
+scsv --> NetworkLoader : phase 2 — lien vers la\nVRAIE Zone, index code → Station
+lcsv --> NetworkLoader : phase 3 — codes résolus\ncontre l'index des arrêts
+
+' ---- Le domaine produit ---------------------------------------
+class Zone <<domain>> {
+  -{final} numero : int
+  -{final} nom : String
+  +{static} parse(csv : String) : Zone
+}
+
+class Station <<domain>> {
+  -{final} code : String
+  -{final} zone : Zone
+  +{static} parse(csv : String) : Station
+  +{static} parse(csv : String, zone : Zone) : Station
+}
+
+class LineData <<domain>> {
+  -{final} nom : String
+  -arrets : List<Station>
+  +{static} parse(csv : String) : LineData
+  ~resoudre(index : Map<String, Station>) : void
+}
+
+class NetworkLoadResult <<domain>> {
+  +getZones() : List<Zone>
+  +getStations() : List<Station>
+  +getLignes() : List<LineData>
+}
+
+class NetworkException <<checked — famille W6>> {
+}
+
+Station *-- Zone : la VRAIE zone,\nrésolue en phase 2 (pas un numéro isolé)
+Station "1" -- "*" LineData : parcours résolu\n(deux phases : codes d'abord, objets ensuite)
+NetworkLoader --> NetworkLoadResult : retour (vues non modifiables,\ncopies défensives)
+NetworkLoader ..> Zone : Zone.parse — cite la ligne fautive
+NetworkLoader ..> Station : Station.parse ×2
+NetworkLoader ..> LineData : LineData.parse + resoudre
+NetworkLoader ..> NetworkException : fichier absent,\nligne malformée, charset\nincompatible — cause enrobée
+ScheduleWriter ..> NetworkException : écriture refusée\n(IOException en cause)
+ScheduleWriter ..> LineData : lit les lignes,\nformate les départs
+
+' ---- L écriture atomique en deux gestes -------------------------
+object "horaire.txt.tmp" as tmp <<même dossier —\nmême système de fichiers>>
+object "horaire.txt" as cible <<la publication>>
+ScheduleWriter --> tmp : étape 1 — écrire tout,\nle flux doit être FERMÉ
+tmp --> cible : étape 2 — Files.move\n(ATOMIC_MOVE, REPLACE_EXISTING)\nle lecteur voit l'un OU l'autre, jamais l'état du milieu
+note right of cible
+  Panne entre 1 et 2 : l'ancien
+  fichier est intact. Panne PENDANT
+  2 : le système de fichiers tranche.
+  Jamais un horaire à moitié écrit.
+end note
+
+' ---- La visite impérative (pas de streams — semaine 8) ----------
+interface "FileVisitor<Path>" as fv <<JDK>>
+class "SimpleFileVisitor<Path>\nCLASSE ANONYME — le compteur\nsurvit dans long[1]" as sfv
+FileSystemWalker ..> fv : tailleTotale → walkFileTree\nvisitFile somme, visitFileFailed\n= CONTINUE (on descend quand même)
+fv <|-- sfv
+FileSystemWalker ..> JDKio : trouverFichiers — DirectoryStream\nmotif "*.csv" : le FS filtre à la source,\nNON récursif (la récursion, c'est le visiteur)
+
+@enduml

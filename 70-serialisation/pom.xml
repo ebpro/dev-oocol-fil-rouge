@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>fr.ebruno.dev.oocol</groupId>
+    <artifactId>dev-oocol-fil-rouge</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <relativePath>../pom.xml</relativePath>
+  </parent>
+
+  <artifactId>70-serialisation</artifactId>
+  <name>70 - Sérialisation Java (ELO 09)</name>
+  <description>Le réseau Trans'U se fige en octets : snapshot sérialisé, Externalizable à façon, serialVersionUID qui se retourne contre son auteur, champs transient qui disparaissent — et les cinq pièges canoniques de la sérialisation Java, joués puis démontrés en tests.</description>
+
+  <dependencies>
+    <!-- JUnit Jupiter (version pilotée par le junit-bom du parent) -->
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <!-- AssertJ : assertions lisibles (« Fluent Assertions ») -->
+    <dependency>
+      <groupId>org.assertj</groupId>
+      <artifactId>assertj-core</artifactId>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+</project>

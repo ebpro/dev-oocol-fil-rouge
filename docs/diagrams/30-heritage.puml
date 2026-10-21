@@ -1,0 +1,170 @@
+@startuml 30-heritage
+' ============================================================
+' Module 30 - Héritage et polymorphisme (ELO 05)
+' Diagramme de classes pedagogique.
+' Autorite = code source :
+'   30-heritage/src/main/java/fr/ebruno/dev/oocol/heritage/domain/
+' Rendu : voir docs/diagrams/README.md
+' ============================================================
+
+title Module 30 — Héritage et polymorphisme (ELO 05)
+
+skinparam monochrome true
+skinparam shadowing false
+skinparam roundCorner 12
+skinparam classAttributeIconSize 0
+skinparam ArrowThickness 1.2
+
+' ---- Vehicle : la classe abstraite (le gabarit) -----------------
+abstract class Vehicle {
+  -{static} compteurVehicules : int
+  --
+  #immatriculation : String
+  #capacitePassagers : int
+  #vitesseMaxKmh : double
+  --
+  #Vehicle(immatriculation : String, capacitePassagers : int, vitesseMaxKmh : double)
+  --
+  +{abstract} decrirePropulsion() : String
+  +{abstract} copier() : Vehicle
+  +annoncer() : String
+  +estPlusRapideQue(autre : Vehicle) : boolean
+  +{static} nombreVehicules() : int
+  +getImmatriculation() : String
+  +getCapacitePassagers() : int
+  +getVitesseMaxKmh() : double
+  +toString() : String
+}
+
+note top of Vehicle
+  {abstract} : « new Vehicle(...) »
+  est refusé à la compilation —
+  seules les sous-classes s'instancient
+end note
+
+' ---- MetroTrain : héritage + retour covariant -------------------
+class MetroTrain {
+  -nombreVoitures : int
+  -automatique : boolean
+  --
+  +MetroTrain(immatriculation : String, capacitePassagers : int, vitesseMaxKmh : double, nombreVoitures : int, automatique : boolean)
+  --
+  +decrirePropulsion() : String
+  +copier() : MetroTrain
+  +getNombreVoitures() : int
+  +estAutomatique() : boolean
+}
+
+note right of MetroTrain::copier
+  Covariant return : Vehicle → MetroTrain
+  (appelant : aucun cast à écrire)
+end note
+
+' ---- Bus : le contraste (pas de covariance) ---------------------
+class Bus {
+  -hybride : boolean
+  -nombrePortes : int
+  --
+  +Bus(immatriculation : String, capacitePassagers : int, vitesseMaxKmh : double, hybride : boolean, nombrePortes : int)
+  --
+  +decrirePropulsion() : String
+  +copier() : Vehicle
+  +peutDoubler() : boolean
+  +estHybride() : boolean
+  +getNombrePortes() : int
+}
+
+note bottom of Bus
+  copier() reste typé Vehicle : le calleur
+  doit caster — le contraste avec MetroTrain
+  est la leçon (à « réparer » en exercice)
+end note
+
+' ---- Tramway : héritage ET implémentations ----------------------
+class Tramway {
+  -longueurM : double
+  -niveauBatterie : double
+  --
+  +Tramway(immatriculation : String, capacitePassagers : int, vitesseMaxKmh : double, longueurM : double, niveauBatterie : double)
+  --
+  +decrirePropulsion() : String
+  +copier() : Tramway
+  +lireVitesse() : double
+  +recharger(unite : double) : void
+  +niveauActuel() : double
+  +getLongueurM() : double
+}
+
+' ---- Capteur / Rechargeable : interfaces de capacité ------------
+interface Capteur {
+  +lireVitesse() : double
+  +estEnSurvitesse(limite : double) : boolean «default»
+}
+
+interface Rechargeable {
+  +recharger(unite : double) : void
+  +niveauActuel() : double
+}
+
+note bottom of Capteur
+  ISP : capacités séparées —
+  un Vehicle n'est PAS obligé
+  d'implémenter Capteur (Bus non)
+end note
+
+' ---- VehicleFactory : le patron Factory -------------------------
+class VehicleFactory {
+  -VehicleFactory()
+  --
+  +{static} creer(type : String, immat : String, capacite : int, vitesse : double) : Vehicle
+}
+
+' ---- Line : la composition (W4) ---------------------------------
+class Line {
+  -nom : String
+  -vehiculeAffecte : Vehicle
+  --
+  +Line(nom : String, vehiculeAffecte : Vehicle)
+  --
+  +getNom() : String
+  +setNom(nom : String)
+  +getVehiculeAffecte() : Vehicle
+  +setVehiculeAffecte(vehiculeAffecte : Vehicle)
+  +annoncerService() : String
+  +toString() : String
+}
+
+note right of Line
+  COMPOSITION, pas héritage (LSP) :
+  une Ligne A un véhicule, elle
+  n'EST PAS un véhicule.
+  « serviceAnnonce(new Line(...)) »
+  ne doit même pas compiler.
+end note
+
+' ---- Héritage (flèche pleine, triangle creux) -------------------
+Vehicle <|-- MetroTrain
+Vehicle <|-- Bus
+Vehicle <|-- Tramway
+
+' ---- Implémentation d'interfaces (flèches pointillées) ----------
+Tramway ..|> Capteur
+Tramway ..|> Rechargeable
+
+' ---- Fabrique : dépendance de création --------------------------
+VehicleFactory ..> Vehicle : «create»
+
+' ---- Composition : la ligne tient un véhicule -------------------
+Line o-- "1" Vehicle : affecte
+
+legend bottom
+|= Élément |= Signification |
+| `abstract` + `{abstract}` | Gabarit non instanciable ; la sous-classe DOIT répondre |
+| `--|>` (triangle creux) | **Héritage** : « est-un » substituable (LSP) |
+| `..|>` (pointillé) | **Réalisation** d'interface : « est capable de » (ISP) |
+| `o--` | **Composition/agrégation** : « a-un » — la bonne relation Line→Vehicle |
+| `..>` | Dépendance : la fabrique *connaît* Vehicle sans l'être |
+| `#champ` | Attribut **protégé** : visible des sous-classes, fermé au reste |
+endlegend
+
+@enduml

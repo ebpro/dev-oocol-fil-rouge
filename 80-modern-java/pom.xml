@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>fr.ebruno.dev.oocol</groupId>
+    <artifactId>dev-oocol-fil-rouge</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <relativePath>../pom.xml</relativePath>
+  </parent>
+
+  <artifactId>80-modern-java</artifactId>
+  <name>80 - Java moderne (ELO 11)</name>
+  <description>Le réseau Trans'U se réécrit avec les outils de Java 21 : records à la place des POJO, hiérarchies sealed à la place des abstractions ouvertes, pattern matching à la place des instanceof+cast, Streams à la place des boucles — et VersionLegacy, le code verbeux de W3-W7 joué en miroir pour que le diff soit la leçon.</description>
+
+  <dependencies>
+    <!-- JUnit Jupiter (version pilotée par le junit-bom du parent) -->
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <!-- AssertJ : assertions lisibles (« Fluent Assertions ») -->
+    <dependency>
+      <groupId>org.assertj</groupId>
+      <artifactId>assertj-core</artifactId>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+</project>
