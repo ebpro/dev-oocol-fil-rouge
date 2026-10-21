@@ -1,0 +1,8 @@
+# Arrêts du réseau (code;nom;zone;accessible)
+GAR;Gare Centrale;1;true
+UNI;Université;1;true
+HOP;Hôpital Sud;2;true
+OID;Olympiade;2;false
+AER;Aéroport;3;true
+MAR;Marché des Pins;1;false
+PAR;Parc technological;2;true

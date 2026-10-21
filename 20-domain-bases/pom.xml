@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>fr.ebruno.dev.oocol</groupId>
+    <artifactId>dev-oocol-fil-rouge</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <relativePath>../pom.xml</relativePath>
+  </parent>
+
+  <artifactId>20-domain-bases</artifactId>
+  <name>20 - Fondations du domaine (ELO 04)</name>
+  <description>Premières classes du domaine « réseau de transport Trans'U » : encapsulation, constructeurs surchargés, membres statiques, final, paquets et Javadoc.</description>
+
+  <dependencies>
+    <!-- JUnit Jupiter (version pilotée par le junit-bom du parent) -->
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <!-- AssertJ : assertions lisibles (« Fluent Assertions ») -->
+    <dependency>
+      <groupId>org.assertj</groupId>
+      <artifactId>assertj-core</artifactId>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+</project>
