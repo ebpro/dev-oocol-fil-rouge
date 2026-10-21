@@ -52,7 +52,7 @@ public class Line {
      * Les arrêts, dans l'ordre de parcours. Initialisé à la déclaration :
      * jamais {@code null} (leçon W5 conservée telle quelle).
      */
-    private final List<Station> arrets = new ArrayList<Station>();
+    private final List<Station> arrets = new ArrayList<>();
 
     /**
      * Intervalle minimal entre deux départs, en minutes. W6 l'introduit pour

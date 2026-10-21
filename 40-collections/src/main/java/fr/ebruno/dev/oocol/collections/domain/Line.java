@@ -47,7 +47,7 @@ public class Line {
      * vivante a toujours une liste (vide au départ), jamais {@code null} —
      * l'alternative (liste nullable) polluerait chaque appelant d'un test.
      */
-    private final List<Station> arrets = new ArrayList<Station>();
+    private final List<Station> arrets = new ArrayList<>();
 
     /**
      * Crée une ligne sans arrêt : on la garnit ensuite avec

@@ -82,7 +82,7 @@ class LineExceptionsTest {
     void validerAccepteLaCadenceParDefaut() {
         Line ligne = ligneTroisArrets();
 
-        assertThatCode(() -> ligne.valider()).doesNotThrowAnyException();
+        assertThatCode(ligne::valider).doesNotThrowAnyException();
     }
 
     @Test
@@ -90,7 +90,7 @@ class LineExceptionsTest {
         Line ligneRapide = new Line("Ligne X", 2); // 2 min : possible mais irréaliste
 
         assertThatExceptionOfType(ScheduleConflictException.class)
-                .isThrownBy(() -> ligneRapide.valider())
+                .isThrownBy(ligneRapide::valider)
                 .satisfies(e -> {
                     // Conflit STRUCTUREL : heureConflit = 0, documenté dans valider().
                     assertThat(e.getLigne()).isEqualTo("Ligne X");
@@ -155,6 +155,6 @@ class LineExceptionsTest {
         Line ligneVide = new Line("Ligne fantôme");
 
         assertThatExceptionOfType(IllegalStateException.class)
-                .isThrownBy(() -> ligneVide.premierArret());
+                .isThrownBy(ligneVide::premierArret);
     }
 }

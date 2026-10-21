@@ -14,6 +14,7 @@ import org.junit.jupiter.api.io.TempDir;
 
 import fr.ebruno.dev.oocol.transit.domain.Network;
 import fr.ebruno.dev.oocol.transit.domain.NetworkException;
+import fr.ebruno.dev.oocol.transit.domain.Station;
 
 /**
  * Tests du loader CSV — format et contrat identiques au module 60, mais la
@@ -54,7 +55,7 @@ class NetworkLoaderTest {
         assertThat(n.stations()).hasSize(3);
         assertThat(n.lignes()).hasSize(1);
         assertThat(n.ligne("Ligne A").orElseThrow().arrets())
-                .extracting(s -> s.code()).containsExactly("GAR", "UNI", "HOP");
+                .extracting(Station::code).containsExactly("GAR", "UNI", "HOP");
         assertThat(n.station("HOP").orElseThrow().zone().numero()).isEqualTo(2);
     }
 

@@ -134,10 +134,10 @@ class LineListTest {
         Line ligne = new Line("Ligne Z");
 
         // Échec bruyant : pas de null qui se propage.
-        assertThatThrownBy(() -> ligne.premierArret())
+        assertThatThrownBy(ligne::premierArret)
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessageContaining("aucun arrêt");
-        assertThatThrownBy(() -> ligne.dernierArret())
+        assertThatThrownBy(ligne::dernierArret)
                 .isInstanceOf(IllegalStateException.class);
     }
 

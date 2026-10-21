@@ -40,10 +40,10 @@ import java.util.Map;
 public class FareCalculator {
 
     /** Zones connues du calculateur, rangées par numéro (ordre naturel de Zone). */
-    private final List<Zone> zones = new ArrayList<Zone>();
+    private final List<Zone> zones = new ArrayList<>();
 
     /** Table des tarifs : numéro de zone en clé texte → prix en euros. */
-    private final Map<String, Double> tarifs = new HashMap<String, Double>();
+    private final Map<String, Double> tarifs = new HashMap<>();
 
     /**
      * Construit un calculateur à partir des zones et des tarifs donnés.

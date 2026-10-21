@@ -36,7 +36,7 @@ public class FareCalculator {
      * {@code get}, l'ordre d'itération n'a aucun sens ici. Choix assumé,
      * hérité du module 40.
      */
-    private final Map<Integer, Double> tarifsParZone = new HashMap<Integer, Double>();
+    private final Map<Integer, Double> tarifsParZone = new HashMap<>();
 
     /**
      * Barème vide : à garnir avec {@link #enregistrerTarif(int, double)}.

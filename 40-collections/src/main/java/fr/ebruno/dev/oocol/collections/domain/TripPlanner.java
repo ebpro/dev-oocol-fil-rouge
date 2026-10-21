@@ -58,7 +58,7 @@ public final class TripPlanner {
      * @return une nouvelle {@code List} vide — jamais {@code null}
      */
     private static List<Station> cheminVide() {
-        return new ArrayList<Station>();
+        return new ArrayList<>();
     }
 
     /**
@@ -77,7 +77,7 @@ public final class TripPlanner {
      * @return une copie inversée
      */
     private static <T> List<T> inverser(List<T> entree) {
-        List<T> sortie = new ArrayList<T>();
+        List<T> sortie = new ArrayList<>();
         for (int i = entree.size() - 1; i >= 0; i--) {
             sortie.add(entree.get(i));
         }
@@ -118,14 +118,14 @@ public final class TripPlanner {
             return cheminVide();
         }
         if (depart.equals(arrivee)) {
-            List<Station> allerSimple = new ArrayList<Station>();
+            List<Station> allerSimple = new ArrayList<>();
             allerSimple.add(depart);
             return allerSimple;
         }
 
-        Queue<Station> aExplorer = new LinkedList<Station>(); // LinkedList en rôle Queue : FIFO explicite
-        Set<Station> visites = new HashSet<Station>();
-        Map<Station, Station> predecesseurs = new HashMap<Station, Station>();
+        Queue<Station> aExplorer = new LinkedList<>(); // LinkedList en rôle Queue : FIFO explicite
+        Set<Station> visites = new HashSet<>();
+        Map<Station, Station> predecesseurs = new HashMap<>();
 
         aExplorer.add(depart);
         visites.add(depart);
@@ -153,7 +153,7 @@ public final class TripPlanner {
         // Reconstruction À L'ENVERS : de l'arrivée vers le départ via les
         // prédécesseurs, puis inversion générique. depart est sa propre
         // racine : predecesseurs.get(depart) vaut null, la boucle s'arrête là.
-        List<Station> aEnvers = new ArrayList<Station>();
+        List<Station> aEnvers = new ArrayList<>();
         Station etape = arrivee;
         while (etape != null) {
             aEnvers.add(etape);
@@ -179,7 +179,7 @@ public final class TripPlanner {
      *         des doublons si deux lignes se suivent — le Set de visites les avale)
      */
     private static List<Station> voisinsDe(Network network, Station s) {
-        List<Station> voisins = new ArrayList<Station>();
+        List<Station> voisins = new ArrayList<>();
         for (Line ligne : network.lignesA(s)) {
             List<Station> arrets = ligne.getArrets();
             int position = arrets.indexOf(s); // equals, encore et toujours

@@ -48,10 +48,10 @@ public class Network {
      * {@code equals}/{@code hashCode} de {@link Station} est la condition de
      * correction de toute la classe.
      */
-    private final Map<Station, Set<Line>> correspondances = new HashMap<Station, Set<Line>>();
+    private final Map<Station, Set<Line>> correspondances = new HashMap<>();
 
     /** Toutes les lignes du réseau, dans l'ordre d'ajout (accès par index utile aux stats). */
-    private final List<Line> lignes = new ArrayList<Line>();
+    private final List<Line> lignes = new ArrayList<>();
 
     /**
      * Enregistre une ligne et met à jour la table d'adjacence pour chacun de
@@ -74,7 +74,7 @@ public class Network {
             // créer son ensemble ; sinon lui adjoindre la ligne ».
             Set<Line> dessert = correspondances.get(s); // lookup O(1) — la promesse de la Map
             if (dessert == null) {
-                dessert = new HashSet<Line>();
+                dessert = new HashSet<>();
                 correspondances.put(s, dessert);
             }
             dessert.add(ligne); // Set : ajouter deux fois la même ligne ne change rien
@@ -114,7 +114,7 @@ public class Network {
      * @return un ensemble (en lecture seule) de toutes les stations desservies
      */
     public Set<Station> tousLesArrets() {
-        Set<Station> ensemble = new HashSet<Station>();
+        Set<Station> ensemble = new HashSet<>();
         for (Line l : lignes) {
             for (Station s : l.getArrets()) {
                 ensemble.add(s); // doublons absorbés par equals — c'est le travail du Set
