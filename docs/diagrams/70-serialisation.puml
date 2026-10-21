@@ -1,0 +1,138 @@
+@startuml 70-serialisation
+' ============================================================
+' Module 70 - Serialisation Java (ELO 09)
+' Diagramme pedagogique : le graphe d'objets devenu octets —
+' Serializable vs Externalizable, serialVersionUID, transient,
+' hooks readObject/writeObject et readResolve.
+' Autorite = code source :
+'   70-serialisation/src/main/java/fr/ebruno/dev/oocol/serialisation/
+' Rendu : voir docs/diagrams/README.md
+' ============================================================
+
+title Module 70 — Sérialisation Java (ELO 09)
+
+skinparam monochrome true
+skinparam shadowing false
+skinparam roundCorner 12
+skinparam classAttributeIconSize 0
+skinparam ArrowThickness 1.2
+
+' ---- Le graphe sérialisable ---------------------------------
+package "Le graphe fige (Serializable)" as graphe #line.dashed {
+
+  class NetworkSnapshot <<Serializable>> {
+    - lignes : List<Line>
+    - zones : List<Zone>
+    - horodatage : Instant
+    - description : String
+    --
+    - {static} serialVersionUID = 1L
+    + sauvegarder(fichier : Path) : void
+    + {static} charger(fichier : Path) : NetworkSnapshot
+  }
+
+  class NetworkSnapshotV2 <<Serializable>> {
+    - version : String
+    --
+    - {static} serialVersionUID = 2L
+    + {static} migrerDepuisV1(fichierV1 : Path) : NetworkSnapshotV2
+  }
+
+  class Line <<Serializable>> {
+    - nom : String
+    - arrets : List<Station>
+    --
+    - {static} serialVersionUID = 1L
+    + addStation(arret : Station) : void
+  }
+
+  class Station <<Serializable>> {
+    - code : String
+    - nom : String
+    - zone : Zone
+    - cacheAffichage : String  <<transient>>
+    --
+    - {static} serialVersionUID = 1L
+    - writeObject(out : ObjectOutputStream) : void
+    - readObject(in : ObjectInputStream) : void
+  }
+
+  class Zone <<Serializable>> {
+    - numero : int
+    - nom : String
+    --
+    - {static} serialVersionUID = 1L
+  }
+
+  NetworkSnapshot *-- Line
+  NetworkSnapshot *-- Zone
+  Line *-- Station
+  Station *-- Zone
+}
+
+' ---- Le contrat rompu ----------------------------------------
+NetworkSnapshot ..> NetworkSnapshotV2 : le fichier d'avant relu par la V2\n-> InvalidClassException\n(UID 1 != UID 2 : le nom ne sauve rien)
+
+' ---- Écrit à la main -----------------------------------------
+package "Ecrit a la main (Externalizable)" as exo #line.dashed {
+
+  class Ticket <<Externalizable>> {
+    - type : String
+    - prix : double
+    - zone : Zone  <<aplatie : seul le numero voyage>>
+    --
+    - {static} serialVersionUID = 1L
+    + Ticket()  <<constructeur vide OBLIGATOIRE>>
+    + writeExternal(out : ObjectOutput) : void
+    + readExternal(in : ObjectInput) : void
+  }
+}
+
+Ticket ..> Zone : reference par numero\ncompact, mais le nom se perd
+
+' ---- Les pieges a reparer ------------------------------------
+package "Le singleton et son pansement" as sing #line.dashed {
+
+  class Passenger <<Serializable>> {
+    - nom : String
+    - abonnement : Subscription  <<transient>>
+    --
+    - {static} INSTANCE : Passenger  <<jamais serialise>>
+    + {static} getInstance() : Passenger
+  }
+
+  class PassengerCorrige <<Serializable>> {
+    - nom : String
+    --
+    - {static} INSTANCE : PassengerCorrige
+    - readResolve() : Object
+  }
+}
+
+note right of Station
+  transient = le champ ne voyage pas.
+  A la relecture : null, puis recalcul
+  paresseux par getAffichage().
+  writeObject / readObject : hooks prives
+  appeles par le mecanisme — readObject
+  REVALIDE les invariants (flux non sur).
+end note
+
+note bottom of PassengerCorrige
+  readResolve() repare le piege n°1 :
+  la JVM alloue un jumeau SANS passer
+  par le constructeur prive ; le hook
+  renvoie l'instance partagee a sa place.
+end note
+
+note as Pieges
+  Les cinq pieges canoniques (VersionnementDemo, scene 6) :
+  1. Le singleton eclate en copie -> readResolve
+  2. readObject assemble n'importe quelle classe du classpath
+     -> ne jamais lire une source non fiable
+  3. transient remplace une information par null -> NPE differe
+  4. Changer le serialVersionUID = perimer tous les fichiers d'avant
+  5. Les champs static ne voyagent jamais (INSTANCE, compteurs)
+end note
+
+@enduml

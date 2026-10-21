@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>fr.ebruno.dev.oocol</groupId>
+    <artifactId>dev-oocol-fil-rouge</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <relativePath>../pom.xml</relativePath>
+  </parent>
+
+  <artifactId>95-transit-app</artifactId>
+  <name>95 - Application Trans'U (synthèse ELO 13)</name>
+  <description>Module final du fil rouge : le motif Builder assemble le réseau Trans'U, la CLI l'interroge, CSV (W7) et JDBC (W12) coexistent comme deux stratégies de persistance interchangeables, et la rétrospective SOLID relit les treize semaines à la lumière de chaque principe.</description>
+
+  <dependencies>
+    <!-- JUnit Jupiter (version pilotée par le junit-bom du parent) -->
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <!-- AssertJ : assertions lisibles (« Fluent Assertions ») -->
+    <dependency>
+      <groupId>org.assertj</groupId>
+      <artifactId>assertj-core</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <!-- H2 : base relationnelle EN MÉMOIRE (jdbc:h2:mem:…). Portée compile et non
+         test car TransitApp (src/main) l'utilise pour sa phase 3 ; aucune
+         installation serveur n'est requise — la CI est autonome. -->
+    <dependency>
+      <groupId>com.h2database</groupId>
+      <artifactId>h2</artifactId>
+      <version>2.3.232</version>
+    </dependency>
+  </dependencies>
+</project>

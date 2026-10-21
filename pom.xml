@@ -49,7 +49,26 @@
   <modules>
     <!-- Semaine 1-2 / Séances CNAM S1-S3 : chaîne d'outils, hello-world « transport » -->
     <module>00-scaffold</module>
-    <!-- Les modules 20..95 sont ajoutés au fil du semestre (voir docs/progression.md) -->
+    <!-- Semaine 3 / Séances CNAM S4-S5 : ELO 04 — classes, encapsulation, static, final -->
+    <module>20-domain-bases</module>
+    <!-- Semaine 4 / Séances CNAM S5-S6 : ELO 05 — héritage, classes abstraites, interfaces, polymorphisme -->
+    <module>30-heritage</module>
+    <!-- Semaine 5 / Séances CNAM S6-S7 : ELO 06 — collections (List/Set/Map/Queue), généricité, Comparable/Comparator, equals/hashCode -->
+    <module>40-collections</module>
+    <!-- Semaine 6 / Séance CNAM S9 : ELO 07 — exceptions checked/unchecked, try-with-resources, chaînage de causes, hiérarchie métier -->
+    <module>50-exceptions</module>
+    <!-- Semaine 7 / Séance CNAM S10 : ELO 08 — NIO.2 (Path, Files), chargement CSV, charset, écriture atomique, FileVisitor -->
+    <module>60-io</module>
+    <!-- Semaine 8 / Séance CNAM S11 : ELO 09 — sérialisation Java (Serializable, serialVersionUID, transient, Externalizable, versioning, pièges) -->
+    <module>70-serialisation</module>
+    <!-- Semaines 10-11 / Séances CNAM S12-S14 : ELO 11 — Java moderne (records, sealed, pattern matching, switch expressions, Streams, lambdas, var, text blocks, Optional) -->
+    <module>80-modern-java</module>
+    <!-- Semaine 11 / Enrichissement ELO 06 — chasse aux bugs : dix pièges classiques des collections (equals/hashCode, fuites mutables, CME, clés instables, comparateurs incohérents) avec miroirs corrigés -->
+    <module>85-collection-pitfalls</module>
+    <!-- Semaine 12 / Séances CNAM S15-S16 : ELO 12 — JDBC (DriverManager, PreparedStatement, ResultSet), motif DAO, transactions ACID, démonstration d'injection SQL, H2 en mémoire -->
+    <module>90-jdbc</module>
+    <!-- Semaines 13+ / Séances CNAM S17+ : ELO 13 — synthèse : motif Builder, rétrospective SOLID, CLI testable, persistance en couches (CSV + JDBC) -->
+    <module>95-transit-app</module>
   </modules>
 
   <properties>
