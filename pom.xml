@@ -67,7 +67,8 @@
     <module>85-collection-pitfalls</module>
     <!-- Semaine 12 / Séances CNAM S15-S16 : ELO 12 — JDBC (DriverManager, PreparedStatement, ResultSet), motif DAO, transactions ACID, démonstration d'injection SQL, H2 en mémoire -->
     <module>90-jdbc</module>
-    <!-- Les modules 95 sont ajoutés au fil du semestre (voir docs/progression.md) -->
+    <!-- Semaines 13+ / Séances CNAM S17+ : ELO 13 — synthèse : motif Builder, rétrospective SOLID, CLI testable, persistance en couches (CSV + JDBC) -->
+    <module>95-transit-app</module>
   </modules>
 
   <properties>
