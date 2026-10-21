@@ -166,7 +166,7 @@ public final class NetworkLoader {
         String premiereLigne;
         // ANTI-PATTERN VOLONTAIRE : pas de try-with-resources ici.
         try {
-            reader = Files.newBufferedReader(fichier, StandardCharsets.UTF_8);
+            reader = Files.newBufferedReader(fichier, StandardCharsets.UTF_8); // NOSONAR java:S2095 — anti-pattern assumé : la leçon est la fuite de descripteur
         } catch (IOException e) {
             throw new NetworkException("Ouverture impossible : " + fichier, e);
         }

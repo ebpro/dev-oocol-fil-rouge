@@ -113,6 +113,21 @@
     <sonar.projectName>Dev OOCOL Fil Rouge</sonar.projectName>
     <sonar.qualitygate.wait>false</sonar.qualitygate.wait>
     <sonar.coverage.jacoco.xmlReportPaths>${project.build.directory}/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
+
+    <!-- Exclusions: CLI/demo packages use System.out intentionally; test sources carry AssertJ style patterns that are the pedagogy -->
+    <sonar.exclusions>**/app/**,**/cli/**,**/*Demo.java</sonar.exclusions>
+    <sonar.test.exclusions></sonar.test.exclusions>
+    <!-- Downgrade AssertJ pedagogical style rules via issue-retain (S5778 one-throwing-call-per-lambda, S5853 chained assertions, S5838 specialized containsEntry) -->
+    <sonar.issue.ignore.multicriteria>e1,e2,e3,e4</sonar.issue.ignore.multicriteria>
+    <sonar.issue.ignore.multicriteria.e1.ruleKey>java:S5778</sonar.issue.ignore.multicriteria.e1.ruleKey>
+    <sonar.issue.ignore.multicriteria.e1.resourceKey>**/src/test/**</sonar.issue.ignore.multicriteria.e1.resourceKey>
+    <sonar.issue.ignore.multicriteria.e2.ruleKey>java:S5853</sonar.issue.ignore.multicriteria.e2.ruleKey>
+    <sonar.issue.ignore.multicriteria.e2.resourceKey>**/src/test/**</sonar.issue.ignore.multicriteria.e2.resourceKey>
+    <sonar.issue.ignore.multicriteria.e3.ruleKey>java:S5838</sonar.issue.ignore.multicriteria.e3.ruleKey>
+    <sonar.issue.ignore.multicriteria.e3.resourceKey>**/src/test/**</sonar.issue.ignore.multicriteria.e3.resourceKey>
+    <!-- S1068 (unused private field) false positive on Java-serialization fields -->
+    <sonar.issue.ignore.multicriteria.e4.ruleKey>java:S1068</sonar.issue.ignore.multicriteria.e4.ruleKey>
+    <sonar.issue.ignore.multicriteria.e4.resourceKey>70-serialisation/**</sonar.issue.ignore.multicriteria.e4.resourceKey>
   </properties>
 
   <dependencyManagement>

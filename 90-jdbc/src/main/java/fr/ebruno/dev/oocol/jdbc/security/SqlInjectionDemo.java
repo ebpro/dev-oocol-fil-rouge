@@ -54,7 +54,7 @@ public final class SqlInjectionDemo {
         // NE JAMAIS FAIRE CECI EN PRODUCTION : la valeur est collée DANS le code SQL.
         String sql = "SELECT * FROM stations WHERE code = '" + codeStation + "'";
         try (Statement st = conn.createStatement();
-             ResultSet rs = st.executeQuery(sql)) {
+             ResultSet rs = st.executeQuery(sql)) { // NOSONAR java:S2077 — leçon didactique : la faille est le sujet, pas un défaut
             return formaterLignes(rs);
         }
     }

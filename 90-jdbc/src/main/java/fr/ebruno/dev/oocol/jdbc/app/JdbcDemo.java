@@ -52,7 +52,7 @@ public final class JdbcDemo {
     public static void main(String[] args) throws SQLException {
         System.out.println("=== Module 90 : le réseau Trans'U passe en base de données (ELO 12) ===");
         // try-with-resources SUR la connexion : c'est l'appelant qui l'ouvre, c'est lui qui la ferme.
-        try (Connection conn = DriverManager.getConnection(URL_H2, "sa", "")) {
+        try (Connection conn = DriverManager.getConnection(URL_H2, "sa", "")) { // NOSONAR java:S2115 — H2 en mémoire de démo : aucun mot de passe à protéger
             scene1Creation(conn);
             NetworkRepository repo = scene2Alimentation(conn);
             scene3Injection(conn);

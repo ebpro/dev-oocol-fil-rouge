@@ -211,7 +211,7 @@ public final class VersionnementDemo {
         System.out.println("  -> juste apr\u00E8s relecture, cacheAffichage (transient) = " + cache.get(relu));
         System.out.println("  -> premier getAffichage() rel\u00E8ve le cache : \u00AB " + relu.getAffichage() + " \u00BB");
         System.out.println("     deuxi\u00E8me appel, m\u00EAme instance : "
-                + (relu.getAffichage() == relu.getAffichage()));
+                + (relu.getAffichage() == relu.getAffichage())); // NOSONAR java:S4973 — == sur String est LA leçon : identité de référence, pas égalité
     }
 
     /**

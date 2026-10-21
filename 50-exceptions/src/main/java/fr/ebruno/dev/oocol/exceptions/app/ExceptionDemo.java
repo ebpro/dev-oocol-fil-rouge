@@ -173,7 +173,7 @@ public final class ExceptionDemo {
         String contenu = "GAR\n";
         BufferedReader ferme = new BufferedReader(new StringReader(contenu));
         ferme.close(); // fermeture manuelle : le cas « oubli de finally » d'avant Java 7
-        ferme.readLine(); // IOException : le stream est fermé
+        ferme.readLine(); // IOException : le stream est fermé — NOSONAR java:S2677 : valeur de retour volontairement ignorée, la leçon est l'exception
     }
 
     /**
