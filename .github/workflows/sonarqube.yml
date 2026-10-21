@@ -1,17 +1,5 @@
 name: SonarQube Analysis
 
-# Analyse SonarQube via le workflow réutilisable canonique de l'org
-# (ebpro/ci-java/.github/workflows/sonarqube-maven.yml@v1.0.0).
-#
-# NB : le job réutilisable est CONDITIONNÉ par une URL non vide
-# (`if: ... inputs.sonar-host-url != '' || inputs.sonar-public-url != ''`).
-# Tant que les variables d'Actions SONAR_HOST_URL / SONAR_PUBLIC_URL ne sont
-# définies ni au niveau org ni au niveau dépôt, le job est silencieusement
-# ignoré (skipped) — ni rouge, ni analysé.
-#
-# Pas de `sonar-runner` : ce dépôt tourne sur ubuntu-latest, le réutilisable
-# sélectionne donc automatiquement l'URL publique (SONAR_PUBLIC_URL).
-
 on:
   push:
     branches: [develop]
@@ -22,19 +10,19 @@ permissions:
   contents: read
 
 concurrency:
-  group: sonarqube-${{ github.workflow }}-${{ github.ref }}
+  group: sonar-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
   sonarqube:
+    # Runs only when secrets are available (instructor org-level; students skip gracefully)
+    if: ${{ !github.event.pull_request.head.repo.fork }}
     uses: ebpro/ci-java/.github/workflows/sonarqube-maven.yml@v1.0.0
     with:
       sonar-main-branch: develop
-      sonar-host-url: ${{ vars.SONAR_HOST_URL }}
-      sonar-public-url: ${{ vars.SONAR_PUBLIC_URL }}
-      # Le défaut du réutilisable (« ./mvnw ... sonar:sonar -Psonar ») référence un
-      # profil Maven « sonar » inexistant ici (anti-objectif contractuel : ne pas
-      # l'ajouter). Commande explicite sans le profil.
+      sonar-host-url: ${{ vars.SONAR_HOST_URL || 'http://sonarqube-sonarqube.sonarqube.svc.cluster.local:9000' }}
+      sonar-public-url: ${{ vars.SONAR_PUBLIC_URL || 'https://sonarqube-api.ebruno.fr' }}
+      sonar-runner: ${{ vars.SONAR_RUNNER || 'ebpro-org' }}
       build-command: ./mvnw -B clean verify sonar:sonar
     secrets:
       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}

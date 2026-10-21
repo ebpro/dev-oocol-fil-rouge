@@ -1,0 +1,91 @@
+# ╔══════════════════════════════════════════════════════════════╗
+# ║  CI Étudiant — dev-oocol-fil-rouge                         ║
+# ║                                                            ║
+# ║  Activation : Settings → Secrets and variables → Actions   ║
+# ║             → Variables → Ajouter :                        ║
+# ║               Name : ENABLE_STUDENT_CI                     ║
+# ║               Value: true                                  ║
+# ║                                                            ║
+# ║  Aucun secret, aucune infrastructure requise.              ║
+# ║  Compatible fork personnel sur GitHub.                     ║
+# ╚══════════════════════════════════════════════════════════════╝
+
+name: Student CI
+
+on:
+  push:
+    branches: ['**']
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: student-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  compile:
+    name: Compilation
+    # NB : `vars` (pas `env`) — le contexte env n'est pas disponible dans
+    # un `if` au niveau job ; l'utiliser provoque un startup_failure.
+    if: vars.ENABLE_STUDENT_CI == 'true' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+
+      - name: Compiler (sans tests)
+        run: ./mvnw compile -DskipTests -q -T 1C
+
+  test:
+    name: Tests
+    needs: compile
+    if: vars.ENABLE_STUDENT_CI == 'true' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+
+      - name: Lancer les tests
+        run: ./mvnw test -T 1C
+
+  quality:
+    name: Qualité (optionnel)
+    needs: test
+    if: vars.ENABLE_STUDENT_CI == 'true' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+
+      - name: Vérification complète (checkstyle, PMD, SpotBugs — avertissements)
+        run: ./mvnw verify -T 1C
+        continue-on-error: true
+
+      - name: Résumé
+        if: always()
+        run: |
+          echo "## Résultat du Student CI" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- **Compilation** : OK" >> $GITHUB_STEP_SUMMARY
+          echo "- **Tests** : passés ($(./mvnw -q surefire:test -pl 00-scaffold 2>/dev/null | grep -oP 'Tests run: \K[0-9]+' | head -1) sur 00-scaffold)" >> $GITHUB_STEP_SUMMARY
+          echo "- **Analyse statique** : voir warnings ci-dessus (non bloquants)" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "💡 **Prochaine étape** : lancez \`./mvnw clean test\` en local pour itérer rapidement." >> $GITHUB_STEP_SUMMARY
