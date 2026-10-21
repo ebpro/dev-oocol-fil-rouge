@@ -53,7 +53,9 @@
     <module>20-domain-bases</module>
     <!-- Semaine 4 / Séances CNAM S5-S6 : ELO 05 — héritage, classes abstraites, interfaces, polymorphisme -->
     <module>30-heritage</module>
-    <!-- Les modules 40..95 sont ajoutés au fil du semestre (voir docs/progression.md) -->
+    <!-- Semaine 5 / Séances CNAM S6-S7 : ELO 06 — collections (List/Set/Map/Queue), généricité, Comparable/Comparator, equals/hashCode -->
+    <module>40-collections</module>
+    <!-- Les modules 50..95 sont ajoutés au fil du semestre (voir docs/progression.md) -->
   </modules>
 
   <properties>
