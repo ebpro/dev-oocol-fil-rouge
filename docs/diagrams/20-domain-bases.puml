@@ -1,0 +1,138 @@
+@startuml 20-domain-bases
+' ============================================================
+' Module 20 - Fondations du domaine (ELO 04)
+' Diagramme de classes pedagogique.
+' Autorite = code source :
+'   20-domain-bases/src/main/java/fr/ebruno/dev/oocol/bases/domain/
+' Rendu : voir docs/diagrams/README.md
+' ============================================================
+
+title Module 20 — Fondations du domaine (ELO 04)
+
+skinparam monochrome true
+skinparam shadowing false
+skinparam roundCorner 12
+skinparam classAttributeIconSize 0
+skinparam ArrowThickness 1.2
+
+' ---- Zone : l'immuabilite par final ----------------------------
+class Zone {
+  -{final} numero : int
+  -{final} nom : String
+  --
+  +Zone(numero : int, nom : String)
+  --
+  +getNumero() : int
+  +getNom() : String
+  +toString() : String
+  +equals(o : Object) : boolean
+  +hashCode() : int
+}
+
+note left of Zone
+  final fields → immuable
+end note
+
+' ---- Station : l'encapsulation + un membre statique ------------
+class Station {
+  -{static} compteurInstances : int
+  --
+  -nom : String
+  -code : String
+  -accessible : boolean
+  -zone : Zone
+  --
+  +Station(nom : String, code : String, zone : Zone)
+  +Station(nom : String, code : String, zone : Zone, accessible : boolean)
+  --
+  +{static} nombreStations() : int
+  +getNom() : String
+  +setNom(nom : String)
+  +getCode() : String
+  +setCode(code : String)
+  +isAccessible() : boolean
+  +estAccessible() : boolean
+  +setAccessible(accessible : boolean)
+  +getZone() : Zone
+  +setZone(zone : Zone)
+  +toString() : String
+}
+
+note top of Station
+  W5 : + Comparable, List<Station> dans Line
+end note
+
+' ---- Line : la tension des deux extremites ---------------------
+class Line {
+  -{static}{final} FREQUENCE_DEFAUT_MIN : int
+  -{static} compteurLignes : int
+  --
+  -nom : String
+  -origine : Station
+  -destination : Station
+  -zoneCommune : Zone
+  -frequenceMin : int
+  --
+  +Line(nom : String, origine : Station, destination : Station)
+  +Line(nom : String, origine : Station, destination : Station, frequenceMin : int)
+  --
+  +{static} nombreLignes() : int
+  +getNom() : String
+  +setNom(nom : String)
+  +getOrigine() : Station
+  +setOrigine(origine : Station)
+  +getDestination() : Station
+  +setDestination(destination : Station)
+  +getZoneCommune() : Zone
+  +setZoneCommune(zoneCommune : Zone)
+  +getFrequenceMin() : int
+  +setFrequenceMin(frequenceMin : int)
+  +estDirecte(s : Station) : boolean
+  +distanceEstimeeKm() : double
+  +toString() : String
+}
+
+note right of Line
+  Tension W3→W5 : seulement 2 extrémités !
+end note
+
+' ---- Ticket : constructeur prive + fabriques statiques ---------
+class Ticket {
+  -{final} type : String
+  -{final} prix : double
+  -{final} valide : boolean
+  -{final} zone : Zone
+  --
+  -Ticket(type : String, prix : double, zone : Zone)
+  --
+  +{static} unite(zone : Zone) : Ticket
+  +{static} jour(zone : Zone) : Ticket
+  +{static} mois(zone : Zone) : Ticket
+  +{static} scolaire(zone : Zone) : Ticket
+  --
+  +getType() : String
+  +getPrix() : double
+  +getZone() : Zone
+  +estValide() : boolean
+  +toString() : String
+}
+
+note right of Ticket
+  W8 : Externalizable
+end note
+
+' ---- Relations -------------------------------------------------
+Station *-- "1" Zone : dans la zone
+Line --> "1" Station : origine
+Line --> "1" Station : destination
+Ticket --> "1" Zone : valable en zone
+
+legend bottom
+|= Élément |= Signification |
+| `-champ` | Attribut **privé** : encapsulation, accès par les accesseurs |
+| `{static}` | Membre de **classe** (souligné) : une seule copie, partagée par toutes les instances |
+| ◆── | **Composition** : un objet « tient » un autre objet |
+| → | **Association** : simple référence vers un autre objet |
+endlegend
+
+@enduml
