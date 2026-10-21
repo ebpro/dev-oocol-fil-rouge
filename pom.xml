@@ -118,7 +118,7 @@
     <sonar.exclusions>**/app/**,**/cli/**,**/*Demo.java</sonar.exclusions>
     <sonar.test.exclusions></sonar.test.exclusions>
     <!-- Downgrade AssertJ pedagogical style rules via issue-retain (S5778 one-throwing-call-per-lambda, S5853 chained assertions, S5838 specialized containsEntry) -->
-    <sonar.issue.ignore.multicriteria>e1,e2,e3,e4,e5,e6,e7,e8,e9,e10,e11,e12</sonar.issue.ignore.multicriteria>
+    <sonar.issue.ignore.multicriteria>e1,e2,e3,e4,e5,e6,e7,e8,e9,e10,e11,e12,e13,e14</sonar.issue.ignore.multicriteria>
     <sonar.issue.ignore.multicriteria.e1.ruleKey>java:S5778</sonar.issue.ignore.multicriteria.e1.ruleKey>
     <sonar.issue.ignore.multicriteria.e1.resourceKey>**/src/test/**</sonar.issue.ignore.multicriteria.e1.resourceKey>
     <sonar.issue.ignore.multicriteria.e2.ruleKey>java:S5853</sonar.issue.ignore.multicriteria.e2.ruleKey>
@@ -149,6 +149,12 @@
     <!-- Serialisation Station static counters: documented test hooks (class Javadoc L33-34, asserted in PitfallsTest) — incrementing them from the read/write hooks is the pedagogy -->
     <sonar.issue.ignore.multicriteria.e12.ruleKey>java:S2696</sonar.issue.ignore.multicriteria.e12.ruleKey>
     <sonar.issue.ignore.multicriteria.e12.resourceKey>**/serialisation/domain/Station.java</sonar.issue.ignore.multicriteria.e12.resourceKey>
+    <!-- Module 40: anonymous Comparator et absence de computeIfAbsent sont une convention pedagogique
+         documentee en code ("lambda reserve au module 80") -->
+    <sonar.issue.ignore.multicriteria.e13.ruleKey>java:S1604</sonar.issue.ignore.multicriteria.e13.ruleKey>
+    <sonar.issue.ignore.multicriteria.e13.resourceKey>40-collections/**</sonar.issue.ignore.multicriteria.e13.resourceKey>
+    <sonar.issue.ignore.multicriteria.e14.ruleKey>java:S3824</sonar.issue.ignore.multicriteria.e14.ruleKey>
+    <sonar.issue.ignore.multicriteria.e14.resourceKey>40-collections/**</sonar.issue.ignore.multicriteria.e14.resourceKey>
   </properties>
 
   <dependencyManagement>
