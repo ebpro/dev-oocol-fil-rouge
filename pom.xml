@@ -97,6 +97,7 @@
     <maven-pmd-plugin.version>3.28.0</maven-pmd-plugin.version>
     <spotbugs-maven-plugin.version>4.9.8.1</spotbugs-maven-plugin.version>
     <jacoco-maven-plugin.version>0.8.14</jacoco-maven-plugin.version>
+    <sonar-maven-plugin.version>5.5.0.6356</sonar-maven-plugin.version>
 
     <!-- Versions centralisées des dépendances -->
     <junit-jupiter.version>6.0.1</junit-jupiter.version>
@@ -104,6 +105,14 @@
 
     <!-- Emplacement des règles d'analyse statique (résolu depuis chaque module) -->
     <filrouge.buildtools.dir>${maven.multiModuleProjectDirectory}/build-tools</filrouge.buildtools.dir>
+
+    <!-- SonarQube : identité du projet + agrégation de la couverture JaCoCo.
+         qualitygate.wait=false → le build ne bloque pas sur le quality gate
+         (aucune référence établie sur ce dépôt pour l'instant). -->
+    <sonar.projectKey>fr.ebruno.dev.oocol:dev-oocol-fil-rouge</sonar.projectKey>
+    <sonar.projectName>Dev OOCOL Fil Rouge</sonar.projectName>
+    <sonar.qualitygate.wait>false</sonar.qualitygate.wait>
+    <sonar.coverage.jacoco.xmlReportPaths>${project.build.directory}/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
   </properties>
 
   <dependencyManagement>
@@ -320,6 +329,16 @@
             <phase>verify</phase>
           </execution>
         </executions>
+      </plugin>
+
+      <!-- Scanner SonarQube : aucun goal lié au cycle de vie ; résout « sonar:sonar »
+           à une version déterministe depuis le POM parent (hérité par les modules).
+           L'URL et le token sont injectés par le workflow réutilisable via les
+           variables d'environnement SONAR_HOST_URL / SONAR_TOKEN. -->
+      <plugin>
+        <groupId>org.sonarsource.scanner.maven</groupId>
+        <artifactId>sonar-maven-plugin</artifactId>
+        <version>${sonar-maven-plugin.version}</version>
       </plugin>
     </plugins>
   </build>
