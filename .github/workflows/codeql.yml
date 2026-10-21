@@ -26,7 +26,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v3
+        uses: github/codeql-action/init@v4
         with:
           languages: java
 
@@ -44,7 +44,7 @@ jobs:
           ./mvnw -B -DskipTests -Dproject.build.outputTimestamp="$BUILD_TIMESTAMP" clean package
 
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v3
+        uses: github/codeql-action/analyze@v4
         with:
           # upload:false — ingestion « code scanning » exige Code Security activé sur le
           # dépôt ; l'organisation ebpro (plan Team, lock metered usage) ne peut pas
