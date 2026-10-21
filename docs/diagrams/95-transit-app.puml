@@ -1,0 +1,76 @@
+@startuml 95-transit-app
+skinparam monochrome true
+skinparam shadowing false
+skinparam roundCorner 12
+skinparam classAttributeIconSize 0
+
+title Module 95 — Application Trans'U (Synthèse W13)
+
+package "Domaine" {
+  class Network <<immutable>> {
+    - zones: List<Zone>
+    - stations: List<Station>
+    - lignes: List<Line>
+    --
+    + builder(): NetworkBuilder
+    + stationsAccessibles(): List<Station>
+    + parZone(): Map<Zone, List<Station>>
+  }
+  class NetworkBuilder {
+    - zones: List<Zone>
+    - stations: List<Station>
+    - lignes: List<Line>
+    --
+    + zone(int, String): NetworkBuilder
+    + station(String, String, int, boolean): NetworkBuilder
+    + ligne(String, String...): NetworkBuilder
+    + construire(): Network
+  }
+  record Zone { numero: int; nom: String }
+  record Station { code: String; nom: String; zone: Zone }
+  record Line { nom: String; arrets: List<Station> }
+}
+
+package "Persistance" {
+  class NetworkJdbcStore {
+    + creerSchema(Connection)
+    + sauvegarder(Network, Connection)
+    + chargerDepuisBase(Connection): Network
+  }
+  class NetworkLoader {
+    + chargerDepuisRepertoire(Path): Network
+  }
+}
+
+package "Présentation" {
+  class TransitCli {
+    + cmdListerStations(Network): String
+    + cmdStats(Network): String
+    + cmdItineraire(Network, String, String): String
+  }
+  class TransitApp {
+    + main(String[])
+  }
+}
+
+NetworkBuilder --> Network : construire()
+TransitApp --> NetworkBuilder : Phase 1
+TransitApp --> TransitCli : Phase 2
+TransitApp --> NetworkJdbcStore : Phase 3
+TransitApp --> NetworkLoader : Phase 4
+NetworkJdbcStore --> Network : reconstruit via Builder
+
+note right of Network
+  Constructeur PRIVATE
+  Seule entrée: builder()
+  DIP: domaine ne connaît
+  ni JDBC ni CSV
+end note
+
+note bottom of TransitApp
+  Phase 5: Rétrospective SOLID
+  S: M20, O: M30, L: M30
+  I: M30, D: M90+M95
+end note
+
+@enduml

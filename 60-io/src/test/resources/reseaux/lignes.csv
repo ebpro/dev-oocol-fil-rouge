@@ -1,0 +1,4 @@
+# Lignes (nom;station1;station2;...)
+Ligne A;GAR;UNI;HOP;AER
+Ligne B;GAR;MAR;OID;PAR
+Ligne C;UNI;OID;AER
