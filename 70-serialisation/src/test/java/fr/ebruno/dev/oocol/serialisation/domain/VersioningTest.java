@@ -39,17 +39,6 @@ import org.junit.jupiter.api.io.TempDir;
  */
 class VersioningTest {
 
-    /** Fige un objet et le relit, dans la mémoire. */
-    private static Object roundTrip(Object original) throws IOException, ClassNotFoundException {
-        ByteArrayOutputStream tampon = new ByteArrayOutputStream();
-        try (ObjectOutputStream sortie = new ObjectOutputStream(tampon)) {
-            sortie.writeObject(original);
-        }
-        try (ObjectInputStream entree = new ObjectInputStream(new ByteArrayInputStream(tampon.toByteArray()))) {
-            return entree.readObject();
-        }
-    }
-
     /** Les octets d'un objet écrit. */
     private static byte[] versOctets(Object original) throws IOException {
         ByteArrayOutputStream tampon = new ByteArrayOutputStream();

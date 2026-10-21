@@ -87,10 +87,14 @@ public final class NetworkJdbcStore {
      * @throws SQLException si le DDL est refusé par la base
      */
     public static void creerSchema(Connection conn) throws SQLException {
+        // Batch : les quatre DDL partent en UN aller-retour vers la base, pas
+        // quatre. Même leçon que plus bas pour les insertions : le coût de
+        // JDBC est dans la conversation client-serveur, pas dans l'ordre.
         try (Statement st = conn.createStatement()) {
             for (String sql : DDL) {
-                st.executeUpdate(sql);
+                st.addBatch(sql);
             }
+            st.executeBatch();
         }
     }
 
@@ -113,10 +117,12 @@ public final class NetworkJdbcStore {
         boolean autoCommitOriginal = conn.getAutoCommit();
         conn.setAutoCommit(false);
         try {
+            // Un aller-retour pour les quatre DELETE (batch), pas quatre.
             try (Statement st = conn.createStatement()) {
                 for (String sql : VIDAGE) {
-                    st.executeUpdate(sql);
+                    st.addBatch(sql);
                 }
+                st.executeBatch();
             }
             try (PreparedStatement ps = conn.prepareStatement(
                     "INSERT INTO zones (numero, nom) VALUES (?, ?)")) {

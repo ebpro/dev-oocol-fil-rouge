@@ -182,7 +182,7 @@ public final class TransitCli {
                 if (visites.add(voisin)) { // add() renvoie false si déjà vue — le Set garde la visite
                     predecesseurs.put(voisin, courante);
                     if (voisin.equals(arrivee)) {
-                        return reconstruire(predecesseurs, depart, arrivee);
+                        return reconstruire(predecesseurs, arrivee);
                     }
                     aExplorer.add(voisin);
                 }
@@ -209,7 +209,7 @@ public final class TransitCli {
 
     /** Remonte le fil d'Ariane de l'arrivée au départ, puis inverse. */
     private static List<Station> reconstruire(Map<Station, Station> predecesseurs,
-            Station depart, Station arrivee) {
+            Station arrivee) {
         List<Station> aEnvers = new ArrayList<>();
         Station etape = arrivee;
         while (etape != null) {

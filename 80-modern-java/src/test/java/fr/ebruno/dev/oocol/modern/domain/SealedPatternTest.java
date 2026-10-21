@@ -66,8 +66,8 @@ class SealedPatternTest {
     void instanceofPatternSansCastExplicite() {
         Vehicle v = new MetroTrain("M-02", 180, 6, new Electrique(3000));
 
-        // Java 16 : le motif « type variable » lie ET transforme — le couple
-        // « if (x instanceof T) T t = (T) x » du module 5 devient une ligne.
+        // Java 16 : le motif « type variable » lie ET transforme — le duo
+        // « test instanceof puis transtypage explicite » du module 5 devient une ligne.
         if (v instanceof MetroTrain m) {
             assertThat(m.nombreVoitures()).isEqualTo(6);
         } else {
@@ -96,7 +96,9 @@ class SealedPatternTest {
     @Test
     void nouvelleVarianteCasseraitLesSwitchs() {
         // Preuve négative, jouable uniquement à la compilation — consignée ici pour la leçon :
-        //   record Funiculaire(String identifiant, int capacite) implements Vehicle {}
+        /* CODE COMMENTÉ — Comparaison pédagogique avant/après:
+           record Funiculaire(String identifiant, int capacite) implements Vehicle {}
+        */
         // ne compile PAS (hors clauses permits) ; et si on l'ajoute AUSSI à « permits »,
         // chaque switch de cette classe (et de la démo) devient une ERREUR de compilation :
         // « the switch expression does not cover all possible input values ».

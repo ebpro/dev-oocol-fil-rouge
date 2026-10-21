@@ -107,10 +107,14 @@ public final class DatabaseSchema {
      * @throws SQLException si la suppression est refusée
      */
     public static void vider(Connection conn) throws SQLException {
+        // Batch : une seule round-trip pour vider toutes les tables, pas une
+        // par DELETE. Le résultat est identique — l'ordre des requêtes est
+        // préservé (les contraintes de référence de W12 ne pardonnent pas).
         try (Statement st = conn.createStatement()) {
             for (String sql : DDL_VIDAGE) {
-                st.executeUpdate(sql);
+                st.addBatch(sql);
             }
+            st.executeBatch();
         }
     }
 }

@@ -6,6 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.List;
 
@@ -123,7 +124,7 @@ public final class TransitApp {
      * {@code Line} rechargées ne seraient pas structurellement égales aux
      * originales (l'égalité d'un record inclut sa liste d'arrêts, ordonnée).
      */
-    private static void phaseJdbc(Network reseau) throws Exception {
+    private static void phaseJdbc(Network reseau) throws SQLException, NetworkException {
         try (Connection conn = DriverManager.getConnection(URL_H2)) {
             NetworkJdbcStore.creerSchema(conn);
             NetworkJdbcStore.sauvegarder(reseau, conn);

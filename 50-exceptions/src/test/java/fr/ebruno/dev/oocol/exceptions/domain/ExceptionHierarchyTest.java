@@ -56,7 +56,7 @@ class ExceptionHierarchyTest {
         StationNotFoundException snfe = new StationNotFoundException("ZZZ");
 
         // Le message clé de la séance : SNFE est une SŒUR des unchecked,
-        // PAS une fille de NetworkException — catch (NetworkException) ne
+        // PAS une fille de NetworkException — un rattrapage typé NetworkException ne
         // l'attrape JAMAIS, volontairement.
         assertThat(snfe).isInstanceOf(RuntimeException.class);
         assertThat(snfe).isNotInstanceOf(NetworkException.class);

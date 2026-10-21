@@ -246,7 +246,7 @@ public final class ModernJavaDemo {
                     UNI;Universite;2;false
                     """);
 
-            // Au module 60 : while ((line = reader.readLine()) != null) + ArrayList + split
+            // Au module 60 : boucle while de lecture ligne à ligne jusqu'à null, avec ArrayList + split
             // à la main. Ici Files.lines renvoie un Stream<String> — pipelet complet :
             List<Station> lues;
             try (Stream<String> flux = Files.lines(csv)) {

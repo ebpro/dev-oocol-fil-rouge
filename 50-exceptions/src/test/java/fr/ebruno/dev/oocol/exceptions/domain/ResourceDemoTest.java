@@ -62,8 +62,8 @@ class ResourceDemoTest {
                     }
                 });
 
-        // C'EST LA LEÇON : l'ancien « finally { r.close(); } » s'oubliait ;
-        // celui-ci ne s'oublie pas — même dans la tourmente, une fermeture.
+        // C'EST LA LEÇON : l'ancienne fermeture manuelle dans un finally s'oubliait ;
+        // celle-ci ne s'oublie pas — même dans la tourmente, une fermeture.
         assertThat(r.nombreDeFermetures()).isEqualTo(1);
     }
 
