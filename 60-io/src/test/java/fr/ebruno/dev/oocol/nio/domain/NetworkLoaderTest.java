@@ -149,7 +149,7 @@ class NetworkLoaderTest {
 
         assertThatExceptionOfType(NetworkException.class)
                 .isThrownBy(() -> NetworkLoader.charger(dossier))
-                .havingCause() // chaînage W6 : le NumberFormatException survit derrière
+                .havingCause() // chaînage des causes : le NumberFormatException survit derrière
                 .isInstanceOf(NumberFormatException.class)
                 .withMessageContaining("X");
     }

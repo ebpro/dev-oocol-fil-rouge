@@ -3,10 +3,10 @@ package fr.ebruno.dev.oocol.nio.domain;
 /**
  * Une zone tarifaire du réseau « Trans'U » (ex. zone 1 = centre-ville).
  *
- * <p><strong>Instantané W7.</strong> {@code Zone} revient du module 50 en
+ * <p><strong>La classe vue depuis les CSV.</strong> {@code Zone} revient du module 50 en
  * version minimale, augmentée d'une seule chose : une fabrique d'analyse
  * {@link #parse(String)} capable de faire naître une zone depuis UNE ligne
- * de CSV. C'est le geste nouveau de la semaine — l'objet ne vient plus d'un
+ * de CSV. C'est le geste nouveau du module — l'objet ne vient plus d'un
  * {@code new} écrit dans le code, il vient d'un fichier que quelqu'un d'autre
  * a saisi, avec les fautes que cela implique.
  *
@@ -60,7 +60,7 @@ public class Zone {
      * <p>Trois niveaux de validation, dans l'ordre : le nombre de champs
      * (sinon la ligne n'est pas du format promis), la convertibilité du
      * numéro ({@link Integer#parseInt(String)} lève un {@code
-     * NumberFormatException} — un checked métier l'enrobe, chaînage W6
+     * NumberFormatException} — un checked métier l'enrobe, chaînage des causes
      * oblige), puis la validité métier via le constructeur. Le message
      * d'erreur cite TOUJOURS la ligne brute : diagnostiquer un fichier
      * sans savoir de quelle ligne il s'agit, c'est deviner.
@@ -80,7 +80,7 @@ public class Zone {
         try {
             numero = Integer.parseInt(champs[0].trim());
         } catch (NumberFormatException e) {
-            // Enrobage W6 : l'erreur de bas niveau devient la CAUSE, pas un déchet.
+            // Enrobage : l'erreur de bas niveau devient la CAUSE, pas un déchet.
             throw new NetworkException(
                     "Numéro de zone non entier dans \u00AB " + csv + " \u00BB", e);
         }
@@ -116,7 +116,7 @@ public class Zone {
     }
 
     /**
-     * Deux zones sont égales quand elles ont le même numéro (contrat W3 repris).
+     * Deux zones sont égales quand elles ont le même numéro (contrat hérité, inchangé).
      *
      * @param o l'objet à comparer
      * @return {@code true} si {@code o} est une zone de même numéro

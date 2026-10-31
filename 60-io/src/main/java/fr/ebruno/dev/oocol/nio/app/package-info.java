@@ -2,12 +2,12 @@
  * La démonstration exécutable du module 60 : six scènes qui jouent
  * l'aller-retour mémoire ↔ disque.
  *
- * <p><strong>Ce que ce package enseigne.</strong> {@code IoDemo} est le
- * script de séance : chaque scène est une méthode privée autonome, titrée,
- * commentable séparément en TD. Toute l'agitation se déroule dans un
+ * <p><strong>Ce que couvre ce package.</strong> {@code IoDemo} est la
+ * démonstration exécutable : chaque scène est une méthode privée autonome,
+ * titrée, commentable séparément. Toute l'agitation se déroule dans un
  * répertoire temporaire créé par {@code Files.createTempDirectory} et
  * supprimé dans le bloc {@code finally} du {@code main} — la démo ne
- * touche jamais le dépôt, jamais le home de l'étudiant, et tourne donc
+ * touche jamais le dépôt, jamais le home de l'utilisateur, et tourne donc
  * aussi bien en local que dans la CI.
  *
  * <p><strong>Ordre de lecture.</strong> Scène 1 (écrire puis relire des

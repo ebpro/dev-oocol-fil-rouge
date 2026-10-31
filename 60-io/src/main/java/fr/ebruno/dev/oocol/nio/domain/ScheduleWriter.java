@@ -24,7 +24,7 @@ import java.util.List;
  * soit le move passe, et le lecteur voit TOUJOURS un horaire complet (l'ancien
  * ou le nouveau, jamais un demi) ; soit il ne passe pas, et l'ancien survit.
  * Sur un même système de fichiers, {@code ATOMIC_MOVE} est le petit frère
- * du « tout ou rien » des transactions — la leçon W6 « une ressource non
+ * du « tout ou rien » des transactions — le principe du module 50 « une ressource non
  * fermée corrompt » devient ici « une écriture non atomique corrompt aussi,
  * même parfaitement fermée ».
  *

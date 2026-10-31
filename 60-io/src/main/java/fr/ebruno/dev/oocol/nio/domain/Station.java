@@ -3,7 +3,7 @@ package fr.ebruno.dev.oocol.nio.domain;
 /**
  * Un arrêt du réseau « Trans'U », identifié par son code (ex. {@code GAR}).
  *
- * <p><strong>Instantané W7.</strong> {@code Station} revient du module 50
+ * <p><strong>La classe vue depuis les fichiers.</strong> {@code Station} revient du module 50
  * avec deux nouveautés dues aux fichiers : une fabrique d'analyse
  * {@link #parse(String)} au format CSV, et l'implémentation de {@link
  * Comparable} — quand un réseau est lu dans le désordre d'un fichier,

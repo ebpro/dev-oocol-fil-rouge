@@ -27,14 +27,14 @@ import fr.ebruno.dev.oocol.nio.domain.Zone;
  * Les six scènes du fichier, jouées en répertoire temporaire.
  *
  * <p><strong>Lecture.</strong> Chaque scène est une méthode privée autonome
- * que l'on peut commenter séparément en TD ; {@link #main(String[])} les
+ * que l'on peut commenter séparément ; {@link #main(String[])} les
  * enchaîne, titre, et garantit le grand ménage : le répertoire temporaire
  * créé en ouverture est supprimé récursivement dans le {@code finally},
- * quoi qu'il arrive — la leçon « une ressource se ferme » s'applique aussi
+ * quoi qu'il arrive — le principe « une ressource se ferme » s'applique aussi
  * aux arborescences que l'on crée.
  *
  * <p><strong>Zéro pollution.</strong> La démo n'écrit que sous {@code
- * Files.createTempDirectory} : ni le dépôt, ni le dossier de l'étudiant ne
+ * Files.createTempDirectory} : ni le dépôt, ni le poste de développement ne
  * sont touchés, elle court donc partout, CI comprise.
  *
  * @author Emmanuel Bruno
@@ -53,7 +53,7 @@ public final class IoDemo {
      * @throws IOException      pire cas des créations temporaires (le disque refuse)
      * @throws NetworkException scène 1 ou 2 : un CSV refusé abort la démo — à ce
      *                          niveau d'entrée, propager la checked est le choix
-     *                          honnête (pas de catch qui avale ; cf. W6/W7)
+     *                          honnête (pas de catch qui avale ; cf. modules 50-60)
      */
     public static void main(String[] args) throws IOException, NetworkException {
         Path racine = Files.createTempDirectory("oocol-io-demo");
