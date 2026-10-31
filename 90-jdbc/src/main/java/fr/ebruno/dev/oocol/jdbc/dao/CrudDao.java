@@ -12,7 +12,7 @@ import java.util.Optional;
  * séparé du <em>comment</em> (JDBC aujourd'hui, JPA demain) — c'est le
  * principe d'inversion de dépendance appliqué à la persistance.
  *
- * <p>Choix pédagogique : les méthodes ne déclarent pas
+ * <p>Choix de conception : les méthodes ne déclarent pas
  * {@code SQLException}. Une {@code SQLException} est une exception
  * <em>vérifiée</em> propre à JDBC ; l'exposer ici contaminerait tous les
  * appelants avec du vocabulaire d'infrastructure. Les implémentations

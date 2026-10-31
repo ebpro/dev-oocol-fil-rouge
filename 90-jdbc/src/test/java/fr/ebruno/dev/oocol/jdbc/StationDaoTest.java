@@ -27,7 +27,7 @@ import fr.ebruno.dev.oocol.jdbc.schema.DatabaseSchema;
  * <p>Isolation : chaque test ouvre sa PROPRE base nommée
  * ({@code jdbc:h2:mem:stations-N}) et la referme. {@code DB_CLOSE_DELAY=-1}
  * garderait la base vivante dans la JVM : sans nom unique, les tests se
- * marcheraient dessus — c'est aussi une leçon JDBC.
+ * marcheraient dessus — c’est aussi un point de vigilance JDBC.
  */
 @DisplayName("StationDaoJdbc — CRUD, mapping et requêtes paramétrées")
 class StationDaoTest {

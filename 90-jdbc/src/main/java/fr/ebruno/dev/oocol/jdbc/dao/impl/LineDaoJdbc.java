@@ -17,8 +17,7 @@ import fr.ebruno.dev.oocol.jdbc.domain.Line;
  * <p>Une {@link Line} vit sur <strong>deux tables</strong> :
  * {@code lignes} (une ligne par nom) et {@code ligne_arrets} (une ligne par
  * arrêt, avec une colonne {@code position} qui porte l'ordre de parcours).
- * C'est la relation N:N ordinalisée : la leçon que les collections de W5 ne
- * pouvaient pas enseigner seules — <em>en SQL, l'ordre est une colonne</em>.
+ * C'est la relation N:N ordinalisée : ce que les collections du module 40 ne pouvaient pas exprimer seules — <em>en SQL, l'ordre est une colonne</em>.
  *
  * <p>Écrire l'agrégat = insérer dans {@code lignes} puis dans
  * {@code ligne_arrets} ; le relire = requête parente + jointure triée par
@@ -101,7 +100,7 @@ public final class LineDaoJdbc implements LineDao {
             for (String nom : noms) {
                 resultat.add(reconstruire(nom));
             }
-            // Note pédagogique : c'est un N+1 (1 requête + 1 par ligne). Inoffensif en TD,
+            // C’est un N+1 (1 requête + 1 par ligne). Inoffensif en démo locale,
             // mortel en production — d'où les pools, le batching et JPA « pour aller plus loin ».
             return List.copyOf(resultat);
         } catch (SQLException e) {

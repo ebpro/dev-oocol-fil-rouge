@@ -18,11 +18,10 @@ import java.sql.Statement;
  *       et stations.</li>
  * </ul>
  *
- * <p>En TD :<em>pourquoi la PK de {@code ligne_arrets} est composée ?</em>
+ * <p>Deux questions ouvertes : <em>pourquoi la PK de {@code ligne_arrets} est composée ?</em>
  * Parce qu'un arrêt ne peut être desservi qu'une fois par ligne dans ce
  * modèle — la contrainte d'unicité EST le doublon. Et <em>pourquoi pas de
- * {@code ON DELETE CASCADE} ?</em> Pour que l'étudiant voie l'effet de la
- * contrainte de référence quand l'ordre de suppression est mauvais.
+ * {@code ON DELETE CASCADE} ?</em> Pour voir l’effet de la contrainte de référence quand l'ordre de suppression est mauvais.
  */
 public final class DatabaseSchema {
 
@@ -109,7 +108,7 @@ public final class DatabaseSchema {
     public static void vider(Connection conn) throws SQLException {
         // Batch : une seule round-trip pour vider toutes les tables, pas une
         // par DELETE. Le résultat est identique — l'ordre des requêtes est
-        // préservé (les contraintes de référence de W12 ne pardonnent pas).
+        // préservé (les contraintes de référence du schéma ne pardonnent pas).
         try (Statement st = conn.createStatement()) {
             for (String sql : DDL_VIDAGE) {
                 st.addBatch(sql);

@@ -22,7 +22,7 @@ import fr.ebruno.dev.oocol.jdbc.security.SqlInjectionDemo;
  * EST exploitée et que la version paramétrée NE L'EST PAS, sur la même base,
  * la même requête et la même attaque.
  *
- * <p>Cadre pédagogique : H2 en mémoire, données fictives, attaque connue
+ * <p>Cadre d’exécution : H2 en mémoire, données fictives, attaque connue
  * (tautologie {@code ' OR '1'='1}). Rien ici n'est un mode d'emploi
  * d'intrusion — c'est une démonstration de la frontière code/valeur.
  */

@@ -10,8 +10,7 @@ import fr.ebruno.dev.oocol.jdbc.domain.Line;
  * <p>Une ligne est une entité <em>aggregate</em> : son identité vit dans la
  * table {@code lignes}, ses arrêts dans la table-jonction
  * {@code ligne_arrets}. Le DAO a la charge d'écrire et de relire les deux
- * tables comme si ce n'était qu'un seul objet — c'est la leçon « mapping
- * objet-relationnel à la main » de l'ELO 12.
+ * tables comme si ce n'était qu'un seul objet — c’est le travail de « mapping objet-relationnel à la main » de l’ELO 12.
  */
 public interface LineDao extends CrudDao<Line, String> {
 
