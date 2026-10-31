@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 /**
  * Le singleton réparé : même idée que {@link Passenger}, plus le hook
- * officiel {@code readResolve} — la réponse canonique au piège n° 1.
+ * officiel {@code readResolve} — la version corrigée du point de vigilance.
  *
  * <p><strong>{@code readResolve}.</strong> Signature imposée :
  * {@code private Object readResolve()}. Le mécanisme l'appelle APRÈS avoir

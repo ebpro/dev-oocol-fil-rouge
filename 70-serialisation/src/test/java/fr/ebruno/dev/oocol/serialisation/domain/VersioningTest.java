@@ -178,7 +178,7 @@ class VersioningTest {
     /** La V2 : un champ de plus, le MÊME UID — l'évolution propre. */
     static final class InstantV2 implements Serializable {
 
-        /** Version du format — restée à 1 : c'est le cœur de la leçon. */
+        /** Version du format — restée à 1 : c'est le cœur du mécanisme. */
         private static final long serialVersionUID = 1L;
 
         /** Numéro de la version enregistrée (non final : la JVM le pose par réflexion). */

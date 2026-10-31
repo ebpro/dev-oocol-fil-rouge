@@ -28,14 +28,14 @@ import fr.ebruno.dev.oocol.serialisation.domain.Zone;
  * Les six scènes de la sérialisation, jouées en répertoire temporaire.
  *
  * <p><strong>Lecture.</strong> Chaque scène est une méthode privée autonome
- * que l'on peut commenter séparément en TD ; {@link #main(String[])} les
+ * que l'on peut commenter séparément ; {@link #main(String[])} les
  * enchaîne, titre, et garantit le grand ménage : le répertoire temporaire
  * créé en ouverture est supprimé récursivement dans le {@code finally},
- * quoi qu'il arrive — une leçon du module vaut aussi pour ses propres
+ * quoi qu'il arrive — un principe du module vaut aussi pour ses propres
  * fichiers : ce qui est ouvert se referme, ce qui est créé se détruit.
  *
  * <p><strong>Zéro pollution.</strong> La démo n'écrit que sous {@code
- * Files.createTempDirectory} : ni le dépôt, ni le dossier de l'étudiant ne
+ * Files.createTempDirectory} : ni le dépôt, ni le poste de développement ne
  * sont touchés, elle court donc partout, CI comprise.
  *
  * <p><strong>Scènes.</strong> 1 : figer et relire le réseau (le contrat
@@ -44,7 +44,7 @@ import fr.ebruno.dev.oocol.serialisation.domain.Zone;
  * 3 : {@code Externalizable} — le même ticket, écrit à la main, bien plus
  * compact ; 4 : le {@code transient} qui s'évapore puis se recalcule ;
  * 5 : le singleton dédoublé, puis réparé par {@code readResolve} ;
- * 6 : l'inventaire des cinq pièges canoniques, un par ligne.
+ * 6 : l'inventaire des cinq points de vigilance canoniques, un par ligne.
  *
  * @author Emmanuel Bruno
  * @see fr.ebruno.dev.oocol.serialisation.domain
@@ -58,10 +58,10 @@ public final class VersionnementDemo {
     /**
      * Enchaîne les six scènes dans un répertoire temporaire, puis le détruit.
      *
-     * <p>Le {@code throws Exception} est un choix assumé au niveau d'un
-     * script de séance : une checked qui remonte jusqu'ici est un signal
-     * pour l'animateur, pas un état du monde à rattraper (cf. W6/W7 — ici,
-     * RIEN n'est censé échouer, et tout ce qui échouerait mérite arrêt).
+     * <p>Le {@code throws Exception} est un choix assumé au niveau du point
+     * d'entrée : une checked qui remonte jusqu'ici n'est pas un état du
+     * monde à rattraper (cf. modules 50-60) — ici, RIEN n'est censé
+     * échouer, et tout ce qui échouerait mérite arrêt).
      *
      * @param args non utilisé
      * @throws Exception toute panne de disque, de flux ou de réflexion —
@@ -211,7 +211,7 @@ public final class VersionnementDemo {
         System.out.println("  -> juste apr\u00E8s relecture, cacheAffichage (transient) = " + cache.get(relu));
         System.out.println("  -> premier getAffichage() rel\u00E8ve le cache : \u00AB " + relu.getAffichage() + " \u00BB");
         System.out.println("     deuxi\u00E8me appel, m\u00EAme instance : "
-                + (relu.getAffichage() == relu.getAffichage())); // NOSONAR java:S4973 — == sur String est LA leçon : identité de référence, pas égalité
+                + (relu.getAffichage() == relu.getAffichage())); // NOSONAR java:S4973 — == sur String est le point : identité de référence, pas égalité
     }
 
     /**
@@ -239,8 +239,8 @@ public final class VersionnementDemo {
     }
 
     /**
-     * Scène 6 — L'INVENTAIRE : les cinq pièges canoniques, un par ligne,
-     * chacun joué par une scène et prouvé par un test.
+     * Scène 6 — L'INVENTAIRE : les cinq points de vigilance canoniques,
+     * un par ligne, chacun joué par une scène et prouvé par un test.
      */
     private static void scene6CinqPieges() {
         titre(6, "Les cinq pi\u00E8ges \u00E0 retenir");
@@ -277,7 +277,7 @@ public final class VersionnementDemo {
 
     /**
      * Supprime une arborescence : les fichiers d'abord, le dossier ensuite —
-     * la leçon W7 vaut jusqu'au ménage du {@code finally}.
+     * le principe du module 60 vaut jusqu'au ménage du {@code finally}.
      */
     private static void detruireRecursivement(Path racine) throws IOException {
         if (!Files.exists(racine)) {

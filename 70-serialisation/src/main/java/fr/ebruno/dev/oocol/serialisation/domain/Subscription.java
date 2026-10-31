@@ -8,8 +8,8 @@ import java.time.LocalDate;
  *
  * <p><strong>Rôle dans le module.</strong> {@code Passenger} porte un
  * {@code Subscription} marqué {@code transient} : l'abonnement ne voyage
- * PAS dans l'instantané sérialisé. C'est le piège n° 3 du module, démontré
- * en test : après relecture, le champ est {@code null} — et chaque appelant
+ * PAS dans l'instantané sérialisé. C'est le point de vigilance {@code transient},
+ * démontré en test : après relecture, le champ est {@code null} — et chaque appelant
  * qui suppose l'objet « revenu intact » prend un {@code NullPointerException}
  * six mois plus tard dans un contexte que plus personne n'a sous les yeux.
  * {@code transient} ne supprime pas une information, il la remplace par
