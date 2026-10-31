@@ -66,8 +66,8 @@ public final class ReseauDemo {
 
         // ------------------------------------------------------------------
         // 3. DES LIGNES — composition : une Ligne « tient » deux Stations.
-        //    Tension à discuter en séance : deux extrémités seulement, pas
-        //    d'arrêts intermédiaires → le module 40 (collections) règlera ça.
+        //    Limite connue : deux extrémités seulement, pas d'arrêts
+        //    intermédiaires — une collection d'arrêts règlerait ça.
         // ------------------------------------------------------------------
         System.out.println();
         System.out.println("=== 3. Des lignes (composition, valeur par défaut 15 min) ===");

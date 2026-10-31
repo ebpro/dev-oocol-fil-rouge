@@ -40,7 +40,7 @@ public class Station {
      * <em>par objet</em>. C'est l'attribut idéal pour une statistique
      * transversale — ici, le nombre de stations du réseau.
      *
-     * <p>Limite assumée (et discutée en séance) : le compteur ne fait
+     * <p>Limite assumée : le compteur ne fait
      * qu'augmenter — Java ne fournit pas de « destructeur » fiable pour le
      * décrémenter quand une station est oubliée par le programme.
      */
@@ -159,8 +159,8 @@ public class Station {
     }
 
     /**
-     * Alias français de {@link #isAccessible()} — purement pédagogique :
-     * il rappelle que la langue des identifiants est un choix d'équipe.
+     * Alias français de {@link #isAccessible()} : la langue des identifiants
+     * est un choix d'équipe.
      * Les deux méthodes lisent le même attribut ; en production, on n'en
      * garde qu'un seul.
      *
@@ -189,7 +189,7 @@ public class Station {
     /**
      * Rattache la station à une nouvelle zone tarifaire.
      *
-     * <p>Pédagogie : le setter valide avant d'affecter — la zone ne peut
+     * <p>Le setter valide avant d'affecter : la zone ne peut
      * jamais être {@code null} dans un objet {@code Station} vivant.
      *
      * @param zone la nouvelle zone, obligatoire

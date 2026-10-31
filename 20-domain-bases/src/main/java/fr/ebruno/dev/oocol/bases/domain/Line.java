@@ -5,18 +5,15 @@ package fr.ebruno.dev.oocol.bases.domain;
  * destination, avec une fréquence de passage exprimée en minutes (ex. « une
  * rame toutes les 15 minutes »).
  *
- * <p><strong>Tension pédagogique assumée — lisez ceci en entier.</strong>
- * Cette classe ne peut relier que <em>DEUX</em> stations : un champ
- * {@code origine} et un champ {@code destination}, point. Or un vrai réseau a
- * des <em>arrêts intermédiaires</em> en nombre variable — 3, 8, 20… Impossible
- * de le modéliser avec deux champs fixes. Le code actuel est donc
- * volontairement <em>insuffisant</em> : c'est le sentiment qu'il faut
- * expérimenter avant d'introduire les collections. La séance W5
- * (module {@code 40-collections}) remplacera ces deux champs par une vraie
- * {@code List<Station>} d'arrêts ordonnés, et {@link #distanceEstimeeKm()}
- * deviendra un calcul réel sur la liste.
+ * <p><strong>Limite connue de cette version.</strong> Cette classe ne peut
+ * relier que <em>deux</em> stations : un champ {@code origine} et un champ
+ * {@code destination}, point. Or un vrai réseau a des <em>arrêts
+ * intermédiaires</em> en nombre variable — 3, 8, 20… — qu'on ne peut pas
+ * modéliser avec deux champs fixes. Une {@code List<Station>} d'arrêts
+ * ordonnés peut remplacer ces deux champs ; {@link #distanceEstimeeKm()}
+ * deviendrait alors un calcul réel sur la liste.
  *
- * <p>En attendant, la classe exerce : la composition (une {@code Line} « tient »
+ * <p>La classe met en œuvre : la composition (une {@code Line} « tient »
  * deux {@code Station}), la surcharge de constructeurs avec valeur par défaut,
  * et un compteur {@code static} de plus (pour comparer avec
  * {@link Station#nombreStations()}).
@@ -26,7 +23,7 @@ package fr.ebruno.dev.oocol.bases.domain;
  */
 public class Line {
 
-    /** Fréquence par défaut entre deux passages, en minutes (W5 la rendra réglable par la direction). */
+    /** Fréquence par défaut entre deux passages, en minutes. */
     private static final int FREQUENCE_DEFAUT_MIN = 15;
 
     /**
@@ -198,7 +195,7 @@ public class Line {
      * par référence : deux objets {@code Station} distincts créés avec le
      * même code « GAR » désignent la même station réelle. Comparer avec
      * {@code ==} ne testerait l'identité qu'<em>à l'intérieur d'un même
-     * objet</em> — un piège classique quand les stations proviennent de
+     * objet</em> — un point de vigilance classique quand les stations proviennent de
      * sources différentes (future base de données, lecture d'un fichier…).
      *
      * @param s la station à tester, peut être {@code null}
@@ -215,10 +212,9 @@ public class Line {
     /**
      * Distance estimée de la ligne, en kilomètres.
      *
-     * <p><strong>Placeholder pédagogique :</strong> W5 remplacera cette
-     * valeur fixe par une vraie liste de stations intermédiaires — pour
-     * l'instant, une ligne relie deux extrémités et rien d'autre, donc la
-     * « distance » ne peut être qu'une convention : 1 km par défaut.
+     * <p>Une ligne ne relie que deux extrémités, sans arrêts intermédiaires
+     * modélisables : la « distance » ne peut pas encore être calculée, c'est
+     * une convention fixe — 1 km par défaut.
      *
      * @return la distance estimée (valeur factice : {@code 1.0})
      */

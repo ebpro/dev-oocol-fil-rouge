@@ -101,7 +101,7 @@ class TicketTest {
         // présence du symbole € et de la zone, pas la ponctuation décimale —
         // le point d'exclamation « virgule » exact relève du rendu local.
         assertThat(ticket.toString()).contains("\u20AC").contains("Zone 1");
-        // Redondance pédagogique : avec Locale.FRANCE, 1.80 s'écrit bien « 1,80 ».
+        // Vérification redondante : avec Locale.FRANCE, 1.80 s'écrit bien « 1,80 ».
         String enFrancais = String.format(Locale.FRANCE, "%.2f", ticket.getPrix());
         assertThat(enFrancais).isEqualTo("1,80");
     }
