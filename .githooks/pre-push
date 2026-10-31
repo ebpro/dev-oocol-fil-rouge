@@ -4,7 +4,6 @@
 # Runs tests on changed modules (plus dependents). Static analysis is CI's job.
 #
 # Install: git config core.hooksPath .githooks
-# Skip with: git push --no-verify (emergency WIP pushes)
 #
 
 set -e

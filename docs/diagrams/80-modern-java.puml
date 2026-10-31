@@ -1,7 +1,7 @@
 @startuml 80-modern-java
 ' ============================================================
 ' Module 80 - Java moderne (ELO 11)
-' Diagramme pedagogique : le diff avant/apres (POJO vs record),
+' Diagramme de classes : le diff avant/apres (POJO vs record),
 ' les hierarchies sealed (Vehicle, Propulsion, Tarif), le switch
 ' de motifs et le pipeline Streams de l'analyse reseau.
 ' Autorite = code source :
@@ -111,9 +111,15 @@ end note
 ' ---- Propulsion : l'union sans méthodes ---------------------------
 interface Propulsion <<sealed>>
 
-class Electrique <<record>> { puissanceKW : int }
-class Diesel <<record>> { cylindree : int }
-class Hydrogene <<record>> { pressionBar : int }
+class Electrique <<record>> {
+  puissanceKW : int
+}
+class Diesel <<record>> {
+  cylindree : int
+}
+class Hydrogene <<record>> {
+  pressionBar : int
+}
 
 Electrique --|> Propulsion
 Diesel --|> Propulsion
@@ -124,9 +130,19 @@ Tramway o--> Propulsion
 ' ---- Tarif : le switch de motifs ----------------------------------
 interface Tarif <<sealed>>
 
-class TarifUnite <<record>> { zone : Zone; prix : double }
-class TarifJour <<record>> { zonesValides : List<Zone>; prix : double }
-class TarifAbonnement <<record>> { titulaire : String; debut : LocalDate; fin : LocalDate }
+class TarifUnite <<record>> {
+  zone : Zone
+  prix : double
+}
+class TarifJour <<record>> {
+  zonesValides : List<Zone>
+  prix : double
+}
+class TarifAbonnement <<record>> {
+  titulaire : String
+  debut : LocalDate
+  fin : LocalDate
+}
 
 TarifUnite --|> Tarif
 TarifJour --|> Tarif
@@ -154,7 +170,7 @@ note right of AnalyseReseau::prixDe
 end note
 
 ' ---- Le pipeline Streams, en flux de données ----------------------
-note as Pipeline [
+note as Pipeline
   ==== Pipeline d'analyse (grouperParZone) ====
   List<Ligne>  →  flatMap(l -> l.arrets())
   →  Stream<Station>  →  groupingBy(Station::zone)
@@ -163,7 +179,7 @@ note as Pipeline [
   4 lignes de pipeline (AnalyseReseau)
   vs 15 lignes de double boucle + put manuel
   (VersionLegacy) — RÉSULTATS IDENTIQUES, prouvés en test.
-]
+end note
 
 AnalyseReseau .. Propulsion : decrirePropulsion\nswitch de motifs
 
@@ -172,14 +188,6 @@ note bottom of Ligne
   l'absence est un fait de TYPE (W5 :
   null retourné + if deviné par l'appelant).
   ifPresent / map / flatMap / orElseThrow.
-end note
-
-note bottom of VersionLegacy
-  Le miroir « avant » : boucles for-each,
-  instanceof + cast, Map.put manuel,
-  StringBuilder, Comparator anonyme.
-  Ce n'EST PAS le code correct — c'est la
-  borne de comparaison du diff.
 end note
 
 class VersionLegacy <<service>> {
@@ -191,6 +199,14 @@ class VersionLegacy <<service>> {
   +{static} rapport(v) : String
   +{static} resumerReseau(lignes) : String
 }
+
+note bottom of VersionLegacy
+  Le miroir « avant » : boucles for-each,
+  instanceof + cast, Map.put manuel,
+  StringBuilder, Comparator anonyme.
+  Ce n'EST PAS le code correct — c'est la
+  borne de comparaison du diff.
+end note
 
 AnalyseReseau -- VersionLegacy : le diff\nest la leçon
 

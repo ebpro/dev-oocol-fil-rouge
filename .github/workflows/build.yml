@@ -1,6 +1,6 @@
 name: Build
 
-# Matrice JDK 21 + 25, cœur = ./mvnw verify (compile, teste, couvre, analyse warn-only).
+# Matrice JDK 25, cœur = ./mvnw verify (compile, teste, couvre, analyse warn-only).
 # Adapté du pipeline CI de ebpro/java101-tp1 (versions de plugins validées 21/25).
 
 concurrency:
@@ -24,7 +24,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        java: [21, 25]
+        java: [25]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7

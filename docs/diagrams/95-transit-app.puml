@@ -26,9 +26,19 @@ package "Domaine" {
     + ligne(String, String...): NetworkBuilder
     + construire(): Network
   }
-  record Zone { numero: int; nom: String }
-  record Station { code: String; nom: String; zone: Zone }
-  record Line { nom: String; arrets: List<Station> }
+  record Zone {
+    numero: int
+    nom: String
+  }
+  record Station {
+    code: String
+    nom: String
+    zone: Zone
+  }
+  record Line {
+    nom: String
+    arrets: List<Station>
+  }
 }
 
 package "Persistance" {

@@ -1,7 +1,7 @@
 @startuml 85-collection-pitfalls
 ' ============================================================
 ' Module 85 - Pieges des collections (chasse aux bugs, W11)
-' Diagramme pedagogique : les trois mecanismes qui font le plus
+' Diagramme de classes : les trois mecanismes qui font le plus
 ' de victimes - seaux HashMap + equals/hashCode incoherents,
 ' retrait pendant for-each (CME), vue taille fixe d'Arrays.asList.
 ' Autorite = code source :
@@ -11,6 +11,8 @@
 
 title Module 85 — Pièges des collections (W11)
 
+allowmixing
+
 skinparam monochrome true
 skinparam shadowing false
 skinparam roundCorner 12
@@ -18,11 +20,11 @@ skinparam ArrowThickness 1.2
 
 ' ---- Piège 1/4/6 : les seaux qui séparent des égaux ----------
 rectangle "Piège 1 - equals sans hashCode" as p1 {
-  object "BuggyStation(\"GAR\",\n\"Gare Centrale\")" as sta1 {
+  object "BuggyStation('GAR',\n'Gare Centrale')" as sta1 {
     equals = true (même code)
     hashCode = 0x71A2 (identité !)
   }
-  object "BuggyStation(\"GAR\",\n\"Gare Neuve\")" as sta2 {
+  object "BuggyStation('GAR',\n'Gare Neuve')" as sta2 {
     equals = true (même code)
     hashCode = 0x3F0B (identité !)
   }
@@ -32,7 +34,7 @@ rectangle "Piège 1 - equals sans hashCode" as p1 {
       card "GAR → 2.0" as entree
     }
     rectangle "seau 15" as seaux15 {
-      card "(vide)" as rien #line.dashed
+      card "(vide)" as rien #lightgray
     }
   }
 
@@ -53,7 +55,7 @@ rectangle "Piège 3 - retrait pendant for-each (CME)" as p3 {
   card "for (BuggyLine l : lignes)\n  lignes.remove(l)" as boucle
   card "itérateur : next() -> U" as it1
   card "remove(U) : modCount++\nliste = [V, W], curseur=1" as it2
-  card "next() : modCount != expected\n!!! ConcurrentModificationException" as cme #bold
+  card "**next() : modCount != expected**\n**!!! ConcurrentModificationException**" as cme
 
   before -right-> boucle
   boucle -right-> it1
@@ -72,7 +74,7 @@ end note
 rectangle "Piège 5 - Arrays.asList : taille fixe" as p5 {
   card "Arrays.asList(2.0, 5.5, 12.0)" as aslist
   card "vue Arrays$ArrayList\nfixe : set OK,\nadd/remove INTERDITS" as vue
-  card "tarifs.add(20.0)\n!!! UnsupportedOperationException" as uoe #bold
+  card "**tarifs.add(20.0)**\n**!!! UnsupportedOperationException**" as uoe
   card "new ArrayList<>(List.of(...))\n-> vraie liste modifiable" as fix
 
   aslist -right-> vue

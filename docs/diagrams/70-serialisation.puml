@@ -1,7 +1,7 @@
 @startuml 70-serialisation
 ' ============================================================
 ' Module 70 - Serialisation Java (ELO 09)
-' Diagramme pedagogique : le graphe d'objets devenu octets —
+' Diagramme de classes : le graphe d'objets devenu octets —
 ' Serializable vs Externalizable, serialVersionUID, transient,
 ' hooks readObject/writeObject et readResolve.
 ' Autorite = code source :

@@ -1,7 +1,7 @@
 @startuml 60-io
 ' ============================================================
 ' Module 60 - NIO.2 et gestion des ressources (ELO 08)
-' Diagramme pedagogique : flux de chargement, ecriture atomique,
+' Diagramme de classes : flux de chargement, ecriture atomique,
 ' visite d'arborescence, et la frontiere try-with-resources.
 ' Autorite = code source :
 '   60-io/src/main/java/fr/ebruno/dev/oocol/nio/
@@ -40,7 +40,7 @@ package "try-with-resources : la fermeture est garantie, même au milieu du fich
   class "Files.newBufferedReader /\nnewBufferedWriter /\nnewDirectoryStream" as JDKio <<JDK — Closeable>> {
   }
 
-  NetworkLoader ..> JDKio : BufferedReader fermé ici,\nune ligne par lecture, try { }
+  NetworkLoader ..> JDKio : try { } — BufferedReader fermé ici,\nune ligne par lecture
   ScheduleWriter ..> JDKio : BufferedWriter vidé ET fermé\nAVANT le move (sinon octets périmés)
   FileSystemWalker ..> JDKio : DirectoryStream = descripteur\nouvert — même piège que le reader
 }

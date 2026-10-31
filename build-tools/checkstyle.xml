@@ -4,7 +4,7 @@
     "https://checkstyle.org/dtds/configuration_1_3.dtd">
 
 <!--
-  Checkstyle configuration for Java 101 pedagogical project
+  Checkstyle configuration for Projet fil rouge DEV-OOCOL
   Based on Sun/Google coding conventions with adaptations for educational purposes
 -->
 <module name="Checker">

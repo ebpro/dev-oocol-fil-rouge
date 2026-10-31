@@ -1,6 +1,6 @@
 {
   // Conteneur de développement du fil rouge DEV-OOCOL.
-  // Image minimale JDK 21 (défaut) + JDK 25 (matrice CI), Git, sans Maven global :
+  // Image JDK 25 (cible unique du projet), Git, sans Maven global :
   // le projet utilise le Maven wrapper (./mvnw) livré dans le dépôt.
   // NB : l'image Solen des dépôts de cours Quarto n'est PAS adaptée ici —
   // ce dépôt est un projet Java/Maven pur, sans rendu de supports.
@@ -8,8 +8,7 @@
   "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
   "features": {
     "ghcr.io/devcontainers/features/java:1": {
-      "version": "21,25",
-      "default": "21",
+      "version": "25",
       "mavenVersion": "none",
       "javaToolchains": true
     },
@@ -18,10 +17,10 @@
   "customizations": {
     "vscode": {
       "extensions": [
-        "redhat.java",
-        "vscjava.vscode-java-debug",
-        "vscjava.vscode-java-test",
-        "vscjava.vscode-maven"
+        "vscjava.vscode-java-pack",
+        "jebbs.plantuml",
+        "shengchen.vscode-checkstyle",
+        "redhat.vscode-xml"
       ]
     }
   },
