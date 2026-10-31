@@ -19,7 +19,7 @@ import fr.ebruno.dev.oocol.transit.domain.Station;
 /**
  * Tests du loader CSV — format et contrat identiques au module 60, mais la
  * construction passe désormais par le Builder : les règles de cohérence
- * référentielle ne vivent plus À DEUX ENDROITS (leçon SRP du module 95).
+ * référentielle ne vivent plus À DEUX ENDROITS (principe SRP du module 95).
  */
 @DisplayName("NetworkLoader — trois CSV, un Builder, un réseau")
 class NetworkLoaderTest {
@@ -27,7 +27,7 @@ class NetworkLoaderTest {
     @TempDir
     Path dossier;
 
-    /** Écrit le trio de fichiers au format W7 ({@code ;}, commentaires {@code #}, UTF-8). */
+    /** Écrit le trio de fichiers au format du module 60 ({@code ;}, commentaires {@code #}, UTF-8). */
     private void ecrireTrio() throws IOException {
         Files.writeString(dossier.resolve("zones.csv"), """
                 # zones

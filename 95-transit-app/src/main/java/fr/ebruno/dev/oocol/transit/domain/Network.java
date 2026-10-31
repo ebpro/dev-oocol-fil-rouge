@@ -130,7 +130,7 @@ public final class Network {
      * présentation du résultat (« trouvé » vs « Introuvable ») est dans
      * {@code TransitCli}, pas ici.
      *
-     * <p>W6 vs module 80 : le retour est un {@link Optional}, pas
+     * <p>Module 50 vs module 80 : le retour est un {@link Optional}, pas
      * {@code null} — l'absence devient typée et l'appelant ne peut pas
      * l'ignorer par inattention.
      *
@@ -157,8 +157,7 @@ public final class Network {
      * <p>SRP : cette méthode ne fait qu'une seule chose — filtrer. La
      * présentation est dans {@code TransitCli}.
      *
-     * <p>Module 80 : un {@code filter}/{@code toList} remplace la boucle
-     * avec accumulateur des semaines 5-7.
+     * <p>Module 80 : un {@code filter}/{@code toList} remplace la boucle avec accumulateur des modules 40 à 60.
      *
      * @return les arrêts dont le composant {@code accessible} est vrai
      */
@@ -181,7 +180,7 @@ public final class Network {
     /**
      * Les lignes qui desservent un arrêt donné.
      *
-     * <p>{@code List#contains} compare par {@code equals} (leçon du module 40,
+     * <p>{@code List#contains} compare par {@code equals} (principe du module 40,
      * verrouillée par l'égalité structurelle du record) : une autre instance
      * de {@code "GAR"} suffit à trouver la ligne.
      *

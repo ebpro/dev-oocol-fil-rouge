@@ -6,7 +6,7 @@ import java.util.Objects;
  * Un arrêt du réseau « Trans'U » — record immuable, ordonné par code.
  *
  * <p><strong>Le contrat du module 40, la forme du module 80.</strong> Le tri
- * naturel par code (alphabétique, comme à la semaine des collections) survit
+ * naturel par code (alphabétique, comme au module des collections) survit
  * sous {@link Comparable} ; l'égalité structurelle du record remplace les
  * quarante lignes de {@code equals}/{@code hashCode} recopiés. Le composant
  * {@code accessible} (PMR) est un {@code boolean} — jamais un

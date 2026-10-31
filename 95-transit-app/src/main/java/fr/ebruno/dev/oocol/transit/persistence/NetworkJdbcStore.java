@@ -17,7 +17,7 @@ import fr.ebruno.dev.oocol.transit.domain.Station;
 import fr.ebruno.dev.oocol.transit.domain.Zone;
 
 /**
- * Persistance JDBC du réseau — le concept du module 90 (W12), simplifié et
+ * Persistance JDBC du réseau — le concept du module 90, simplifié et
  * raconté à travers le Builder.
  *
  * <p><strong>SRP : ce qui lit/écrit SQL est ICI, pas dans {@code Network}.</strong>
@@ -28,13 +28,12 @@ import fr.ebruno.dev.oocol.transit.domain.Zone;
  * Postgres — ou disparaître au profit d'un fichier — sans qu'une seule ligne
  * du domaine ou de la CLI ne bouge.
  *
- * <p><strong>Différence assumée avec W12.</strong> Le module 90 décortiquait
+ * <p><strong>Différence assumée avec le module 90.</strong> Le module 90 décortiquait
  * le motif DAO : petits contrats {@code StationDao}/{@code LineDao}, façade
- * {@code NetworkRepository}, gabarit transactionnel. À la semaine 13, le fil
- * rouge a besoin d'UNE opération « sauver tout l'agrégat / recharger tout
+ * {@code NetworkRepository}, gabarit transactionnel. Ici, le fil rouge a besoin d'UNE opération « sauver tout l'agrégat / recharger tout
  * l'agrégat » — deux méthodes statiques suffisent, le vocabulaire JDBC reste
  * le même : {@link PreparedStatement} partout (jamais de concaténation —
- * W12 a prouvé pourquoi), try-with-resources partout, batch pour les
+ * le module 90 a prouvé pourquoi), try-with-resources partout, batch pour les
  * insertions, transaction pour l'atomicité du remplacement complet.
  *
  * <p><strong>Le retour du Builder.</strong> {@link #chargerDepuisBase(Connection)}
@@ -67,7 +66,7 @@ public final class NetworkJdbcStore {
                 + "PRIMARY KEY (nom_ligne, code_station))",
     };
 
-    /** Vidage enfants d'abord : la contrainte de référence ne pardonne pas l'ordre inverse (W12). */
+    /** Vidage enfants d'abord : la contrainte de référence ne pardonne pas l’ordre inverse (module 90). */
     private static final String[] VIDAGE = {
         "DELETE FROM ligne_arrets",
         "DELETE FROM lignes",
@@ -88,7 +87,7 @@ public final class NetworkJdbcStore {
      */
     public static void creerSchema(Connection conn) throws SQLException {
         // Batch : les quatre DDL partent en UN aller-retour vers la base, pas
-        // quatre. Même leçon que plus bas pour les insertions : le coût de
+        // quatre. Même principe que plus bas pour les insertions : le coût de
         // JDBC est dans la conversation client-serveur, pas dans l'ordre.
         try (Statement st = conn.createStatement()) {
             for (String sql : DDL) {
@@ -152,7 +151,7 @@ public final class NetworkJdbcStore {
                 }
                 ps.executeBatch();
             }
-            // L'ordre de parcours des arrêts devient une COLONNE (leçon W12 :
+            // L'ordre de parcours des arrêts devient une COLONNE (principe du module 90 :
             // une Line vit sur DEUX tables ; sans « position », le SELECT du
             // retour ne saurait pas dans quel ordre les relier).
             try (PreparedStatement ps = conn.prepareStatement(
@@ -184,7 +183,7 @@ public final class NetworkJdbcStore {
      * <p>Chaque table est lue dans un ordre DÉTERMINISTE ({@code ORDER BY}) —
      * sans clause d'ordre, un SGBD relationnel ne promet rien : le même
      * {@code SELECT} peut rendre les lignes dans un ordre différent d'une
-     * exécution à l'autre. Ici la déterminisation sert aussi la pédagogie :
+     * exécution à l'autre. Ici la déterminisation sert aussi la lisibilité :
      * le réseau rechargé se compare terme à terme au réseau sauvegardé.
      *
      * @param conn connexion ouverte, schéma déjà créé

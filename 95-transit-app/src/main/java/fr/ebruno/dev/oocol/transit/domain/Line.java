@@ -10,8 +10,7 @@ import java.util.List;
  * mais une {@code List} transmise au constructeur reste partageable :
  * l'appelant qui modifie sa liste après coup modifierait la ligne « par
  * télécommande ». Le constructeur compact applique donc {@link List#copyOf} :
- * copie défensive, immuable, qui refuse en plus les {@code null}. Leçon
- * rappelée par le module 85 (fuites mutables) : un objet immuable qui
+ * copie défensive, immuable, qui refuse en plus les {@code null}. Rappelé par le module 85 (fuites mutables) : un objet immuable qui
  * encapsule une collection mutable ne l'est pas.
  *
  * @param nom    identifiant de la ligne (ex. {@code "Ligne A"})

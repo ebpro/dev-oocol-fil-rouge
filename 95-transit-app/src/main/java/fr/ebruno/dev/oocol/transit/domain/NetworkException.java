@@ -22,7 +22,7 @@ package fr.ebruno.dev.oocol.transit.domain;
  */
 public class NetworkException extends Exception {
 
-    /** Identifiant de sérialisation (W8 : {@code Throwable} est {@code Serializable}). */
+    /** Identifiant de sérialisation (module 70 : {@code Throwable} est {@code Serializable}). */
     private static final long serialVersionUID = 1L;
 
     /**
@@ -35,7 +35,7 @@ public class NetworkException extends Exception {
     }
 
     /**
-     * Décrit la situation ET préserve la cause d'origine (chaînage W6).
+     * Décrit la situation ET préserve la cause d'origine (chaînage du module 50).
      *
      * @param message le message explicatif du point de vue métier
      * @param cause   l'exception de bas niveau enrobée, ou {@code null}

@@ -32,7 +32,7 @@ import fr.ebruno.dev.oocol.transit.domain.Station;
  *
  * <p><strong>DIP — le CLI dépend d'une abstraction (les méthodes de
  * {@code Network}), pas de JDBC.</strong> Ces méthodes ne savent pas si le
- * réseau vient d'un Builder duré, d'un CSV (W7) ou d'une base (W12) : elles
+ * réseau vient d'un Builder duré, d’un CSV (module 60) ou d’une base (module 90) : elles
  * n'appellent que des requêtes du domaine. On peut changer la persistance
  * sans toucher l'affichage — la preuve vivante de la rétrospective de la
  * phase 5 : trois sources de données, zéro ligne de CLI écrite deux fois.
@@ -129,12 +129,10 @@ public final class TransitCli {
     /**
      * Itinéraire le plus court (en segments) entre deux codes d'arrêt.
      *
-     * <p><strong>Le BFS du module 40 ({@code TripPlanner}), rejoué avec les
-     * outils de la semaine 13.</strong> Même algorithme — ondulation
+     * <p><strong>Le BFS du module 40 ({@code TripPlanner}), rejoué avec les outils du module 95.</strong> Même algorithme — ondulation
      * concentrique depuis le départ, file des découvertes, ensemble des
      * visites, map des prédécesseurs (fil d'Ariane) — mais la graphie
-     * rajeunit : {@link Deque} en interface (le {@code LinkedList}-concret de
-     * W5 est devenu un détail), texte composé en stream, deux stations
+     * rajeunit : {@link Deque} en interface (le {@code LinkedList}-concret du module 40 est devenu un détail), texte composé en stream, deux stations
      * adjacentes quand elles sont <em>consécutives sur une même ligne</em>.
      *
      * @param n       le réseau à explorer

@@ -21,11 +21,11 @@ import fr.ebruno.dev.oocol.transit.persistence.NetworkLoader;
 /**
  * L'application Trans'U — le livrable final du fil rouge (ELO 13).
  *
- * <p><strong>13 semaines de code → une application cohérente qui démarre,
+ * <p><strong>Tout le code du parcours assemblé → une application cohérente qui démarre,
  * charge, manipule, sauvegarde et affiche le réseau Trans'U.</strong> Ce main
- * est le point de confluence : le domaine des semaines 3-11 (records,
- * immuabilité, collections, streams), le Builder de la semaine 13, le CSV de
- * la semaine 7, le JDBC de la semaine 12, et une CLI faite de fonctions pures
+ * est le point de confluence : le domaine des modules 20 à 80 (records,
+ * immuabilité, collections, streams), le Builder du module 95, le CSV du
+ * module 60, le JDBC du module 90, et une CLI faite de fonctions pures
  * — assemblés en cinq phases qui se lisent comme le sommaire du cours.
  *
  * <p><strong>Aucune interactivité</strong> (pas de {@code Scanner}, pas de
@@ -120,7 +120,7 @@ public final class TransitApp {
      * <p>Le round-trip compare les stations TRIÉES (la base rend un ordre
      * {@code ORDER BY code}, le Builder un ordre de déclaration — l'identité
      * des listes ne doit rien à cette différence) et l'ordre des arrêts de
-     * chaque ligne : la colonne {@code position} de W12 a survécu, sinon les
+     * chaque ligne : la colonne {@code position} du module 90 a survécu, sinon les
      * {@code Line} rechargées ne seraient pas structurellement égales aux
      * originales (l'égalité d'un record inclut sa liste d'arrêts, ordonnée).
      */
@@ -170,7 +170,7 @@ public final class TransitApp {
         }
     }
 
-    /** @return le contenu de {@code zones.csv} (format W7 : {@code numero;nom}) */
+    /** @return le contenu de {@code zones.csv} (format du module 60 : {@code numero;nom}) */
     private static String csvZones(Network reseau) {
         StringBuilder sb = new StringBuilder("# zones\n");
         for (var z : reseau.zones()) {
@@ -179,7 +179,7 @@ public final class TransitApp {
         return sb.toString();
     }
 
-    /** @return le contenu de {@code stations.csv} (format W7 : {@code code;nom;zone;accessible}) */
+    /** @return le contenu de {@code stations.csv} (format du module 60 : {@code code;nom;zone;accessible}) */
     private static String csvStations(Network reseau) {
         StringBuilder sb = new StringBuilder("# stations\n");
         for (Station s : reseau.stations()) {
@@ -189,7 +189,7 @@ public final class TransitApp {
         return sb.toString();
     }
 
-    /** @return le contenu de {@code lignes.csv} (format W7 : {@code nom;arret1;arret2;...}) */
+    /** @return le contenu de {@code lignes.csv} (format du module 60 : {@code nom;arret1;arret2;...}) */
     private static String csvLignes(Network reseau) {
         StringBuilder sb = new StringBuilder("# lignes\n");
         for (Line l : reseau.lignes()) {
@@ -212,8 +212,7 @@ public final class TransitApp {
     }
 
     /**
-     * Phase 5 : la rétrospective — six blocs de texte, cinq principes,
-     * treize semaines relues.
+     * Phase 5 : la rétrospective — six blocs de texte, cinq principes, tout le parcours relu.
      *
      * <p>Chaque principe cite SA démonstration dans le fil rouge : le
      * SOLID n'est plus une définition à réciter, c'est l'inventaire de ce
