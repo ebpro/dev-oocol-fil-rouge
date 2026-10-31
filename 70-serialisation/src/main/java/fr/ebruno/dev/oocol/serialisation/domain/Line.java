@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Une ligne du réseau : un nom et la liste ordonnée de ses arrêts.
  *
- * <p><strong>La leçon cachée de cette classe : la sérialisation est
+ * <p><strong>Le point non évident de cette classe : la sérialisation est
  * transitiv.</strong> {@code Line} est {@code Serializable} ; elle sérialise
  * donc aussi tout ce que sa liste contient. Deux conséquences démontrées en
  * tests :
@@ -81,7 +81,7 @@ public class Line implements Serializable {
     }
 
     /**
-     * @return les arrêts dans l'ordre, en vue non modifiable (contrat W3 repris)
+     * @return les arrêts dans l'ordre, en vue non modifiable (contrat du module 20 repris)
      */
     public List<Station> getStations() {
         return Collections.unmodifiableList(arrets);

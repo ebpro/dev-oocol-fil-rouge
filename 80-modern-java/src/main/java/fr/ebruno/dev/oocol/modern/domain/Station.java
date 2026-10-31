@@ -9,8 +9,7 @@ import java.util.Objects;
  * modules 20 à 70 : quatre champs {@code private final}, constructeur
  * gardien, quatre getters, {@code equals}/{@code hashCode}/{@code toString}
  * recopiés à la main, plus l'implémentation de {@code Comparable}. Le record
- * absorbe toute la plomberie ; il ne reste que ce qui a une valeur
- * pédagogique : les gardes du constructeur compact et les méthodes métier
+ * absorbe toute la plomberie ; il ne reste que ce qui a une valeur de conception : les gardes du constructeur compact et les méthodes métier
  * ({@link #compareTo}, {@link #affichage()}).
  *
  * <p><strong>Un record n'est pas qu'un data-carrier muet.</strong> Il peut

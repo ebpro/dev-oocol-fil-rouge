@@ -32,9 +32,9 @@ import fr.ebruno.dev.oocol.modern.domain.Zone;
  * Les sept scènes du Java moderne, jouées sur le réseau Trans'U.
  *
  * <p><strong>Lecture.</strong> Chaque scène est une méthode privée autonome,
- * titrée, commentable séparément en TD. Le fil rouge de la démo tient en une
- * phrase : <em>le code de W3-W7 est verbeux et défensif, les mêmes opérations
- * en Java 21 tiennent en trois lignes — le diff est la leçon</em>. Les scènes
+ * titrée, commentable séparément. Le fil rouge de la démo tient en une
+ * phrase : <em>le code des modules 20 à 60 est verbeux et défensif, les mêmes opérations
+ * en Java 21 tiennent en trois lignes — le diff est la démonstration</em>. Les scènes
  * 4 à 6 jouent d'ailleurs le duo {@link AnalyseReseau} / {@link VersionLegacy}
  * côte à côte et impriment l'égalité des résultats.
  *
@@ -45,7 +45,7 @@ import fr.ebruno.dev.oocol.modern.domain.Zone;
  * <p><strong>Scènes.</strong> 1 : records (plomberie générée, {@code var},
  * immutabilité) ; 2 : {@code sealed} + switch de motifs sur {@code Vehicle}
  * (exhaustivité vérifiée) ; 3 : pattern matching sur {@code Tarif} ; 4 :
- * pipelines Streams contre boucles W4-W6 ; 5 : {@code Optional} en chaîne,
+ * pipelines Streams contre boucles des modules 30 à 50 ; 5 : {@code Optional} en chaîne,
  * adieu le {@code null} + {@code if} ; 6 : blocs de texte {@code """} ;
  * 7 : {@code Files.lines} en stream — déverrouillé ici, interdit au module 60.
  *
@@ -194,7 +194,7 @@ public final class ModernJavaDemo {
         var zone = new Zone(1, "Centre");
         var ligne = new Ligne("A", List.of(new Station("GAR", "Gare Centrale", zone, true)));
 
-        // Le W5-way : « Station trouver(...) » renvoyait null, et l'appelant
+        // La version précédente : « Station trouver(...) » renvoyait null, et l'appelant
         // devinait — le NPE au bout du doigt. Ici l'absence est dans le type.
         Optional<Station> trouvee = ligne.trouverParCode("GAR");
         trouvee.map(Station::affichage)

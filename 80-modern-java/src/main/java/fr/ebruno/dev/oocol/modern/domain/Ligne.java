@@ -6,18 +6,16 @@ import java.util.Optional;
 /**
  * Une ligne du réseau : un nom et une liste d'arrêts — record à composant collection.
  *
- * <p><strong>Le piège que le constructeur compact désamorce.</strong> Un
+ * <p><strong>Le point de vigilance que le constructeur compact désamorce.</strong> Un
  * record rend ses composants accessibles, mais ne les rend pas immuables
  * <em>pour de bon</em> si le composant est mutable : passer un
  * {@code ArrayList} au constructeur laisserait l'appelant modifier la liste
  * <em>après coup</em>, « par-derrière » l'objet censé être figé. La parade
  * tient en une ligne : {@code List.copyOf} dans le constructeur compact —
- * copie défensive plus liste non modifiable. C'est la leçon d'encapsulation
- * des semaines 3-5, enfin pliable en une instruction.
+ * copie défensive plus liste non modifiable. C'est le principe d'encapsulation des modules 20-40, enfin pliable en une instruction.
  *
  * <p><strong>{@link Optional} au lieu de {@code null}.</strong>
- * {@link #trouverParCode} renvoie un {@code Optional<Station>} : le module 50
- * avait enseigné à ne pas renvoyer {@code null} sans le dire ; Java 21 sait
+ * {@link #trouverParCode} renvoie un {@code Optional<Station>} : le module 50 avait posé le principe de ne pas renvoyer {@code null} sans le dire ; Java 21 sait
  * le dire dans le type même de la méthode, et l'appelant est forcé de
  * traiter l'absence (cf. scène 5 de la démonstration).
  *

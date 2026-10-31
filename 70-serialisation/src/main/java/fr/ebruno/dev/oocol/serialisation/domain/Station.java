@@ -32,7 +32,7 @@ import java.io.Serializable;
  *
  * <p><strong>Les compteurs statiques</strong> ({@code compteurEcritures},
  * {@code compteurLectures}) servent aux tests : ils prouvent que le hook
- * est bien appelé par le mécanisme, jamais à la main. Ironie pédagogique :
+ * est bien appelé par le mécanisme, jamais à la main. Contrepartie :
  * étant {@code static}, ils ne voyagent pas dans le flux (cf.
  * {@code VersioningTest}).
  *

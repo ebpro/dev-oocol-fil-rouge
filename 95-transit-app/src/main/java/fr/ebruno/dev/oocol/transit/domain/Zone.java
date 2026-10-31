@@ -3,7 +3,7 @@ package fr.ebruno.dev.oocol.transit.domain;
 /**
  * Une zone tarifaire du réseau « Trans'U » — la forme finale du module 95.
  *
- * <p><strong>Treize semaines d'évolution en un record.</strong> Le {@code Zone}
+ * <p><strong>Trois modules d’évolution en un record.</strong> Le {@code Zone}
  * du module 20 était une classe avec champs privés, constructeur gardien,
  * getters et {@code equals}/{@code hashCode} écrits à la main. Celui du module
  * 80 devient un record. Ici, la même ligne de déclaration scelle la forme

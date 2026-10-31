@@ -5,9 +5,9 @@ package fr.ebruno.dev.oocol.exceptions.domain;
  * inconnu, le programme est mal construit — on ne « rattrape » pas, on
  * corrige le code appelant.
  *
- * <p><strong>Le contre-exemple pédagogique de la hiérarchie.</strong> Elle
+ * <p><strong>Le contre-exemple de la hiérarchie.</strong> Elle
  * n'hérite PAS de {@link NetworkException} — elle hérite directement de
- * {@code RuntimeException}. Ce choix est le message de la semaine :
+ * {@code RuntimeException}. Ce choix est le message central du module :
  * « station inconnue » n'est pas une situation que l'appelant peut réparer
  * (il n'a rien à re-planifier, rien à recharger — il a demandé une station
  * que le réseau ne connaît pas, donc <em>son</em> code est faux). Obliger
@@ -17,7 +17,7 @@ package fr.ebruno.dev.oocol.exceptions.domain;
  *
  * <p>Elle porte le {@code code} cherché : un appelant qui <em>a une bonne
  * raison</em> d'anticiper l'absence (un import de fichier malveillant, par
- * exemple — module {@code 60-io}) peut la rattraper et lire la donnée utile
+ * exemple) peut la rattraper et lire la donnée utile
  * sans parser le message.
  *
  * @author Emmanuel Bruno

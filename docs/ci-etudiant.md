@@ -27,9 +27,8 @@ et analyse votre code automatiquement à chaque push.
 
 - **Build rouge** → lisez le log dans l'onglet Actions. L'étape qui a échoué est surlignée en rouge.
 - **Timeout** → le cache Maven est activé ; réessayez (le premier build est lent, les suivants rapides).
-- **Vous voulez tout vérifier en local** → `./mvnw clean verify` (identique à l'instructor CI).
+- **Vous voulez tout vérifier en local** → `./mvnw clean verify`.
 
-## Différence avec le CI enseignant
+## Périmètre du Student CI
 
-Le CI enseignant (workflow `Build`) ajoute : JDK 21 + JDK 25 (matrice), SonarQube, CodeQL.
-Le Student CI est volontairement simplifié : JDK 21 seul, aucune dépendance externe.
+Le Student CI est volontairement simplifié : JDK 25, aucune dépendance externe.

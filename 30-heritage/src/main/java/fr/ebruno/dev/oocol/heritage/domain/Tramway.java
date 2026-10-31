@@ -95,8 +95,8 @@ public class Tramway extends Vehicle implements Capteur, Rechargeable {
      *
      * <p>Version simplifiée assumée : le capteur de vitesse lit la vitesse
      * <em>maximale de conception</em> plutôt qu'une télémétrie temps réel —
-     * hors sujet en W4, l'important est que la méthode du contrat
-     * {@link Capteur} soit honorée.
+     * l'essentiel est que la méthode du contrat {@link Capteur} soit
+     * honorée.
      */
     @Override
     public double lireVitesse() {

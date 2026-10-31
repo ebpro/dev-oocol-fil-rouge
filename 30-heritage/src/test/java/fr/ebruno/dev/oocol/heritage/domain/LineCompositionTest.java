@@ -6,7 +6,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import org.junit.jupiter.api.Test;
 
 /**
- * Tests de {@link Line} (version W4) — la composition et la délégation, avec
+ * Tests de {@link Line} dans ce module — la composition et la délégation, avec
  * la preuve réflexive que la ligne n'hérite pas du véhicule : le LSP est
  * respecté par construction.
  *

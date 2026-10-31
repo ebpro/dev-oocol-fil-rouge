@@ -13,9 +13,9 @@ import java.util.Set;
  * Planificateur d'itinéraires : le chemin le plus court entre deux stations,
  * par parcours en largeur (BFS).
  *
- * <p><strong>La scène où chaque conteneur joue son rôle.</strong> Un même
- * algorithme mobilise les quatre familles de la séance, chacune choisie pour
- * sa sémantique :
+ * <p><strong>Ici, chaque conteneur joue son rôle.</strong> Un même
+ * algorithme mobilise les quatre familles de collections, chacune choisie
+ * pour sa sémantique :
  * <ul>
  *   <li>{@code Queue<Station>} (implémentée par {@code LinkedList}) : la
  *       frontière à explorer — le BFS traite les stations dans l'ordre où il
@@ -32,8 +32,8 @@ import java.util.Set;
  * <p>Le graphe exploré relie deux stations quand elles sont <em>consécutives
  * sur une même ligne</em> ({@link #voisinsDe}) : le BFS compte donc des
  * trajets d'arrêts, et le premier chemin trouvé est le plus court en nombre
- * d'arrêts intermédiaires. Le tri par « changements de ligne minimaux »
- * resterait en exercice de séance.
+ * d'arrêts intermédiaires. Le tri par « changements de ligne minimaux » est
+ * hors du périmètre de ce module.
  *
  * <p><strong>Parcours en largeur, en français :</strong> on explore toutes
  * les stations à 1 arrêt de distance, puis toutes celles à 2, etc. — comme
@@ -147,7 +147,7 @@ public final class TripPlanner {
         }
 
         if (!atteinte) {
-            return cheminVide(); // réseau débranché entre les deux points — cf. W6 : exception
+            return cheminVide(); // réseau débranché entre les deux points — vide = échec
         }
 
         // Reconstruction À L'ENVERS : de l'arrivée vers le départ via les

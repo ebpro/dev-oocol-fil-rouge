@@ -13,10 +13,10 @@ import fr.ebruno.dev.oocol.transit.domain.NetworkBuilder;
 import fr.ebruno.dev.oocol.transit.domain.NetworkException;
 
 /**
- * Charge un réseau depuis trois fichiers CSV — le concept du module 60 (W7),
+ * Charge un réseau depuis trois fichiers CSV — le concept du module 60,
  * raconté cette fois à travers le Builder.
  *
- * <p><strong>Comparez avec W7 : même parsing CSV, mais la construction passe
+ * <p><strong>Comparez avec le module 60 : même parsing CSV, mais la construction passe
  * par le Builder → plus lisible.</strong> Le {@code NetworkLoader} du module
  * 60 devait maintenir lui-même les index {@code numéro → Zone} et
  * {@code code → Station}, faire la résolution des lignes à la main et
@@ -27,14 +27,14 @@ import fr.ebruno.dev.oocol.transit.domain.NetworkException;
  * une seule implémentation de ces règles pour le CSV, le JDBC et le code
  * duré. SRP gagnée sur toute la ligne.
  *
- * <p><strong>Contrat du répertoire (identique à W7).</strong>
+ * <p><strong>Contrat du répertoire (identique au module 60).</strong>
  * <ul>
  *   <li>{@code zones.csv} — une zone par ligne : {@code numero;nom} ;</li>
  *   <li>{@code stations.csv} — un arrêt par ligne : {@code code;nom;zoneNumero;accessible} ;</li>
  *   <li>{@code lignes.csv} — une ligne par ligne : {@code nom;codeStation1;codeStation2;...}.</li>
  * </ul>
  * Lignes vides et commentaires ({@code #} en premier caractère) ignorés ;
- * lecture en UTF-8 explicite (W7 : <em>un octet n'a de sens que dans un
+ * lecture en UTF-8 explicite (module 60 : <em>un octet n'a de sens que dans un
  * encoding</em>).
  *
  * @author Emmanuel Bruno
@@ -130,7 +130,7 @@ public final class NetworkLoader {
     /**
      * Lit un fichier et n'en retient que les lignes significatives : vides et
      * commentaires ({@code #}) retirés, fins normalisées. Try-with-resources :
-     * le reader ferme même en cas de levée (W6-W7).
+     * le reader ferme même en cas de levée (modules 50-60).
      */
     private static List<String> lireLignes(Path fichier) throws NetworkException {
         if (!Files.isRegularFile(fichier)) {

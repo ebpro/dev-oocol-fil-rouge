@@ -9,9 +9,9 @@ import java.util.List;
  * le résultat brut d'un {@link NetworkLoader#charger(java.nio.file.Path) chargement},
  * sans index ni invariants d'exploitation.
  *
- * <p><strong>Rôle pédagogique.</strong> Ce type est l'exemple du « DTO de
+ * <p><strong>Rôle.</strong> Ce type est l'exemple du « DTO de
  * lecture » : les listes sont défensivement copiées à la construction puis
- * exposées en vues non modifiables (contrat W5 — le chargeur garde la
+ * exposées en vues non modifiables (contrat du module 40 — le chargeur garde la
  * maîtrise de ce que contiennent les collections). Un {@code toString}
  * condensé permet d'afficher un chargement entier en une ligne de log.
  *

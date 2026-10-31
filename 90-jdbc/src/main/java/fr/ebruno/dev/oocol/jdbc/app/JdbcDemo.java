@@ -14,8 +14,7 @@ import fr.ebruno.dev.oocol.jdbc.security.SqlInjectionDemo;
 /**
  * Les six scènes du JDBC sur le réseau Trans'U (ELO 12).
  *
- * <p><strong>Le fil narratif.</strong> Semaine 12 : le {@code NetworkSnapshot}
- * sérialisé de W8 était fragile (format binaire opaque) et mono-poste (un
+ * <p><strong>Le fil narratif.</strong> le {@code NetworkSnapshot} sérialisé du module 70 était fragile (format binaire opaque) et mono-poste (un
  * fichier, un utilisateur à la fois). Une vraie base de données résout la
  * concurrence, les requêtes et l'intégrité — cette démo joue ce passage.
  *
@@ -28,8 +27,7 @@ import fr.ebruno.dev.oocol.jdbc.security.SqlInjectionDemo;
  * à zéro — la base est un état comme un autre, elle se vide.
  *
  * <p><strong>Zéro pollution.</strong> La base est {@code jdbc:h2:mem:} : en
- * mémoire, sans fichier, détruite avec la JVM. Elle tourne identiquement en
- * TD et dans la CI.
+ * mémoire, sans fichier, détruite avec la JVM. Elle tourne identiquement en local et dans la CI.
  *
  * @author Emmanuel Bruno
  * @see fr.ebruno.dev.oocol.jdbc.dao

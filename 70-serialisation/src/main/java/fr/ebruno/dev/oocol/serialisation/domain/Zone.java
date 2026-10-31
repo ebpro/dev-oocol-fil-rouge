@@ -5,13 +5,13 @@ import java.io.Serializable;
 /**
  * Une zone tarifaire du réseau « Trans'U », cette fois <em>sérialisable</em>.
  *
- * <p><strong>Instantané W8.</strong> {@code Zone} revient du module 60 avec
+ * <p><strong>Version sérialisable.</strong> {@code Zone} revient du module 60 avec
  * un seul ajout en apparence anodin : {@code implements Serializable} et sa
  * constante {@code serialVersionUID}. Apparence anodine, car ce couple est
  * un <em>contrat binaire</em> : dès qu'un objet traverse un flux d'octets
  * (fichier, socket, cache), sa classe s'engage sur un format. Le numéro de
- * version de ce format, c'est {@code serialVersionUID} — et la semaine
- * entière explore ce qui se passe quand on rompt l'engagement.
+ * version de ce format, c'est {@code serialVersionUID} — et tout le module
+ * entier explore ce qui se passe quand on rompt l'engagement.
  *
  * <p><strong>Pourquoi une constante écrite à la main ?</strong> Sans
  * déclaration explicite, la JVM <em>calcule</em> le UID à partir de la
@@ -89,7 +89,7 @@ public class Zone implements Serializable {
     }
 
     /**
-     * Deux zones sont égales quand elles ont le même numéro (contrat W3 repris).
+     * Deux zones sont égales quand elles ont le même numéro (contrat du module 20 repris).
      *
      * @param o l'objet à comparer
      * @return {@code true} si {@code o} est une zone de même numéro

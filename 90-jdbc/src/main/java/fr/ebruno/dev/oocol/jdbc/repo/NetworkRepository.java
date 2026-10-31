@@ -9,10 +9,9 @@ import fr.ebruno.dev.oocol.jdbc.dao.impl.LineDaoJdbc;
 import fr.ebruno.dev.oocol.jdbc.dao.impl.StationDaoJdbc;
 
 /**
- * Façade du réseau persistant — le point d'entrée unique des services W2-W8.
+ * Façade du réseau persistant — le point d’entrée unique des services des modules 10 à 70.
  *
- * <p><strong>Facade</strong> — masque la complexité JDBC. Les classes de
- * service W2-W8 ne changent pas, on remplace seulement le stockage : elles
+ * <p><strong>Facade</strong> — masque la complexité JDBC. Les classes de service des modules 10 à 70 ne changent pas, on remplace seulement le stockage : elles
  * manipulaient des {@code List} en mémoire, elles manipulent désormais des
  * DAO derrière cette façade, et c'est tout.
  *
@@ -25,7 +24,7 @@ import fr.ebruno.dev.oocol.jdbc.dao.impl.StationDaoJdbc;
  * </ul>
  *
  * <p>Note de vocabulaire : en JPA, « repository » désigne plus ou moins ceci.
- * Le mot est choisi ici pour que la transition terminologique W13→W14 soit
+ * Le mot est choisi ici pour que la transition terminologique vers JPA soit
  * douce — mais ce repository-là est fait de JDBC brut, pas de magie.
  */
 public final class NetworkRepository {
@@ -57,7 +56,7 @@ public final class NetworkRepository {
         return lineDao;
     }
 
-    /** @return la connexion sous-jacente — exposée pour la pédagogie des transactions */
+    /** @return la connexion sous-jacente — exposée pour rendre les transactions visibles */
     public Connection connexion() {
         return connection;
     }

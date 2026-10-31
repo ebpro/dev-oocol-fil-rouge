@@ -70,7 +70,7 @@ public final class VehicleFactory {
             case "tram":
                 return new Tramway(immat, capacite, vitesse, 33.0, 0.8);
             default:
-                // Message pédagogique : nommer l'inconnu ET la liste des connus.
+                // Le message nomme l'inconnu ET la liste des types connus.
                 throw new IllegalArgumentException(
                         "Type de véhicule inconnu : " + type + " (attendu : metro, bus ou tram)");
         }

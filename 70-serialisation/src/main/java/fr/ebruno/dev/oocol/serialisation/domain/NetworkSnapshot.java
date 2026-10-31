@@ -61,7 +61,7 @@ public class NetworkSnapshot implements Serializable {
 
     /**
      * Construit un instantané à partir de listes copiées (le snapshot ne se
-     * laisse pas modifier après capture — le principe W2 s'applique aussi aux octets).
+     * laisse pas modifier après capture — la copie défensive vaut aussi pour les octets).
      *
      * @param lignes      les lignes du réseau, non {@code null}
      * @param zones       les zones du réseau, non {@code null}
@@ -114,7 +114,7 @@ public class NetworkSnapshot implements Serializable {
      *
      * <p>Le couple {@code FileOutputStream} + {@code ObjectOutputStream} est
      * le B.A.-BA du module : le second enveloppe le premier (motif Decorator,
-     * séance io) et ajoute la couche « objets » à la couche « octets ».
+     * vu au module 60) et ajoute la couche « objets » à la couche « octets ».
      * Fermer le {@code ObjectOutputStream} ferme tout le monde — try-with-resources.
      *
      * @param fichier chemin cible (les parents doivent exister)
@@ -130,7 +130,7 @@ public class NetworkSnapshot implements Serializable {
     /**
      * Relit un instantané écrit par {@link #sauvegarder}.
      *
-     * <p><strong>Avertissement de sécurité (piège n° 2 du module)</strong> :
+     * <p><strong>Avertissement de sécurité — flux non fiables</strong> :
      * {@code readObject} reconstruit n'importe quelle classe du <em>classpath
      * du lecteur</em> dont le nom apparaît dans le flux. Un fichier
      * sérialisé n'est pas une donnée, c'est une <em>programme d'assemblage

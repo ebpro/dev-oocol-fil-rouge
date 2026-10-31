@@ -50,7 +50,7 @@ public class FareCalculator {
      *
      * <p>Les collections reçues sont COPIÉES puis triées : le calculateur ne
      * devient jamais le otage de la liste d'un appelant qui la modifierait
-     * après coup (la leçon d'encapsulation de W3, appliquée aux conteneurs —
+     * après coup (l'encapsulation appliquée aux conteneurs —
      * un getter qui expose la liste interne annule toute l'histoire).
      *
      * @param zonesInitiales  les zones du réseau, non vides

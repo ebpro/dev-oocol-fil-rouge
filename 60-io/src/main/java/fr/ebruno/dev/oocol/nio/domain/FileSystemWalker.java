@@ -13,19 +13,19 @@ import java.util.List;
 
 /**
  * Boîte à outils autour de {@link Path} : chercher, mesurer, composer des
- * chemins. Trois gestes NIO.2 qui couvrent l'essentiel de la semaine.
+ * chemins. Trois gestes NIO.2 qui couvrent l'essentiel du module.
  *
  * <p><strong>Pourquoi pas {@code Files.walk()} ?</strong> {@code Files.walk}
  * retourne un {@code java.util.stream.Stream} — la API Streams est le
  * module 80 du fil rouge, et l'utiliser ici serait tricher deux fois :
  * d'abord avec le programme, ensuite avec la raison d'être de ces outils
  * (un {@code Stream} sur des fichiers DOIT être fermé — {@code try (Stream...)}
- * — une subtilité que la semaine 8 enseignera avec le recul nécessaire).
+ * — subtilité que le module 80 traite avec le recul nécessaire).
  * Ici on utilise donc {@link Files#newDirectoryStream} (pré-streams, lui
  * aussi {@code Closeable}, mais fermé par le même try-with-resources déjà
- * appris en W6/W7) et {@link Files#walkFileTree} avec un {@link
+ * appris aux modules 50-60) et {@link Files#walkFileTree} avec un {@link
  * SimpleFileVisitor} anonyme : la visite impérative, explicite, ligne à
- * ligne — exactement le niveau d'abstraction de la semaine.
+ * ligne — exactement le niveau d'abstraction du module.
  *
  * @author Emmanuel Bruno
  * @see NetworkLoader
@@ -45,7 +45,7 @@ public final class FileSystemWalker {
      * filtre à la source, pas une boucle qui filtre après coup. Le stream
      * est une ressource fermée par try-with-resources — un
      * {@code DirectoryStream} non fermé garde un descripteur de dossier
-     * ouvert, le même piège que le reader de {@link
+     * ouvert, la même fuite de descripteur que le reader de {@link
      * NetworkLoader#chargerSansFermer(Path)}.
      *
      * @param repertoire dossier à parcourir (NON récursif — {@link #tailleTotale(Path)}
@@ -90,7 +90,7 @@ public final class FileSystemWalker {
     public static long tailleTotale(Path repertoire) throws NetworkException {
         // Le compteur survit aux appels du visiteur via ce tableau à une case :
         // une variable locale ne peut pas être « mutée » depuis une classe anonyme
-        // (elle devrait être effectively final — concept de la semaine 8).
+        // (elle devrait être effectively final — concept repris au module 80).
         final long[] total = new long[1];
         try {
             Files.walkFileTree(repertoire, new SimpleFileVisitor<Path>() {

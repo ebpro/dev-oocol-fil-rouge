@@ -12,17 +12,16 @@ import java.util.Set;
 
 /**
  * Le miroir verbeux : les mêmes opérations qu'{@link AnalyseReseau}, écrites
- * « à la main » dans le style des semaines 4 à 7 — boucles for-each,
+ * « à la main » dans le style des modules 30 à 60 — boucles for-each,
  * {@code instanceof} + cast, {@code Map.put} manuel, {@code StringBuilder}
  * et {@code Comparator} en classe interne anonyme.
  *
  * <p><strong>Ce fichier n'est PAS le code correct.</strong> Il compile, il
  * tourne, et il produit des résultats <em>strictement identiques</em> à
- * {@link AnalyseReseau} — c'est précisément la preuve pédagogique : le diff
- * entre les deux fichiers EST la leçon (3 lignes de pipeline contre 15 lignes
+ * {@link AnalyseReseau} — c'est précisément la démonstration : le diff
+ * entre les deux fichiers EST la démonstration (3 lignes de pipeline contre 15 lignes
  * de boucle, à résultat égal). On le garde dans le dépôt comme borne
- * « avant », pour que les étudiants comptent les lignes plutôt que de me
- * croire sur parole.
+ * « avant », pour compter les lignes soi-même plutôt que de croire le commentaire sur parole.
  *
  * <p><strong>Pourquoi « défensif ».</strong> Chaque {@code else} final qui
  * lance {@code IllegalStateException} (« type inattendu ») est une branche
@@ -38,7 +37,7 @@ public final class VersionLegacy {
     private VersionLegacy() {
     }
 
-    // ANCIENNE FAÇON (W4-W6) — ~8 lignes. Comparez avec AnalyseReseau.stationsAccessibles() : 3 lignes.
+    // ANCIENNE FAÇON (style des modules précédents) — ~8 lignes. Comparez avec AnalyseReseau.stationsAccessibles() : 3 lignes.
     /**
      * Filtre des arrêts accessibles par boucle et variable tampon.
      *
@@ -55,7 +54,7 @@ public final class VersionLegacy {
         return resultat;
     }
 
-    // ANCIENNE FAÇON (W4-W6) — ~15 lignes, double boucle + put manuel. Comparez avec AnalyseReseau.grouperParZone() : 4 lignes.
+    // ANCIENNE FAÇON (style des modules précédents) — ~15 lignes, double boucle + put manuel. Comparez avec AnalyseReseau.grouperParZone() : 4 lignes.
     /**
      * Regroupe les arrêts par zone avec deux boucles imbriquées et une
      * gestion manuelle de la carte (containsKey / get / put).
@@ -81,7 +80,7 @@ public final class VersionLegacy {
         return resultat;
     }
 
-    // ANCIENNE FAÇON (W5) — instanceof + cast à la chaîne, avec le "else" qui jette. Comparez avec AnalyseReseau.prixDe() : un switch scellé sans cast.
+    // ANCIENNE FAÇON (style des modules précédents) — instanceof + cast à la chaîne, avec le "else" qui jette. Comparez avec AnalyseReseau.prixDe() : un switch scellé sans cast.
     /**
      * Prix d'un tarif par chaîne {@code instanceof}/{@code cast} : le compilateur
      * ne vérifie rien, d'où le {@code else} final « type inattendu » — branche
@@ -104,7 +103,7 @@ public final class VersionLegacy {
         }
     }
 
-    // ANCIENNE FAÇON (W4-W6) — accumulateur double + garde liste vide. Comparez avec AnalyseReseau.prixMoyen() : mapToDouble().average().
+    // ANCIENNE FAÇON (style des modules précédents) — accumulateur double + garde liste vide. Comparez avec AnalyseReseau.prixMoyen() : mapToDouble().average().
     /**
      * Prix moyen par accumulateur explicite (somme, taille, division) — le
      * {@code OptionalDouble} n'apparaît qu'à la fin, « emballé » à la main.
@@ -123,7 +122,7 @@ public final class VersionLegacy {
         return OptionalDouble.of(somme / tarifs.size());
     }
 
-    // ANCIENNE FAÇON (W4) — Comparator en classe interne anonyme sur un ArrayList trié en place. Comparez avec AnalyseReseau.trierParCode() : sorted().
+    // ANCIENNE FAÇON (style des modules précédents) — Comparator en classe interne anonyme sur un ArrayList trié en place. Comparez avec AnalyseReseau.trierParCode() : sorted().
     /**
      * Trie une copie des stations par code, avec le {@code Comparator}
      * anonyme des débuts : cinq lignes pour exprimer ce que
@@ -143,7 +142,7 @@ public final class VersionLegacy {
         return copie;
     }
 
-    // ANCIENNE FAÇON (W5) — instanceof + cast + concaténation. Comparez avec le switch de motifs sur Vehicle (scène 2 de la démo) : sans cast, vérifié exhaustif.
+    // ANCIENNE FAÇON (style des modules précédents) — instanceof + cast + concaténation. Comparez avec le switch de motifs sur Vehicle (scène 2 de la démo) : sans cast, vérifié exhaustif.
     /**
      * Rapport technique d'un véhicule, dans le style pré-16 : trois
      * {@code instanceof} suivis de trois casts, plus le {@code throw} de
@@ -167,7 +166,7 @@ public final class VersionLegacy {
         }
     }
 
-    // ANCIENNE FAÇON (W6-W7) — StringBuilder ligne par ligne, compteurs manuels. Comparez avec AnalyseReseau.resumerReseau() : un bloc """ et trois pipelines.
+    // ANCIENNE FAÇON (style des modules précédents) — StringBuilder ligne par ligne, compteurs manuels. Comparez avec AnalyseReseau.resumerReseau() : un bloc """ et trois pipelines.
     /**
      * Résumé du réseau par {@code StringBuilder} : chaque ligne du texte est
      * un {@code append} avec son {@code \n} explicite — le résultat est

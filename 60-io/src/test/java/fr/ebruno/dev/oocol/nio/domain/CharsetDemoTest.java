@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
 /**
- * Tests du charset — la leçon que « le texte » n'existe pas sur disque :
+ * Tests du charset — « le texte » n'existe pas sur disque :
  * il n'y a que des octets, et un encoding est le contrat qui décide lesquels
  * signifient quoi. Deux fichiers BYTE-différents peuvent relire le MÊME
  * texte (pourvu qu'on connaisse leur contrat) ; un même fichier peut relire

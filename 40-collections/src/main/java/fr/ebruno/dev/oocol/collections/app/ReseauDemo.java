@@ -16,12 +16,11 @@ import fr.ebruno.dev.oocol.collections.domain.TripPlanner;
 import fr.ebruno.dev.oocol.collections.domain.Zone;
 
 /**
- * La démonstration de la semaine 5 : le réseau Trans'U découvre les
- * collections.
+ * Démonstration des collections appliquées au réseau Trans'U.
  *
- * <p>Six scènes, dans l'ordre de la séance :
+ * <p>Six scènes :
  * <ol>
- *   <li>construction — la paire W3 devient une {@code List<Station>} ;</li>
+ *   <li>construction — la paire de champs devient une {@code List<Station>} ;</li>
  *   <li>equals/hashCode — le bug motivateur, joué puis résolu ;</li>
  *   <li>TripPlanner — l'itinéraire le plus court par BFS sur une Queue ;</li>
  *   <li>correspondances — la Map d'adjacence qui répond en O(1) ;</li>
@@ -29,9 +28,9 @@ import fr.ebruno.dev.oocol.collections.domain.Zone;
  *   <li>tarifs — la zone la plus profonde traversée décide du prix.</li>
  * </ol>
  *
- * <p>Aucun lambda, aucun stream, aucun {@code Optional} : toute la séance
- * reste en syntaxe « pré-module 80 », pour que la modernité de W10 se
- * mesure en diff. Exécutable avec :
+ * <p>Aucun lambda, aucun stream, aucun {@code Optional} : syntaxe
+ * volontairement antérieure au module {@code 80-modern-java}, pour que la
+ * version moderne se mesure en diff. Exécutable avec :
  *
  * <pre>
  * java -cp 40-collections/target/classes fr.ebruno.dev.oocol.collections.app.ReseauDemo
@@ -79,7 +78,7 @@ public final class ReseauDemo {
     }
 
     /**
-     * Assemble le réseau de la séance : trois lignes, sept stations,
+     * Assemble le réseau de démonstration : trois lignes, sept stations,
      * deux correspondances (GAR et HOP).
      *
      * @param aer l'Aéroport

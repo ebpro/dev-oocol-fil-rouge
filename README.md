@@ -15,8 +15,8 @@ collections, exceptions, E/S, sérialisation, modern Java, JDBC…).
 
 | Outil | Version | Remarque |
 |---|---|---|
-| JDK | **21 minimum** (25 conseillé pour la matrice CI) | un seul JDK suffit pour travailler |
-| Maven | **aucune installation requise** | le dépôt livre le wrapper `./mvnw` (Maven 3.9.8) |
+| JDK | **25** | un seul JDK suffit pour travailler |
+| Maven | **aucune installation requise** | le dépôt livre le wrapper `./mvnw` (Maven 3.10.0) |
 | Git | récent | hooks optionnels : `git config core.hooksPath .githooks` |
 
 Aucun plugin d'IDE n'est requis : tout se vérifie en ligne de commande. L'IDE
@@ -47,14 +47,23 @@ leur build).
   POM parent qui centralise versions de plugins et dépendances.
 - **VS Code** : ouvrir le dossier à la racine du dépôt, l'extension Java détecte le
   projet Maven.
-- **Conteneur de développement** : `.devcontainer/` fournit JDK 21 + 25, Git et le
+- **Conteneur de développement** : `.devcontainer/` fournit JDK 25, Git et le
   hook path déjà configurés (Reopen in Container).
+
+## IntelliJ IDEA
+
+À partir de **IntelliJ IDEA 2025.2+** (niveau de langage Java 25 supporté). Les
+intégrations Maven, Gradle, debugger et tests sont **incluses** : aucun plugin
+requis. Dans `File → Project Structure`, définir le **Project SDK sur JDK 25**
+(IDEA détecte automatiquement les JDK installés via sdkman). Le conteneur de
+développement est destiné aux utilisateurs de VS Code ; avec IDEA, travailler
+directement sur l'hôte.
 
 ## Structure
 
 ```
 pom.xml                  ← parent : pluginManagement + dependencyManagement + enforcer
-.github/workflows/       ← CI : build.yml (matrice JDK 21/25), codeql.yml, dependabot
+.github/workflows/       ← CI : build.yml (matrice JDK 25), codeql.yml, dependabot
 .githooks/               ← commit-msg (Conventional Commits), pre-commit, pre-push
 build-tools/             ← checkstyle.xml, pmd-ruleset.xml (warn-only)
 docs/progression.md      ← mapping modules × semaines UTLN × séances CNAM

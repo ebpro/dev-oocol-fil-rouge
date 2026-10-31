@@ -14,7 +14,7 @@ package fr.ebruno.dev.oocol.heritage.domain;
  * erreur de compilation — la notion elle-même est incomplète, seuls les
  * concepts généraux sont abstraits (UML : stéréotype {@code {abstract}}).
  *
- * <p><strong>Tension pédagogique W4.</strong> Sans ancêtre commun, on écrivait
+ * <p><strong>Pourquoi un ancêtre commun ?</strong> Sans ancêtre commun, on écrivait
  * un {@code MetroLine} et un {@code BusLine} quasi identiques — duplication
  * pure. En remontant le commun dans {@code Vehicle}, la sous-classe ne garde
  * que sa différence (la propulsion, ses équipements). C'est le mécanisme que

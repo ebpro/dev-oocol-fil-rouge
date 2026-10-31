@@ -10,13 +10,13 @@ package fr.ebruno.dev.oocol.modern.domain;
  * liste de composants ({@code int numero, String nom}) suffit : le compilateur
  * génère le constructeur canonique, les accesseurs (qui s'appellent
  * {@code numero()} et {@code nom()}, plus {@code getNumero()}), l'égalité
- * structurelle, le hachage et l'affichage. Avant : 40 lignes (W2-W8),
+ * structurelle, le hachage et l'affichage. Avant : 40 lignes (modules 10-70),
  * maintenant : 5.
  *
  * <p><strong>Le constructeur compact</strong> (bloc {@code public Zone { … }}
  * sans signature répétée) est la porte d'entrée unique : il s'exécute
  * <em>avant</em> l'affectation des champs, donc aucune instance invalide ne
- * peut exister. C'est le constructeur gardien des semaines précédentes,
+ * peut exister. C'est le constructeur gardien des modules précédents,
  * enfin imposé par le langage — la désérialisation par-dessus (module 70)
  * ne peut plus le contourner, le record ayant son propre format géré par le
  * compilateur autour de ce constructeur.

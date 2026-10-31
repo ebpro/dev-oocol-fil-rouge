@@ -1,7 +1,7 @@
 @startuml 20-domain-bases
 ' ============================================================
 ' Module 20 - Fondations du domaine (ELO 04)
-' Diagramme de classes pedagogique.
+' Diagramme de classes.
 ' Autorite = code source :
 '   20-domain-bases/src/main/java/fr/ebruno/dev/oocol/bases/domain/
 ' Rendu : voir docs/diagrams/README.md

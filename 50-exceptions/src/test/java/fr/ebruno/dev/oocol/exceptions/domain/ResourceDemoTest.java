@@ -62,7 +62,7 @@ class ResourceDemoTest {
                     }
                 });
 
-        // C'EST LA LEÇON : l'ancienne fermeture manuelle s'oubliait, alors que
+        // POINT CENTRAL : l'ancienne fermeture manuelle s'oubliait, alors que
         // try-with-resources ne l'oublie pas — même dans la tourmente, une fermeture.
         assertThat(r.nombreDeFermetures()).isEqualTo(1);
     }

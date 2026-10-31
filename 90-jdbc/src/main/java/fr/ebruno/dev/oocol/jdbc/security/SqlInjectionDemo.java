@@ -11,7 +11,7 @@ import fr.ebruno.dev.oocol.jdbc.dao.impl.StationDaoJdbc;
 import fr.ebruno.dev.oocol.jdbc.domain.Station;
 
 /**
- * Démonstration pédagogique. Le code vulnérable est là pour être COMPARE, pas copié.
+ * Démonstration. Le code vulnérable est là pour être COMPARE, pas copié.
  *
  * <p><strong>Le mécanisme de l'injection.</strong> Une requête SQL est du
  * <em>code</em> que l'on envoie exécuter au serveur. Concaténer une entrée
@@ -54,7 +54,7 @@ public final class SqlInjectionDemo {
         // NE JAMAIS FAIRE CECI EN PRODUCTION : la valeur est collée DANS le code SQL.
         String sql = "SELECT * FROM stations WHERE code = '" + codeStation + "'";
         try (Statement st = conn.createStatement();
-             ResultSet rs = st.executeQuery(sql)) { // NOSONAR java:S2077 — leçon didactique : la faille est le sujet, pas un défaut
+             ResultSet rs = st.executeQuery(sql)) { // NOSONAR java:S2077 — démo volontaire : la faille est le sujet, pas un défaut
             return formaterLignes(rs);
         }
     }
@@ -109,7 +109,7 @@ public final class SqlInjectionDemo {
                 + "dans la façon d'écrire la requête.");
     }
 
-    /** Mise en forme pédagogique des lignes d'un ResultSet : {@code code|nom}. */
+    /** Mise en forme compacte des lignes d'un ResultSet : {@code code|nom}. */
     private static String formaterLignes(ResultSet rs) throws SQLException {
         StringBuilder sb = new StringBuilder();
         while (rs.next()) {

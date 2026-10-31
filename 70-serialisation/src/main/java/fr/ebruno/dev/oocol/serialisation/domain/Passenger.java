@@ -3,8 +3,8 @@ package fr.ebruno.dev.oocol.serialisation.domain;
 import java.io.Serializable;
 
 /**
- * Le passager « singleton » du réseau — et le piège n° 1 de la sérialisation,
- * joué ici dans sa forme cassée (cf. {@link PassengerCorrige} pour le pansement).
+ * Le passager « singleton » du réseau — point de vigilance central de la
+ * sérialisation, joué ici dans sa forme cassée (cf. {@link PassengerCorrige}).
  *
  * <p><strong>Pourquoi la sérialisation casse les singletons.</strong>
  * Le motif Singleton promet « une seule instance ». Mais le mécanisme de
@@ -24,7 +24,7 @@ import java.io.Serializable;
  * <p><strong>Le remède officiel</strong> : {@code private Object readResolve()}
  * — hook appelé par le mécanisme APRÈS la reconstruction, dont la valeur
  * retournée remplace l'objet relu. Fourni dans {@link PassengerCorrige},
- * testé, et mentionné dans le README (piège n° 1).
+ * testé, et mentionné dans le README (point de vigilance du singleton).
  *
  * @author Emmanuel Bruno
  * @see PassengerCorrige
@@ -37,7 +37,7 @@ public class Passenger implements Serializable {
 
     /**
      * L'instance « singleton » — statique, donc ABSENTE du flux sérialisé.
-     * C'est le piège : le lecteur croit relire l'original, il fabrique un jumeau.
+     * Le lecteur croit relire l'original : la relecture fabrique un jumeau.
      */
     private static Passenger INSTANCE = new Passenger("Passager par défaut");
 
@@ -45,8 +45,8 @@ public class Passenger implements Serializable {
     private final String nom;
 
     /**
-     * Abonnement en cours — {@code transient} : NE voyage PAS (piège n° 3,
-     * cf. {@link Subscription}). Après désérialisation : {@code null}.
+     * Abonnement en cours — {@code transient} : NE voyage PAS (point de
+     * vigilance {@code transient}, cf. {@link Subscription}). Après relecture : {@code null}.
      */
     private transient Subscription abonnement;
 

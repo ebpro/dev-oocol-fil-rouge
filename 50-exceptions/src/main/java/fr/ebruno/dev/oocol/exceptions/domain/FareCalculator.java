@@ -7,7 +7,7 @@ import java.util.Map;
  * Le barème de l'opérateur : un prix par zone traversée, le titre facturée
  * étant le <em>plus grand</em> tarif des zones couvertes par le trajet.
  *
- * <p><strong>Instantané W6 — le second registre unchecked.</strong> Avec
+ * <p><strong>Le second registre unchecked.</strong> Avec
  * {@link StationNotFoundException}, cette classe forme la famille des
  * <em>bugs</em> : un tarif négatif dans la table, une zone traversée sans
  * tarif enregistré, ce sont des incohérences du <em>code qui construit le
@@ -53,7 +53,7 @@ public class FareCalculator {
      * Un prix négatif signifierait « on rembourse l'usager pour voyager » :
      * ça n'existe pas dans le domaine. Le refuser ici par
      * {@link FareCalculationException} — unchecked — plutôt que par une
-     * valeur de retour, c'est le message de la séance appliqué au barème :
+     * valeur de retour, c'est le message central du module appliqué au barème :
      * qui écrit {@code enregistrerTarif(2, -1.5)} a <em>un code faux</em>,
      * et rien en aval ne pourra rattraper cet appel.
      *
@@ -80,7 +80,7 @@ public class FareCalculator {
      * Prix d'un trajet entre deux stations : le plus grand tarif des zones
      * traversées (du point le plus proche du centre au plus lointain).
      *
-     * <p>Contrat W6 : les deux stations sont validées par
+     * <p>Contrat : les deux stations sont validées par
      * {@link Station#requireValide(Station, String)} — une {@code null} en
      * entrée propage une {@link StationNotFoundException} typée, immédiate
      * et localisée, au lieu d'une {@code NullPointerException} différée.

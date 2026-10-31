@@ -13,7 +13,7 @@ package fr.ebruno.dev.oocol.modern.domain;
  * composants de chaque variante sont déstructurés ({@code case TarifUnite t})
  * sans un seul {@code instanceof} ni cast.
  *
- * <p>C'est le « choix de design » de la semaine : le polymorphisme pour un
+ * <p>C'est le « choix de design » du module : le polymorphisme pour un
  * comportement qui <em>appartient</em> au type, le switch scellé pour une
  * opération qui <em>traverse</em> la hiérarchie (ici : la tarification est une
  * politique du réseau, pas une propriété intrinsèque du ticket).

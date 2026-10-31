@@ -4,7 +4,7 @@ package fr.ebruno.dev.oocol.exceptions.domain;
  * Le compte d'un usager du réseau : un solde en euros que la borne
  * {@link #debiter(double)} puise pour payer les titres.
  *
- * <p><strong>Nouvelle entité W6 — le support vivant du checked.</strong>
+ * <p><strong>Nouvelle entité de ce module — le support vivant du checked.</strong>
  * {@code Compte} n'existait pas dans les modules précédents : il est créé
  * parce qu'il fallait une opération dont l'échec est <em>récupérable par
  * nature</em>. Débit refusé faute de solde ? L'appelant a un plan B réel :
@@ -19,7 +19,7 @@ package fr.ebruno.dev.oocol.exceptions.domain;
  * La classe joue les deux registres côte à côte — c'est voulu.
  *
  * <p>Pas de concurrence ici (module mono-thread) : un solde en
- * {@code double} suffit à la pédagogie ; la monnaie strictement exacte
+ * {@code double} suffit à la démonstration ; la monnaie strictement exacte
  * ({@code BigDecimal}) est un sujet hors ELO 07.
  *
  * @author Emmanuel Bruno
@@ -66,7 +66,7 @@ public class Compte {
     /**
      * Puise un montant sur le compte — OU lève une exception récupérable.
      *
-     * <p><strong>Le contrat que la séance dissèque.</strong> Trois issues,
+     * <p><strong>Le contrat au coeur du module.</strong> Trois issues,
      * trois canaux :
      * <ul>
      *   <li>montant négatif → {@link IllegalArgumentException} (unchecked :

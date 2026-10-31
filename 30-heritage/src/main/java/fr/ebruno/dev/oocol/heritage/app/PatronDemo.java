@@ -21,8 +21,7 @@ import fr.ebruno.dev.oocol.heritage.domain.VehicleFactory;
  * java -cp 30-heritage/target/classes fr.ebruno.dev.oocol.heritage.app.PatronDemo
  * }</pre>
  *
- * <p>Lisez de haut en bas : chaque bloc est une scène pédagogique annoncée
- * par son entête {@code println}.
+ * <p>Chaque bloc correspond au thème annoncé par son entête {@code println}.
  *
  * @author Emmanuel Bruno
  */
@@ -39,7 +38,7 @@ public final class PatronDemo {
     // ==================================================================
     // Auxiliaires de la scène 6 — MASQUAGE de méthodes statiques.
     // Deux classes imbriquées, uniquement pour la démo : elles ne font
-    // PAS partie du domaine (jamais de piège de masquage dans domain/).
+    // PAS partie du domaine (ce schéma de masquage reste hors de domain/).
     // ==================================================================
 
     /** Scène 6 : classe de base portant une méthode statique {@code rapporter()}. */

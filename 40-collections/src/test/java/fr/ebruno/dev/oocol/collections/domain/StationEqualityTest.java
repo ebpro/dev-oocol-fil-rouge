@@ -12,8 +12,8 @@ import java.util.Set;
 import org.junit.jupiter.api.Test;
 
 /**
- * Tests du contrat d'identité de {@link Station} — la leçon centrale de W5 :
- * equality par code, cohérence du hashCode, ordre naturel et comparateur
+ * Tests du contrat d'identité de {@link Station} : equality par code,
+ * cohérence du hashCode, ordre naturel et comparateur
  * délégué. Le test {@link #hashSetRetrouveUnAutreExemplaireDeMemeCode()} EST
  * la preuve que le bug motivateur est fermé.
  *

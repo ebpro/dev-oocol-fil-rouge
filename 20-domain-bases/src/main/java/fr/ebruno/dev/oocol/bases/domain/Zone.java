@@ -19,11 +19,10 @@ package fr.ebruno.dev.oocol.bases.domain;
  *
  * <p>La classe définit aussi {@link #equals(Object)} et {@link #hashCode()} :
  * deux zones sont identiques <em>si et seulement si</em> elles ont le même
- * numéro. Règle d'or pédagogique : <strong>ces deux méthodes doivent touj
- * toujours correspondre</strong> — redéfinir {@code equals} sans {@code hashCode} casse
- * silencieusement les collections futures ({@code HashSet}, {@code HashMap}),
- * qui cherchent un objet dans « le mauvais tiroir ». Le module 40
- * (collections) en fera l'expérience concrète.
+ * numéro. Règle d'or : <strong>ces deux méthodes doivent toujours
+ * correspondre</strong> — redéfinir {@code equals} sans {@code hashCode} casse
+ * silencieusement les collections ({@code HashSet}, {@code HashMap}), qui
+ * cherchent un objet dans « le mauvais tiroir ».
  *
  * @author Emmanuel Bruno
  * @see Station
@@ -80,7 +79,7 @@ public class Zone {
      *
      * <p>Contrairement à {@code toString()} par défaut (qui affiche
      * {@code fr.ebruno.dev.oocol.bases.domain.Zone@1f}), celle-ci est écrite
-     * pour les humains : les étudiants et les journaux de debug.
+     * pour les humains : affichages et journaux de debug.
      *
      * @return le libellé complet de la zone
      */
@@ -115,7 +114,7 @@ public class Zone {
      * Code de hachage cohérent avec {@link #equals(Object)} : basé sur le
      * numéro uniquement.
      *
-     * <p>Pédagogie : la règle « {@code a.equals(b)} implique
+     * <p>La règle « {@code a.equals(b)} implique
      * {@code a.hashCode() == b.hashCode()} » doit être respectée, sinon les
      * objets « disparaissent » des tables de hachage.
      *

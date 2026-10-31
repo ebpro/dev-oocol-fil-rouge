@@ -13,10 +13,10 @@
  * {@code Externalizable} ; et le duo
  * {@link fr.ebruno.dev.oocol.serialisation.domain.Passenger} /
  * {@link fr.ebruno.dev.oocol.serialisation.domain.PassengerCorrige} met en
- * scène le piège du singleton.
+ * scène la rupture de l'invariant du singleton.
  *
  * <p>Règle du cours : la sérialisation est un <em>mécanisme d'infrastructure</em>
- * que le domaine subit, pas un outil de conception. Ici, on l'enseigne en
+ * que le domaine subit, pas un outil de conception. Ici, on la découvre en
  * l'exposant — pas en la célébrant.
  */
 package fr.ebruno.dev.oocol.serialisation.domain;

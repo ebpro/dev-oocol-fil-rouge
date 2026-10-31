@@ -1,7 +1,7 @@
 @startuml 90-jdbc
 ' ============================================================
 ' Module 90 - JDBC et motif DAO (ELO 12)
-' Diagramme pedagogique : l'empilement App -> Facade ->
+' Diagramme de classes : l'empilement App -> Facade ->
 ' contrats DAO -> implementations JDBC -> Connection -> base,
 ' et l'opposition PreparedStatement (?) vs Statement (+).
 ' Autorite = code source :

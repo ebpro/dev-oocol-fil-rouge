@@ -1,10 +1,10 @@
 /**
  * Le domaine « Trans'U » relu par le prisme des fichiers (ELO 08).
  *
- * <p><strong>Ce que ce package enseigne.</strong> Le réseau cesse d'être
+ * <p><strong>Ce que couvre ce package.</strong> Le réseau cesse d'être
  * un littéral du code : il vit dans trois fichiers CSV que quelqu'un a
  * écrits, exportés, édités — donc qu'on ne maîtrise plus. Trois gestes
- * structurent la semaine :
+ * structurent le module :
  * <ul>
  *   <li><strong>lire</strong> : {@link fr.ebruno.dev.oocol.nio.domain.NetworkLoader}
  *     ouvre chaque fichier en UTF-8 explicite via
@@ -25,7 +25,7 @@
  *     étant réservé au module 80.</li>
  * </ul>
  *
- * <p><strong>La tension de la semaine, en deux méthodes.</strong>
+ * <p><strong>La tension du module, en deux méthodes.</strong>
  * {@link fr.ebruno.dev.oocol.nio.domain.NetworkLoader#chargerSansFermer(java.nio.file.Path)} :
  * la ressource non fermée qui « marche quand même » sous POSIX et corrompt
  * ailleurs, le pendant exact du FileWriter laissé ouvert. Et
@@ -34,7 +34,7 @@
  * et le mauvais choix transforme « Aéroport » en « AÃ©roport » sous vos yeux.
  *
  * <p><strong>Ordre de lecture conseillé.</strong> {@code NetworkException}
- * (la racine checked, instantanée W7) → {@code Zone} et sa fabrique
+ * (la racine checked, mise à jour par le module) → {@code Zone} et sa fabrique
  * {@code parse} (le geste fondamental : CSV → objet, avec diagnostic) →
  * {@code Station} (parse en deux temps, intégrité référentielle) →
  * {@code LineData} (la référence différée, résolue contre un index) →

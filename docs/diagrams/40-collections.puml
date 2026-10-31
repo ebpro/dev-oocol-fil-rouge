@@ -1,7 +1,7 @@
 @startuml 40-collections
 ' ============================================================
 ' Module 40 - Collections framework (ELO 06)
-' Diagramme de classes pedagogique.
+' Diagramme de classes.
 ' Autorite = code source :
 '   40-collections/src/main/java/fr/ebruno/dev/oocol/collections/
 ' Rendu : voir docs/diagrams/README.md

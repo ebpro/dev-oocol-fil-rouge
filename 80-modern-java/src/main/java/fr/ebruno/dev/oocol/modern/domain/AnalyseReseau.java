@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 /**
  * Analyse du réseau en pipelines Streams — la version « après ».
  *
- * <p><strong>Chaque méthode tient en 1-3 lignes là où la version W4-W6 en
+ * <p><strong>Chaque méthode tient en 1-3 lignes là où la version legacy en
  * prenait 10-20</strong> (cf. {@link VersionLegacy}, son miroir verbeux, qui
  * calcule des résultats <em>strictement identiques</em> — prouvé en test).
  * Le pipeline (source → opérations intermédiaires paresseuses → opération

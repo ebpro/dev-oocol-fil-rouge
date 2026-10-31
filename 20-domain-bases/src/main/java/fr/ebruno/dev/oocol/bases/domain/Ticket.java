@@ -38,8 +38,9 @@ public class Ticket {
 
     /**
      * Validité du titre. Toujours {@code true} pour un ticket créé par une
-     * fabrique : on pourrait ajouter une date d'expiration — la séance W8
-     * (sérialisation) le fera, et {@code estValide()} deviendra un vrai calcul.
+     * fabrique : sans date d'expiration, le statut reste un booléen posé à la
+     * construction ; avec une telle date, {@code estValide()} deviendrait un
+     * vrai calcul.
      */
     private final boolean valide;
 
@@ -64,7 +65,7 @@ public class Ticket {
         this.type = type;
         this.prix = prix;
         this.zone = zone;
-        // Un ticket sort fraîchement validé de la borne ; l'expiration arrivera en W8.
+        // Un ticket sort fraîchement validé de la borne.
         this.valide = true;
     }
 
@@ -132,9 +133,9 @@ public class Ticket {
     /**
      * Le titre est-il valide ?
      *
-     * <p>Toujours {@code true} à ce stade du fil rouge (cf. le champ
-     * {@link #valide}) : W8 introduira une date d'expiration et cette
-     * méthode comparera la date courante à la date de fin.
+     * <p>Toujours {@code true} en l'état (cf. le champ {@link #valide}) :
+     * le titre n'a pas de date d'expiration ; s'il en avait une, cette
+     * méthode comparerait la date courante à la date de fin.
      *
      * @return {@code true} si le titre est utilisable
      */

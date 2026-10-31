@@ -42,7 +42,7 @@ public class Ticket implements Externalizable {
     /**
      * Version du format externe. Comme pour {@code Serializable}, la JVM la
      * compare à la relecture — l'illusion « Externalizable n'a pas de UID
-     * utile » est le piège que le test {@code ExternalizableTest} démonte.
+     * utile » est le point de vigilance que le test {@code ExternalizableTest} démonte.
      */
     private static final long serialVersionUID = 1L;
 

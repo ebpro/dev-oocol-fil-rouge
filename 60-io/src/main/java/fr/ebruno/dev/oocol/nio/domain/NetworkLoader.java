@@ -37,8 +37,8 @@ import java.util.Map;
  * lecture passe par {@link Files#newBufferedReader(Path, Charset)} avec un
  * {@link Charset} explicite. Oublier le charset, c'est hériter du
  * {@code charset.default} de la JVM — le même fichier lit alors « Gare
- * Centrale » correctement sur la machine d'un étudiant en UTF-8 et
- * « Gare CentrÃ© » sur un vieux poste Windows en Windows-1252. La leçon
+ * Centrale » correctement sur une machine de développement en UTF-8 et
+ * « Gare CentrÃ© » sur un vieux poste Windows en Windows-1252. Le principe
  * tient en une phrase : <em>un octet n'a de sens que dans un encoding.</em>
  *
  * @author Emmanuel Bruno
@@ -141,7 +141,7 @@ public final class NetworkLoader {
      *
      * <p>Ouvre un {@link BufferedReader} sur le fichier, lit la première
      * ligne, ne ferme JAMAIS le reader, puis tente {@link Files#delete}.
-     * Le résultat est PLATFORM-DÉPENDANT, et c'est la leçon :
+     * Le résultat est PLATFORM-DÉPENDANT, et c'est précisément le point :
      * <ul>
      *   <li>Windows verrouille le fichier ouvert → {@code IOException} de
      *       suppression : la fuite est <em>visible</em> ;</li>
@@ -153,8 +153,8 @@ public final class NetworkLoader {
      * Ce succès POSIX est une grâce du système de fichiers, pas une garantie
      * Java : le jour où le même code croise un antivirus, un partage réseau
      * ou Windows, il casse. <em>La seule écriture qui ne dépend pas du bon
-     * vouloir de l'OS est le try-with-resources</em> — W6 l'avait montré sur
-     * {@code StringReader}, W7 l'impose sur de vrais fichiers.
+     * vouloir de l'OS est le try-with-resources</em> — le module 50 l'avait montré sur
+     * {@code StringReader}, celui-ci l'impose sur de vrais fichiers.
      *
      * @param fichier le CSV à ouvrir (puis à tenter de supprimer)
      * @return la première ligne du fichier
@@ -166,7 +166,7 @@ public final class NetworkLoader {
         String premiereLigne;
         // ANTI-PATTERN VOLONTAIRE : pas de try-with-resources ici.
         try {
-            reader = Files.newBufferedReader(fichier, StandardCharsets.UTF_8); // NOSONAR java:S2095 — anti-pattern assumé : la leçon est la fuite de descripteur
+            reader = Files.newBufferedReader(fichier, StandardCharsets.UTF_8); // NOSONAR java:S2095 — anti-pattern assumé : le point est la fuite de descripteur
         } catch (IOException e) {
             throw new NetworkException("Ouverture impossible : " + fichier, e);
         }
@@ -194,7 +194,7 @@ public final class NetworkLoader {
      * en cas de levée au milieu du fichier. C'est LA structure qui remplace
      * le {@code finally { reader.close(); }} que l'on oublie (ou que l'on
      * écrit faux : close() dans le finally peut masquer l'exception
-     * primaire, cf. W6 « suppressed »).
+     * primaire, cf. le module 50 et « suppressed »).
      *
      * @param fichier le CSV à lire
      * @param charset encoding du fichier

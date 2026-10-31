@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
 /**
- * Tests de l'algèbre des chemins — le point où les étudiants continuent de
+ * Tests de l'algèbre des chemins — le point où l'on continue de
  * raisonner en chaînes de caractères. Chaque assertion est une propriété que
  * {@code String} ne peut pas tenir : connaître le séparateur du système,
  * composer sans concaténer, normaliser les remontées, relativiser.

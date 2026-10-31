@@ -12,18 +12,18 @@ import java.io.Serializable;
 import org.junit.jupiter.api.Test;
 
 /**
- * Les pièges canoniques de la sérialisation, joués jusqu'à la preuve. Le
- * singleton qui éclate en copie (puis se répare par {@code readResolve}), la
+ * Les points de vigilance canoniques de la sérialisation, joués jusqu'à la
+ * preuve. Le singleton qui éclate en copie (puis se répare par {@code readResolve}), la
  * super-classe non sérialisable dont le constructeur se rejoue à chaque
  * lecture, les hooks {@code writeObject} / {@code readObject} que seul le
  * mécanisme appelle — et l'invariant qu'ils gardent.
  *
- * <p><strong>Piège n° 2 — la sécurité.</strong> Il ne se « teste » pas ici :
+ * <p><strong>Point de vigilance — la sécurité.</strong> Il ne se « teste » pas ici :
  * il se CONSTATE. {@code readObject} reconstruit n'importe quelle classe
  * citée dans le flux, avec n'importe quel état. Un fichier sérialisé n'est
  * pas une donnée, c'est un programme d'assemblage. La seule défense est
  * avant la lecture (ne jamais désérialiser une source non fiable) — d'où le
- * silence du fichier de tests, qui est déjà une leçon.
+ * silence du fichier de tests, qui est déjà une démonstration.
  *
  * @author Emmanuel Bruno
  */

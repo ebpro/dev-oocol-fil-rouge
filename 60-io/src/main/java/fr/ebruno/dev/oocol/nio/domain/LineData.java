@@ -7,7 +7,7 @@ import java.util.Map;
 
 /**
  * L'enregistrement d'une ligne tel qu'il est lu dans {@code lignes.csv} —
- * distinct de la {@code Line} métier des semaines 4 et 5 : ici la ligne est
+ * distinct de la {@code Line} métier des modules 40 et 50 : ici la ligne est
  * une DONNÉE brute en cours de résolution, pas encore un objet du domaine
  * avec sa cadence et ses invariants d'exploitation.
  *
@@ -42,7 +42,7 @@ public class LineData {
      * Construit une ligne à partir de son nom et de ses arrêts déjà résolus.
      *
      * <p>Copie défensive : la liste passée peut être modifiée par l'appelant
-     * après coup, l'état interne de la ligne n'en bouge pas (leçon W5,
+     * après coup, l'état interne de la ligne n'en bouge pas (le contrat de copie,
      * appliquée aux données lues). Les codes sont dérivés des arrêts, dans
      * le même ordre — une ligne résolue sait toujours d'où elle vient.
      *

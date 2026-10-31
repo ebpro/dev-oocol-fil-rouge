@@ -9,7 +9,7 @@ et se teste seul (`./mvnw -pl <module> verify`).
   fait).
 - **Colonne UTLN** : semaine d'introduction dans le déroulé en 12 sections du cours
   [`lecture-UTLN-M1_Info_Math-DEV-OOCOL`](https://github.com/ebpro/lecture-UTLN-M1_Info_Math-DEV-OOCOL)
-  (mapping indicatif, ajusté chaque année par l'enseignant).
+  (mapping indicatif, ajusté chaque année d'après le déroulé des séances).
 
 ## Tableau des modules
 
@@ -42,7 +42,7 @@ supplémentaire (ex. tests : `45-testing`) peut s'insérer sans renuméroter le 
 ## Cycle de vie d'un module
 
 1. **Ouvert** : la semaine correspondante du cours, le module est créé/étendu en CM-TD
-   (l'enseignant pousse l'état « guidé »).
+   (l'état « guidé » est publié dans le cours).
 2. **Gel** : en fin de séance de travaux dirigés, le module est figé (tag Git
    `<module>-semaine-N`) ; les étudiants qui reprennent le fil rouge partent du tag.
 3. **Lecture seule ensuite** : les modules antérieurs ne sont plus modifiés par la
