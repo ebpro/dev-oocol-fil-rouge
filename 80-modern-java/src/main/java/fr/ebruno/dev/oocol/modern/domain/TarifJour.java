@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Ticket journalier multi-zones — variante de {@link Tarif} avec une collection.
  *
- * <p>Même leçon défensive que {@link Ligne} : si le prix moyen du réseau
+ * <p>Même principe défensif que {@link Ligne} : si le prix moyen du réseau
  * dépendait encore de la liste interne, une mutation par-derrière fausserait
  * les statistiques. La copie immuable est le réflexe standard des records à
  * composant collection.

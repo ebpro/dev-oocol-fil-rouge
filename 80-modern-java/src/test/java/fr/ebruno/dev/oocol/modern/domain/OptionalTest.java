@@ -81,13 +81,13 @@ class OptionalTest {
     void orElseDonneLeDefautQuandCEstVide() {
         Station secours = new Station("XXX", "Secours", Z1, false);
         assertThat(A.trouverParCode("ZZZ").orElse(secours)).isSameAs(secours);
-        // (orElseGet attend un Supplier — évaluation paresseuse du défaut ; noté pour l'oral.)
+        // (orElseGet attend un Supplier — évaluation paresseuse du défaut.)
     }
 
     @Test
     void optionalSurvitAuxCalculsDeDate() {
         // Simple clin d'œil à java.time (TarifAbonnement) : Optional et LocalDate
-        // sont les deux « contrôles d'absence » de la semaine — l'un sur la valeur,
+        // sont les deux « contrôles d'absence » du module — l'un sur la valeur,
         // l'autre sur le temps.
         TarifAbonnement abonnement = new TarifAbonnement(
                 "Alice", LocalDate.of(2026, 10, 1), LocalDate.of(2027, 9, 30));

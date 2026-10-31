@@ -13,7 +13,7 @@ package fr.ebruno.dev.oocol.modern.domain;
  *
  * <p>Le composant {@code propulsion} est typé {@link Propulsion} : une
  * deuxième hiérarchie scellée, imbriquée — le véhicule <em>a</em> une
- * propulsion, il n'en <em>est</em> pas une (composition, leçon du module 20).
+ * propulsion, il n'en <em>est</em> pas une (composition, principe du module 20).
  *
  * @author Emmanuel Bruno
  * @see Vehicle

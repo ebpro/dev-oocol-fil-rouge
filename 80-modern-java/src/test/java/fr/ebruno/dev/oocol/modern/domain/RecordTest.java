@@ -59,10 +59,10 @@ class RecordTest {
         Zone autre = new Zone(1, "Centre");
         Zone differente = new Zone(2, "Campus");
 
-        // Égalité structurelle : le module 3 passait 15 lignes à l'écrire.
+        // Égalité structurelle : le module 20 passait 15 lignes à l'écrire.
         assertThat(une).isEqualTo(autre).isNotEqualTo(differente);
         assertThat(une).hasSameHashCodeAs(autre);
-        // equals porte sur TOUS les composants (nuance vs le W3 qui ne regardait que numero).
+        // equals porte sur TOUS les composants (nuance vs le module 20 qui ne regardait que numero).
         assertThat(new Zone(1, "A")).isNotEqualTo(new Zone(1, "B"));
     }
 

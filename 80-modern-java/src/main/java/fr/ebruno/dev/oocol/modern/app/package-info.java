@@ -3,8 +3,8 @@
  * réseau Trans'U à Java 21 — chaque scène montre l'ancien réflexe et son
  * équivalent moderne côte à côte.
  *
- * <p><strong>Ce que ce package enseigne.</strong> {@code ModernJavaDemo} est
- * le script de séance : les records et leur plomberie gratuite (scène 1), la
+ * <p><strong>Ce que couvre ce package.</strong> {@code ModernJavaDemo} est
+ * la démonstration exécutable : les records et leur plomberie gratuite (scène 1), la
  * hiérarchie scellée et le switch exhaustif sur {@code Vehicle} (scène 2), le
  * pattern matching sur {@code Tarif} (scène 3), les pipelines Streams contre
  * {@link fr.ebruno.dev.oocol.modern.domain.VersionLegacy} (scène 4),

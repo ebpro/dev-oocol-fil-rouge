@@ -4,7 +4,7 @@ package fr.ebruno.dev.oocol.modern.domain;
  * Un bus du réseau — le plus simple des trois véhicules scellés.
  *
  * <p>Pas de {@code Propulsion} ici : un bus se rattache à une
- * {@code ligne} (String, pour la démo). C'est aussi une leçon de scellage :
+ * {@code ligne} (String, pour la démo). C'est aussi un cas d'école de scellage :
  * les permissionnaires d'une hiérarchie {@code sealed} n'ont aucune obligation
  * de se ressembler — {@link MetroTrain} et {@link Tramway} portent une
  * propulsion, {@code Bus} non. Ce que le switch exhaustif garantit, c'est la

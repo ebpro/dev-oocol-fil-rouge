@@ -95,7 +95,7 @@ class SealedPatternTest {
 
     @Test
     void nouvelleVarianteCasseraitLesSwitchs() {
-        // Preuve négative, jouable uniquement à la compilation — consignée ici pour la leçon :
+        // Preuve négative, jouable uniquement à la compilation — consignée ici en commentaire :
         // déclarer un variant Funiculaire en plus (un record implémentant Vehicle)
         // ne compile PAS (hors clauses permits) ; et si on l'ajoute AUSSI à « permits »,
         // chaque switch de cette classe (et de la démo) devient une ERREUR de compilation :

@@ -14,8 +14,7 @@ import org.junit.jupiter.api.Test;
  * Les pipelines d'{@link AnalyseReseau}, testés un par un — puis jugés face à
  * leur miroir : {@link VersionLegacy} doit rendre <em>exactement</em> les mêmes
  * résultats, preuve que le passage aux Streams ne change pas le calcul, seule
- * la façon de le dire change. C'est cette égalité (derniers tests) qui fait du
- * diff entre les deux classes la leçon elle-même.
+ * la façon de le dire change. C'est cette égalité (derniers tests) qui fait que le diff entre les deux classes est le sujet.
  *
  * @author Emmanuel Bruno
  */
