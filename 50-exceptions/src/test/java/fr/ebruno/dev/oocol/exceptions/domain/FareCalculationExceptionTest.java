@@ -7,7 +7,7 @@ import static org.assertj.core.api.Assertions.within;
 import org.junit.jupiter.api.Test;
 
 /**
- * Tests de {@link FareCalculator} version W6 — le second registre unchecked :
+ * Tests de {@link FareCalculator} — le second registre unchecked :
  * le tarif négatif et la zone sans barème sont des BUGS de construction du
  * calculateur (FCE), pendant que l'argument {@code null} relève de
  * {@link StationNotFoundException} propagé par {@code requireValide}. Une

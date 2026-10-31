@@ -4,20 +4,20 @@ package fr.ebruno.dev.oocol.exceptions.domain;
  * Une station du réseau « Trans'U », identifiée par son code d'exploitation
  * à trois lettres majuscules (ex. {@code "GAR"} pour Gare Centrale).
  *
- * <p><strong>Instantané W6 — la lecture « exceptions » d'une classe déjà vue.</strong>
+ * <p><strong>La lecture « exceptions » d'une classe déjà vue.</strong>
  * Les champs, l'ordre {@link Comparable} et le contrat {@code equals}/
  * {@code hashCode} (par code) sont repris du module 40, inchangés. Ce que
- * W6 change est une façon de <em>nommer</em> ce qui était déjà là :
+ * ce module change est une façon de <em>nommer</em> ce qui était déjà là :
  * <ul>
  *   <li>les validations du constructeur et des setters lèvent des
- *       {@link IllegalArgumentException} — et la séance verbalise enfin
- *       POURQUOI elles sont <em>unchecked par nature</em> : un code
+ *       {@link IllegalArgumentException} — et la raison est directe : elles
+ *       sont <em>unchecked par nature</em>, car un code
  *       malformé, un nom blanc, sont des paramètres invalides fournis par
  *       le code appelant, donc des <strong>bugs</strong>, pas des états du
  *       monde que l'on rattrape à l'exécution ;</li>
  *   <li>la station <em>absente</em> change de statut : le module 40 la
- *       rendait par {@code null} (contrat documenté, piégeux à l'usage) ;
- *       W6 la remplace par {@link StationNotFoundException} — voir
+ *       rendait par {@code null} (contrat documenté, source d'oublis à l'usage) ;
+ *       ce module la remplace par {@link StationNotFoundException} — voir
  *       {@link Line#trouverParCode(String)} et la fabrique de garde
  *       {@link #requireValide(Station, String)} ci-dessous.</li>
  * </ul>
@@ -32,7 +32,7 @@ public class Station implements Comparable<Station> {
     /**
      * Code d'exploitation : exactement 3 lettres majuscules (ex. {@code "GAR"}).
      *
-     * <p>{@code final} depuis W5 : c'est la clé d'identité, donc la clé de
+     * <p>{@code final} depuis le module 40 : c'est la clé d'identité, donc la clé de
      * hachage des collections qui contiennent la station.
      */
     private final String code;
@@ -91,15 +91,15 @@ public class Station implements Comparable<Station> {
     }
 
     /**
-     * Garde W6 : remplace le pattern « {@code return null} » par une levée
+     * Méthode de garde : remplace le pattern « {@code return null} » par une levée
      * typée.
      *
-     * <p>Avant W6, une recherche ratée rendait {@code null} et chaque
+     * <p>Avant ce module, une recherche ratée rendait {@code null} et chaque
      * appelant devait tester — un oubli de test déplaçait l'échec loin de sa
      * source (une {@code NullPointerException} au bout de la chaîne).
      * Maintenant : on passe le résultat éventuel dans {@code requireValide}
      * et l'échec est immédiat, typé ({@link StationNotFoundException}),
-     * localisé au point d'usage. C'est la migration guidée W5 → W6 jouée
+     * localisé au point d'usage. C'est la migration « null → throws » jouée
      * sur la station elle-même.
      *
      * <p>Particularité rapportée dans le « code » : la station absente n'a
@@ -213,7 +213,7 @@ public class Station implements Comparable<Station> {
 
     /**
      * Deux stations sont la MÊME station quand elles ont le même code
-     * (contrat W5 repris, inchangé).
+     * (contrat du module 40, inchangé).
      *
      * @param o l'objet à comparer
      * @return {@code true} si {@code o} est une station de même code

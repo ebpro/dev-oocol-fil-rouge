@@ -1,10 +1,10 @@
 /**
  * Le domaine « Trans'U » relu par le prisme des exceptions (ELO 07).
  *
- * <p><strong>Ce que ce package enseigne.</strong> Les entités des semaines
- * précédentes (Zone, Station, Line, FareCalculator) reviennent en instantané
- * W6 — même domaine, nouveau vocabulaire d'erreur. Trois canaux coexistent,
- * et les choisir <em>est</em> la compétence de la semaine :
+ * <p><strong>Ce que couvre ce package.</strong> Les entités des modules
+ * précédents (Zone, Station, Line, FareCalculator) reviennent en instantané —
+ * même domaine, nouveau vocabulaire d'erreur. Trois canaux coexistent,
+ * et les choisir <em>est</em> la compétence centrale du module :
  * <ul>
  *   <li><strong>unchecked « bug »</strong> : {@link
  *     fr.ebruno.dev.oocol.exceptions.domain.StationNotFoundException} et
@@ -17,7 +17,7 @@
  *     — situation d'affaire prévue avec plan B ; le compilateur force sa gestion ;</li>
  *   <li><strong>valeurs de retour « réponse normale »</strong> : {@code boolean}
  *     de {@code retirerArret}, vue non modifiable, etc. — tout ce qui n'est
- *     pas une anomalie garde son contrat W5.</li>
+ *     pas une anomalie garde son contrat du module 40.</li>
  * </ul>
  *
  * <p><strong>Ordre de lecture conseillé.</strong> {@code NetworkException}

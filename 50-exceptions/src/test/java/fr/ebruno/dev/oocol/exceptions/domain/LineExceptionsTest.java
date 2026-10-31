@@ -7,7 +7,7 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import org.junit.jupiter.api.Test;
 
 /**
- * Tests de {@link Line} version W6 — la migration « null → throws » jouée
+ * Tests de {@link Line} — la migration « null → throws » jouée
  * méthode par méthode : lookup typé, doublons en IAE, cadence en checked,
  * ET le contrepoint qui GARDE son boolean ({@code retirerArret}) parce que
  * « rien à retirer » est une réponse métier, pas une anomalie.
@@ -50,8 +50,8 @@ class LineExceptionsTest {
     void trouverParCodeAbsentLeveStationNotFoundAvecLeCode() {
         Line ligne = ligneTroisArrets();
 
-        // W5 : return null (piège différé). W6 : levée immédiate, typée,
-        // ET le code cherché voyage dans l'objet, pas qu'en concaténation.
+        // Avant : return null (échec différé, caché). Maintenant : levée immédiate,
+        // typée, ET le code cherché voyage dans l'objet, pas qu'en concaténation.
         assertThatExceptionOfType(StationNotFoundException.class)
                 .isThrownBy(() -> ligne.trouverParCode("ZZZ"))
                 .withMessageContaining("ZZZ")
@@ -70,8 +70,8 @@ class LineExceptionsTest {
     void ajouterArretDoublonEstUnBugDoncUneIAE() {
         Line ligne = ligneTroisArrets();
 
-        // W5 rendait false (silencieux). W6 lève : même code = même station
-        // (le contrat equals W5 œuvre toujours dans contains()).
+        // Avant : false (silencieux). Maintenant : levée — même code = même
+        // station (le contrat equals du module 40 œuvre toujours dans contains()).
         assertThatExceptionOfType(IllegalArgumentException.class)
                 .isThrownBy(() -> ligne.ajouterArret(Station.of("GAR", "Gare bis", zone1())))
                 .withMessageContaining("GAR");
@@ -131,7 +131,7 @@ class LineExceptionsTest {
         Line ligne = ligneTroisArrets();
         Station stade = Station.of("STP", "Stade", zone1());
 
-        // LE contrepoint de la séance : une réponse métier normale garde son
+        // LE contrepoint du module : une réponse métier normale garde son
         // boolean. En faire une exception = exceptions pour le contrôle de
         // flux, l'anti-pattern combattu.
         assertThatCode(() -> ligne.retirerArret(stade)).doesNotThrowAnyException();

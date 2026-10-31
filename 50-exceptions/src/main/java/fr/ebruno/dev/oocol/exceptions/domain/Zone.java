@@ -4,12 +4,12 @@ package fr.ebruno.dev.oocol.exceptions.domain;
  * Une zone tarifaire du réseau « Trans'U » (ex. zone 1 = centre-ville,
  * zone 2 = périphérie…).
  *
- * <p><strong>Instantané W6 — inchangé sur le fond.</strong> {@code Zone}
- * est recopiée du module 40 (principe « snapshot-per-week » : chaque module
+ * <p><strong>Inchangée sur le fond.</strong> {@code Zone}
+ * est recopiée du module 40 (principe d'autonomie des modules : chaque module
  * est autonome, aucune dépendance inter-modules) parce que {@link Station}
  * en porte une référence et que {@link FareCalculator} en indexe les
- * tarifs. Rien n'est ajouté cette semaine : la zone n'est pas le sujet de
- * l'atelier exceptions — elle est là pour que le domaine reste entier.
+ * tarifs. Rien n'est ajouté ici : la zone n'est pas le sujet de
+ * ce module — elle est là pour que le domaine reste entier.
  *
  * @author Emmanuel Bruno
  * @see Station
@@ -29,7 +29,7 @@ public class Zone implements Comparable<Zone> {
      * <p>Validation dans le constructeur (constructeur gardien, repris du
      * module 20) : un objet {@code Zone} qui existe est un objet valide.
      * Une valeur interdite ici lève {@link IllegalArgumentException} —
-     * W6 la relit comme le premier exemple du cours <em>unchecked par nature</em> :
+     * ce module la relit comme un cas d'école <em>unchecked par nature</em> :
      * un numéro {@code <= 0} est un bug de l'appelant, jamais une situation
      * à rattraper.
      *
@@ -86,7 +86,7 @@ public class Zone implements Comparable<Zone> {
     }
 
     /**
-     * Deux zones sont égales quand elles ont le même numéro (contrat W3 repris).
+     * Deux zones sont égales quand elles ont le même numéro (contrat inchangé).
      *
      * @param o l'objet à comparer
      * @return {@code true} si {@code o} est une zone de même numéro

@@ -8,7 +8,7 @@ import java.lang.reflect.Field;
 import org.junit.jupiter.api.Test;
 
 /**
- * Tests de la HIERARCHIE elle-même (ELO 07, scène fondatrice) : qui hérite
+ * Tests de la HIERARCHIE elle-même (ELO 07) : qui hérite
  * de qui, checked vs unchecked à la lecture de l'arbre, cause préservée
  * derrière le chaînage, données utiles portées par les exceptions, et
  * serialVersionUID présent sur toute la famille.
@@ -55,7 +55,7 @@ class ExceptionHierarchyTest {
     void stationNotFoundEstUncheckedEtPasDeLaFamilleMetier() {
         StationNotFoundException snfe = new StationNotFoundException("ZZZ");
 
-        // Le message clé de la séance : SNFE est une SŒUR des unchecked,
+        // Le point central du module : SNFE est une SŒUR des unchecked,
         // PAS une fille de NetworkException — un rattrapage typé NetworkException ne
         // l'attrape JAMAIS, volontairement.
         assertThat(snfe).isInstanceOf(RuntimeException.class);
@@ -126,8 +126,8 @@ class ExceptionHierarchyTest {
         for (Class<?> cible : famille) {
             Field champ = cible.getDeclaredField("serialVersionUID");
             champ.setAccessible(true);
-            // Requis par Serializable (dont Throwable hérite) ; le module
-            // 70-serialisation dira POURQUOI ce constant n'est pas du decor.
+            // Requis par Serializable (dont Throwable hérite) ; ce constant n'est
+            // pas du décor dès qu'une exception traverse un flux sérialisé.
             assertThat(champ.getLong(null))
                     .as("serialVersionUID de %s", cible.getSimpleName())
                     .isEqualTo(1L);

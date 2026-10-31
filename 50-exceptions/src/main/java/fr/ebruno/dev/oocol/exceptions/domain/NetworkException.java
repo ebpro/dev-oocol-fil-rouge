@@ -11,7 +11,7 @@ package fr.ebruno.dev.oocol.exceptions.domain;
  * un {@code NullPointerException} ou une {@code SQLException} remonte
  * intact, au lieu d'être étouffé par un {@code catch (Exception)} trop large.
  * Dériver de {@code Exception} (et non {@code RuntimeException}) est le
- * choix fort de la semaine : <em>checked</em> signifie que le compilateur
+ * choix fort du module : <em>checked</em> signifie que le compilateur
  * inscrit la gestion de l'erreur dans la signature de chaque méthode —
  * l'oublier est une erreur de compilation, pas une promesse dans un commentaire.
  *
@@ -30,8 +30,8 @@ public class NetworkException extends Exception {
 
     /**
      * Identifiant de sérialisation : requis par {@code Serializable} (dont
-     * {@code Throwable} hérite). Le module {@code 70-serialisation} montrera
-     * à quoi il sert vraiment quand une exception traverse un flux sérialisé.
+     * {@code Throwable} hérite). Il compte vraiment dès qu'une exception
+     * traverse un flux sérialisé.
      */
     private static final long serialVersionUID = 1L;
 

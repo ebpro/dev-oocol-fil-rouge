@@ -19,7 +19,7 @@ import fr.ebruno.dev.oocol.exceptions.domain.Zone;
  * Les six gestes d'exception du développeur Trans'U, joués en scène ouvertes.
  *
  * <p><strong>Lecture.</strong> Chaque scène est une méthode privée autonome
- * que l'on peut commenter séparément en TD ; {@link #main(String[])} les
+ * que l'on peut commenter séparément ; {@link #main(String[])} les
  * enchaîne et titre. Les signatures {@code throws} portées par les scènes
  * (et résumées sur {@code main}) décrivent le PIRE CAS de chaque scène —
  * exactement ce qu'un appelant de production devrait écrire s'il ne
@@ -65,7 +65,7 @@ public final class ExceptionDemo {
     /**
      * Scène 1 — PROPAGER : l'unchecked n'est pas rattrapé, elle monte.
      *
-     * <p>Ici on la rattrape UNE fois pour pouvoir afficher la leçon sans
+     * <p>Ici on la rattrape UNE fois pour pouvoir afficher le diagnostic sans
      * tuer la démo ; en production, le bon geste est de la LAISSER monter
      * jusqu'au point d'entrée (ou jusqu'à la CI) et d'y imprimer la stack
      * trace — {@code e.printStackTrace()} montre le « au point même de la
@@ -81,8 +81,8 @@ public final class ExceptionDemo {
         ligneA.ajouterArret(uni);
 
         try {
-            // W5 : Station introuvable = return null = NPE trois méthodes plus loin.
-            // W6 : levée immédiate, typée, localisée, avec le code cherché dedans.
+            // Avant la migration : station introuvable = return null = NPE trois méthodes
+            // plus loin. Maintenant : levée immédiate, typée, localisée, code cherché dedans.
             Station fantome = ligneA.trouverParCode("ZZZ");
             System.out.println("Jamais affiché : " + fantome);
         } catch (StationNotFoundException e) {
@@ -149,7 +149,7 @@ public final class ExceptionDemo {
         // même si le corps lève — plus jamais de "finally { if (r != null) r.close(); }".
         try (BufferedReader reader = new BufferedReader(new StringReader(contenu))) {
             String ligne = reader.readLine();
-            while (ligne != null) { // while explicite : pas de stream (contrainte W6 inchangée)
+            while (ligne != null) { // while explicite : pas de stream (contrainte de style du module, inchangée)
                 lignes++;
                 if (premier == null) {
                     premier = ligne;
@@ -173,7 +173,7 @@ public final class ExceptionDemo {
         String contenu = "GAR\n";
         BufferedReader ferme = new BufferedReader(new StringReader(contenu));
         ferme.close(); // fermeture manuelle : le cas « oubli de finally » d'avant Java 7
-        ferme.readLine(); // IOException : le stream est fermé — NOSONAR java:S2677 : valeur de retour volontairement ignorée, la leçon est l'exception
+        ferme.readLine(); // IOException : le stream est fermé — NOSONAR java:S2677 : valeur de retour volontairement ignorée, l'intérêt de la ligne est l'exception
     }
 
     /**
