@@ -12,7 +12,7 @@
  * {@link fr.ebruno.dev.oocol.heritage.domain.Rechargeable} (ISP),
  * la fabrique {@link fr.ebruno.dev.oocol.heritage.domain.VehicleFactory}
  * (patron Factory) et la {@link fr.ebruno.dev.oocol.heritage.domain.Line}
- * version W4 (composition + délégation, démonstration LSP).
+ * version en composition (composition + délégation, démonstration LSP).
  *
  * <p>Ordre de lecture conseillé : Vehicle (l'abstraction, la méthode
  * abstraite) → MetroTrain (héritage + retour covariant) → Bus (contraste :

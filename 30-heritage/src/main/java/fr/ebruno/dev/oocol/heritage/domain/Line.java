@@ -1,11 +1,11 @@
 package fr.ebruno.dev.oocol.heritage.domain;
 
 /**
- * Une ligne de service, version W4 : un nom commercial et UN véhicule
+ * Une ligne de service dans ce module : un nom commercial et UN véhicule
  * affecté. Ce n'est pas la {@code Line} du module 20 (deux stations, une
- * fréquence) — architecture « snapshot-per-week » : chaque module rejoue le
- * domaine avec les yeux de sa semaine. Ici, la ligne sert de décor à la
- * leçon : <em>qu'est-ce qui est composition, qu'est-ce qui est héritage</em>.
+ * fréquence) : le domaine est rejoué dans chaque module avec une structure
+ * différente. La ligne illustre ici <em>ce qui est composition, ce qui est
+ * héritage</em>.
  *
  * <p><strong>Pourquoi {@code Line} ne peut PAS étendre {@link Vehicle}
  * (démonstration LSP) :</strong> la tentation existe — une ligne « roule »,

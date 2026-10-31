@@ -27,11 +27,11 @@ package fr.ebruno.dev.oocol.heritage.domain;
  * choisit laquelle exécuter selon le <em>type statique de la variable</em>,
  * jamais selon l'objet réel. Zéro polymorphisme. {@code Vehicle.nombreVehicules()}
  * continue de compter TOUTE la flotte ; {@code MetroTrain.nombreVehicules()}
- * compterait les métros — deux méthodes homonymes sans lien, piège de lecture
+ * compterait les métros — deux méthodes homonymes sans lien, source de confusion
  * garanti. La démonstration de ce comportement vit dans
  * {@link fr.ebruno.dev.oocol.heritage.app.PatronDemo} (classes auxiliaires
  * {@code StatFlotte}/{@code StatMetro}) ; elle n'est volontairement PAS
- * implantée ici, pour que la hiérarchie reste un modèle à imiter, pas un piège.
+ * implantée ici : la hiérarchie du domaine ne garde que les schémas corrects.
  *
  * @author Emmanuel Bruno
  * @see Vehicle

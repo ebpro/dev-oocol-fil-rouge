@@ -69,9 +69,9 @@ public class Bus extends Vehicle {
      * <p>Le type de retour reste {@code Vehicle}, exactement celui du parent.
      * Résultat côté appelant : {@code Bus r = bus.copier()} ne compile PAS,
      * il faut écrire {@code Bus r = (Bus) bus.copier()}. Comparer avec
-     * {@link MetroTrain#copier()} : même travail, signature meilleure. Ce
-     * contraste est la démonstration — en W4, on demande aux étudiants de
-     * « réparer » ce {@code copier()} en ajoutant le retour covariant.
+     * {@link MetroTrain#copier()} : même travail, signature meilleure. Le
+     * contraste indique la réparation : déclarer {@code Bus copier()}, le
+     * retour covariant.
      *
      * @return un nouveau bus identique, typé seulement comme {@code Vehicle}
      */
