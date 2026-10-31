@@ -4,7 +4,7 @@ package fr.ebruno.dev.oocol.collections.domain;
  * Une zone tarifaire du réseau « Trans'U » (ex. zone 1 = centre-ville,
  * zone 2 = périphérie…).
  *
- * <p><strong>Instantané W5 — la zone gagne un ordre naturel.</strong> Les
+ * <p><strong>Nouveauté de ce module : la zone gagne un ordre naturel.</strong> Les
  * attributs, la validation et le contrat {@code equals}/{@code hashCode}
  * (par numéro) sont repris du module 20 ; la nouveauté est l'implémentation
  * de {@link Comparable} : {@code Zone implements Comparable<Zone>}, avec la
@@ -12,10 +12,10 @@ package fr.ebruno.dev.oocol.collections.domain;
  * {@code List<Zone>} peut être triée « sans rien dire » par
  * {@code Collections.sort(liste)} — c'est l'ordre naturel que découvre alors
  * la méthode de tri. Le {@link FareCalculator} s'en sert pour ranger les
- * zones du réseau, et le cours montre en miroir la seconde façon de trier :
- * un {@link java.util.Comparator} fourni par l'appelant.
+ * zones du réseau ; la seconde façon de trier existe en miroir : un
+ * {@link java.util.Comparator} fourni par l'appelant.
  *
- * <p>Pédagogie du {@code compareTo} : la contract est un signe —
+ * <p>Contrat du {@code compareTo} : la valeur retournée est un signe —
  * {@code négatif / zéro / positif} selon que {@code this} passe
  * <em>avant</em>, <em>comme</em> ou <em>après</em> l'argument. Comme pour
  * {@code equals}, la cohérence avec l'égalité compte : ici deux zones de
@@ -85,7 +85,8 @@ public class Zone implements Comparable<Zone> {
     public int compareTo(Zone autre) {
         // Astuce sans méthode de comparaison « moderne » : la soustraction des
         // entiers donne le signe voulu. (Ici les numéros restent petits :
-        // pas de risque de débordement — limite à discuter en séance.)
+        // pas de risque de débordement ; avec de grands nombres la
+        // soustraction peut déborder — Integer.compare est alors sûr.)
         return this.numero - autre.numero;
     }
 
@@ -100,7 +101,7 @@ public class Zone implements Comparable<Zone> {
     }
 
     /**
-     * Deux zones sont égales quand elles ont le même numéro (contrat W3 repris).
+     * Deux zones sont égales quand elles ont le même numéro (contrat inchangé).
      *
      * @param o l'objet à comparer
      * @return {@code true} si {@code o} est une zone de même numéro

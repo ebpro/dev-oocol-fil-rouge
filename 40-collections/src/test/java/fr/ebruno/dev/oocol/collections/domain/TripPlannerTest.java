@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
  * quatre familles de conteneurs ({@code Queue} frontière, {@code Set}
  * visites, {@code Map} prédécesseurs, {@code List} résultat) : chemin le
  * plus court en arrêts, correspondances traversées, et retour « liste vide »
- * sur l'impossible (contrat W5, corrigé en W6).
+ * sur l'impossible (contrat documenté : vide = échec).
  *
  * @author Emmanuel Bruno
  */
@@ -132,7 +132,7 @@ class TripPlannerTest {
         Network reseau = reseauDeuxLignes();
         Station inconnue = Station.of("XXX", "Bout-du-Monde", zone1());
 
-        // Contrat W5 documenté : vide = échec (ambiguïté assumée, W6 la lèvera).
+        // Contrat documenté : vide = échec (ambiguïté assumée par la méthode).
         assertThat(TripPlanner.planifier(reseau, gare(), inconnue)).isEmpty();
         assertThat(TripPlanner.planifier(reseau, inconnue, gare())).isEmpty();
     }

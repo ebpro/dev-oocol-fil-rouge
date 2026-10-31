@@ -1,9 +1,9 @@
 /**
- * Module 40 — démonstration de la semaine 5 (collections).
+ * Module 40 — démonstration des collections.
  *
  * <p>Ce paquet contient l'exécutable {@link
  * fr.ebruno.dev.oocol.collections.app.ReseauDemo}, qui joue les six scènes
- * de la séance sur un réseau à trois lignes et sept stations : construction
+ * sur un réseau à trois lignes et sept stations : construction
  * de la {@code List<Station>}, scène equals/hashCode, itinéraire BFS,
  * correspondances, tris (naturel et délégué), barème tarifaire.
  *

@@ -8,7 +8,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 /**
- * Tests de {@link Line} version W5 — la paire de champs est devenue une
+ * Tests de {@link Line} — la paire de champs est devenue une
  * {@code List<Station>} : ordre préservé, refus des doublons par
  * {@code equals}, retrait par autre exemplaire, lookup O(n) documenté.
  *
@@ -32,7 +32,7 @@ class LineListTest {
         return Station.of("HOP", "Hopital", zone1());
     }
 
-    /** Ligne à trois arrêts, l'archétype de la séance. */
+    /** Ligne à trois arrêts, le cas de test archétypal. */
     private static Line ligneTroisArrets() {
         Line ligne = new Line("Ligne A");
         ligne.ajouterArret(gare());
@@ -99,7 +99,7 @@ class LineListTest {
     void trouverParCodeAbsentRetourneNull() {
         Line ligne = ligneTroisArrets();
 
-        // Absence = null, contrat documenté de la méthode (W6 : exception).
+        // Absence = null, contrat documenté de la méthode.
         assertThat(ligne.trouverParCode("ZZZ")).isNull();
     }
 

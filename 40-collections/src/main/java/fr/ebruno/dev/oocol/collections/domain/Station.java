@@ -6,9 +6,9 @@ import java.util.Comparator;
  * Une station du réseau « Trans'U », identifiée par son code d'exploitation
  * à trois lettres majuscules (ex. {@code "GAR"} pour Gare Centrale).
  *
- * <p><strong>LA classe du bug motivateur de la semaine 5.</strong> En W3, une
- * station n'était qu'un objet encapsulé ; en W5, elle devient une <em>clé de
- * collection</em> : elle entre dans des {@code HashSet}, sert d'index dans des
+ * <p><strong>La classe du bug motivateur.</strong> La station n'est plus
+ * seulement un objet encapsulé ; elle devient une <em>clé de collection</em> :
+ * elle entre dans des {@code HashSet}, sert d'index dans des
  * {@code HashMap} et se cherche dans des {@code List}. Or une collection de
  * hachage ne compare pas les objets champ par champ : elle demande leur
  * {@code hashCode()} pour choisir « dans quel tiroir regarder », puis leur
@@ -27,7 +27,7 @@ import java.util.Comparator;
  * clé qui a changé de valeur une fois rangée dans un {@code HashSet} devient
  * introuvable — le tiroir calculé à l'insertion ne correspond plus à celui
  * consulté à la recherche. Une clé de hachage doit être immuable ; c'est
- * aussi pour ça que {@code setCode} a disparu de cet instantané.
+ * aussi pour ça que {@code setCode} a disparu de cette classe.
  *
  * <p>La station gagne aussi deux façons d'être ordonnée :
  * <ul>
@@ -35,9 +35,8 @@ import java.util.Comparator;
  *       c'est l'ordre « par défaut » d'une {@code List<Station>} triée ;</li>
  *   <li>l'ordre <strong>délégué</strong> ({@link #parNom()}), par nom sans
  *       tenir compte de la casse — un {@code Comparator} écrit en classe
- *       interne <em>anonyme</em>, comme avant les lambdas. Le module
- *       {@code 80-modern-java} remplacera cette fabrique par un lambda ;
- *       en attendant, le code anonyme montre ce que le lambda « dit ».</li>
+ *       interne <em>anonyme</em>, la forme « avant les lambdas », qui dit
+ *       exactement ce qu'un lambda exprime.</li>
  * </ul>
  *
  * @author Emmanuel Bruno
@@ -50,7 +49,7 @@ public class Station implements Comparable<Station> {
     /**
      * Code d'exploitation : exactement 3 lettres majuscules (ex. {@code "GAR"}).
      *
-     * <p>{@code final} en W5 : c'est la clé d'identité de la station, donc la
+     * <p>Champ {@code final} : c'est la clé d'identité de la station, donc la
      * clé de hachage de toutes les collections qui la contiennent. Modifier
      * une clé après insertion « perd » l'objet dans la table — le setter
      * {@code setCode} du module 20 est volontairement supprimé ici.
@@ -240,7 +239,7 @@ public class Station implements Comparable<Station> {
      * Deux stations sont la MÊME station quand elles ont le même code.
      *
      * <p><strong>Sans cette paire (equals + hashCode), {@code HashSet.contains()}
-     * et {@code HashMap.get()} ratent silencieusement — c'est le bug W5
+     * et {@code HashMap.get()} ratent silencieusement — c'est le bug
      * motivant.</strong> Concrètement : {@code Line.retirerArret} renverrait
      * {@code false} pour un arrêt pourtant présent, {@code Network} verrait
      * la même station sous deux clés différentes, et le BFS du

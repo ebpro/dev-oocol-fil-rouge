@@ -7,16 +7,16 @@ import java.util.List;
 /**
  * Une ligne du réseau : une suite <em>ordonnée</em> d'arrêts.
  *
- * <p><strong>La transformation de la semaine 5.</strong> En W3
- * ({@code 20-domain-bases}), {@code Line} ne reliait que DEUX stations —
- * deux champs fixes, {@code origine} et {@code destination} — et son Javadoc
- * assumait l'insuffisance. La voici résolue : la paire est remplacée par une
+ * <p><strong>La paire de champs devient une liste.</strong> Dans le module
+ * {@code 20-domain-bases}, {@code Line} ne reliait que deux stations — deux
+ * champs fixes, {@code origine} et {@code destination} — une limite assumée.
+ * Elle est levée ici : la paire est remplacée par une
  * {@code List<Station>}. Pourquoi une {@code List} précisément ? Parce
  * qu'un itinéraire de bus EST une séquence : l'ordre a un sens (le terminus
  * d'aller n'est pas le terminus de retour), les doublons sont refusés, le
  * accès par position ({@code get(i)}) est demandé par l'exploitation.
  * {@code Set} aurait perdu l'ordre ; {@code Map} n'a rien à indexer ici.
- * « Bon conteneur pour bon usage » : c'est la règle de choix de la séance.
+ * « Bon conteneur pour bon usage » : la règle de choix d'un conteneur.
  *
  * <p>La classe met en scène le contrat {@code equals}/{@code hashCode} de
  * {@link Station} là où il fait mal s'il manque : {@code contains},
@@ -25,7 +25,7 @@ import java.util.List;
  * silence sur un arrêt pourtant présent — {@link #demontrerBugSansEquals()}
  * rejoue la scène complète, résultats à l'appui.
  *
- * <p>Limite affichée (et promise pour la suite de la séance) :
+ * <p>Limite affichée :
  * {@link #trouverParCode(String)} parcourt la liste à la main — coût
  * {@code O(n)}. Le graphe {@link Network} qui suit montre la réponse
  * {@code O(1)} d'une {@code Map} ; la leçon n'est pas « List est mauvaise »
@@ -105,8 +105,8 @@ public class Line {
      * Retrouve un arrêt depuis son code d'exploitation.
      *
      * <p>Parcours linéaire : à chaque appel on peut devoir lire toute la
-     * liste — coût {@code O(n)}. C'est VOLONTAIREMENT naïf : W5 montre la
-     * limite de ce lookup manuel, et {@link Network} introduit dans la foulée
+     * liste — coût {@code O(n)}. C'est VOLONTAIREMENT simple : le lookup
+     * manuel montre ici sa limite, et {@link Network} introduit dans la foulée
      * la {@code Map} qui le fait en {@code O(1)}. Comparer les deux, c'est
      * comprendre le choix du conteneur.
      *
@@ -119,7 +119,7 @@ public class Line {
                 return s;
             }
         }
-        return null; // absence = null, contrat documenté ; W6 y substituera une exception
+        return null; // absence = null, contrat documenté de la méthode
     }
 
     /**
@@ -137,7 +137,7 @@ public class Line {
         if (arrets.isEmpty()) {
             // Échec BRUYANT : demander le premier arrêt d'une ligne vide est
             // une erreur du programme, pas une réponse métier (« null » ici
-            // se propagerait trop loin — cf. la promesse W6).
+            // se propagerait trop loin).
             throw new IllegalStateException("La ligne " + nom + " n'a aucun arrêt.");
         }
         return arrets.get(0);
@@ -197,7 +197,7 @@ public class Line {
      * <p>{@code Collections.unmodifiableList} renvoie une VUE qui refuse
      * toute écriture : le monde extérieur lit la liste, seul
      * {@link #ajouterArret(Station)} et {@link #retirerArret(Station)} la
-     * modifient — l'encapsulation de W3, appliquée à une collection.
+     * modifient — l'encapsulation appliquée à une collection.
      * Tenter {@code getArrets().add(...)} lève une
      * {@code UnsupportedOperationException} : échec bruyant, pas corruption
      * silencieuse.
@@ -209,7 +209,7 @@ public class Line {
     }
 
     /**
-     * Scène pédagogique : le bug qui motive le contrat {@code equals}/
+     * Démonstration : le bug qui motive le contrat {@code equals}/
      * {@code hashCode}.
      *
      * <p>Ajoute une station, puis la recherche et la retire via une AUTRE

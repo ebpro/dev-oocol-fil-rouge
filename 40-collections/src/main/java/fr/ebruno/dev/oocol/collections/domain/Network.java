@@ -11,7 +11,7 @@ import java.util.Set;
 /**
  * Le graphe du réseau : quelle station est desservie par quelles lignes.
  *
- * <p><strong>Le conteneur-vedette de la séance : la {@code Map}.</strong>
+ * <p><strong>Le conteneur central de ce module : la {@code Map}.</strong>
  * {@code Line.trouverParCode} montrait le lookup {@code O(n)} d'un parcours
  * manuel ; ici, la question « quelles lignes passent par cette station ? »
  * se pose des milliers de fois par seconde dans une vraie application
