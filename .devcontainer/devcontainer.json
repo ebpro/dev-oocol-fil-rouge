@@ -1,20 +1,10 @@
 {
   // Conteneur de développement du fil rouge DEV-OOCOL.
-  // Image minimale JDK 21 (défaut) + JDK 25 (matrice CI), Git, sans Maven global :
-  // le projet utilise le Maven wrapper (./mvnw) livré dans le dépôt.
-  // NB : l'image Solen des dépôts de cours Quarto n'est PAS adaptée ici —
-  // ce dépôt est un projet Java/Maven pur, sans rendu de supports.
+  // Ce dépôt utilise désormais le profil Solen « lang-java-25 » : l'image fournit
+  // JDK 25 et Git, sans Maven global — le projet utilise le Maven wrapper (./mvnw)
+  // livré dans le dépôt.
   "name": "dev-oocol-fil-rouge",
-  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
-  "features": {
-    "ghcr.io/devcontainers/features/java:1": {
-      "version": "21,25",
-      "default": "21",
-      "mavenVersion": "none",
-      "javaToolchains": true
-    },
-    "ghcr.io/devcontainers/features/git:1": {}
-  },
+  "image": "ghcr.io/ebpro/solen:lang-java-25-v1.3.42",
   "customizations": {
     "vscode": {
       "extensions": [
@@ -26,5 +16,5 @@
     }
   },
   "postCreateCommand": "git config core.hooksPath .githooks && chmod +x mvnw && ./mvnw -B -q --version",
-  "remoteUser": "vscode"
+  "remoteUser": "jovyan"
 }
