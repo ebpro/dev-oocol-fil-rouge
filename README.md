@@ -15,7 +15,7 @@ collections, exceptions, E/S, sérialisation, modern Java, JDBC…).
 
 | Outil | Version | Remarque |
 |---|---|---|
-| JDK | **21 minimum** (25 conseillé pour la matrice CI) | un seul JDK suffit pour travailler |
+| JDK | **21 minimum** (le conteneur de développement fournit **25**) | un seul JDK suffit pour travailler |
 | Maven | **aucune installation requise** | le dépôt livre le wrapper `./mvnw` (Maven 3.9.8) |
 | Git | récent | hooks optionnels : `git config core.hooksPath .githooks` |
 
@@ -47,8 +47,12 @@ leur build).
   POM parent qui centralise versions de plugins et dépendances.
 - **VS Code** : ouvrir le dossier à la racine du dépôt, l'extension Java détecte le
   projet Maven.
-- **Conteneur de développement** : `.devcontainer/` fournit JDK 21 + 25, Git et le
-  hook path déjà configurés (Reopen in Container).
+- **Conteneur de développement** : `.devcontainer/` utilise par défaut l'image
+  Solen `ghcr.io/ebpro/solen:lang-java-25-v1.3.42` (JDK 25 et Git, hook path
+  déjà configuré — Reopen in Container). L'ancienne feature devcontainer
+  installait JDK 21 + 25 ; le profil Solen Java 25 est désormais le défaut.
+  Besoin de JDK 21 ? Passez l'image à `ghcr.io/ebpro/solen:lang-java-21-v1.3.42`
+  dans `.devcontainer/devcontainer.json`.
 
 ## Structure
 
